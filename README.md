@@ -14,7 +14,7 @@
 - [개천절 이미지와 Skia 그래픽](site/dist/assets/): 한국 산세·신단수 상상·곰과 범·청동기 생활 재구성·고인돌·현대 교실 이미지 6종과 Skia 정지 타이포그래픽 1종
 - [개천절 이미지 프롬프트·검수 기록](knowledge/개천절-이미지-프롬프트.md): 최종 에셋 경로와 중국풍 배제 조건
 - [개천절 학습지](site/dist/worksheets/): 학년군별 학생용·교사용 각 2쪽, 총 6종
-- [개천절 오프라인 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.0): 승인 전 영상은 포함하지 않은 별도 패키지
+- [개천절 오프라인 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.1): 승인 전 영상은 포함하지 않은 별도 패키지
 
 ## 완성된 한글날 자료
 
@@ -22,13 +22,13 @@
 
 **교사 발표 화면을 PPT 방식으로 개선했습니다.** 전자칠판의 16:9 슬라이드에서 ‘다음’만 누르면 질문·설명·활동·정답이 순서대로 나옵니다. 1–2학년 31장, 3–4학년 34장, 5–6학년 36장입니다. 필요한 장면의 글자 조합·핵심 문구·정답 모션, 생성 영상 3편, Skia 연표 타이포그래픽 1편과 클링 도입 다큐 1편은 들어가면 자동 재생되고, 화면 위 다시 보기로 반복할 수 있습니다. 세종이 새 글자를 만든 까닭을 생각하는 장면은 클링으로 제작했습니다. 학생은 태블릿 QR로 글자 탐험·만들기·골든벨을 개별 진행합니다.
 
-학년별 정리 화면은 창제 목적과 오늘의 쓰임을 연결합니다. 저학년은 내 말을 적어 전하는 경험, 중학년은 읽는 사람을 돕는 안내문, 고학년은 『훈민정음』 해례본에 남은 이유·원리와 정확한 글쓰기를 다룹니다. 발표 제목은 교실 뒤에서도 읽기 쉬운 고딕체로 맞추고, 모든 수업 문구를 포함한 로컬 글꼴을 제공합니다.
+학년별 정리 화면은 창제 목적과 오늘의 쓰임을 연결합니다. 저학년은 내 말을 적어 전하는 경험, 중학년은 읽는 사람을 돕는 안내문, 고학년은 『훈민정음』 해례본에 남은 이유·원리와 한글을 이어 온 사람들, 정확한 글쓰기를 다룹니다. 발표 제목은 교실 뒤에서도 읽기 쉬운 고딕체로 맞추고, 모든 수업 문구를 포함한 로컬 글꼴을 제공합니다.
 
 - [공개 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 교사 전자칠판과 학생 태블릿에서 접속합니다.
-- [한글날 오프라인 수업자료 다운로드](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.0): 영상·학습지·교사 대본을 포함한 ZIP입니다.
+- [한글날 오프라인 수업자료 다운로드](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.1): 영상·학습지·교사 대본을 포함한 ZIP입니다.
 - [교사용 수업 안내](docs/한글날/교사용-수업안내.md): 진행 방법, 발문·예상 답, 평가 기준, 기기 없는 대안
 - [학생용·교사용 PDF 폴더](site/dist/worksheets/): 학년군별 학생용 3종·교사용 3종, **총 6종·각 2쪽**
-- [한글날 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.0) · [배포용 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 이미지·폰트·학습지가 포함된 완성 패키지입니다.
+- [한글날 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.1) · [배포용 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 이미지·폰트·학습지가 포함된 완성 패키지입니다.
 - [학습설계와 공식 근거](knowledge/hangeul-learning-design.md): 관찰·예상·탐색·설명·적용·수정 피드백을 연결한 설계
 
 | 구성 | 현재 구현 |
