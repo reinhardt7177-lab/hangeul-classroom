@@ -24,6 +24,7 @@ for(const [id,g] of Object.entries(data.grades)){
 }
 const landing=fs.readFileSync(path.join(root,'index.html'),'utf8');
 for(const name of ['3·1절','제헌절','광복절','개천절','한글날'])assert.ok(landing.includes(name),`landing missing ${name}`);
+assert.ok(!/[三法光]/.test(landing),'landing must use Korean/number symbols rather than decorative Hanja');
 for(const page of ['hangeul.html','gaecheon.html'])assert.ok(landing.includes(`href="${page}"`),`landing missing ${page}`);
 const app=fs.readFileSync(path.join(root,'gaecheon.js'),'utf8');
 assert.ok(app.includes("student/${state.grade}"),'teacher QR must target the grade tablet route');
