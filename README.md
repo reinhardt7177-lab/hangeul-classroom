@@ -12,6 +12,7 @@
 - [사실과 전승 검증](knowledge/개천절-사실과-전승-검증.md)
 - [영상 제작 승인 전 계획](docs/개천절/영상-승인전-제작계획.md): Kling/Higgsfield·Blender·Skia 후보 컷과 역사 고증 게이트. **영상은 제작하지 않음**
 - [개천절 이미지와 Skia 그래픽](site/dist/assets/): 한국 산세·신단수 상상·곰과 범·청동기 생활 재구성·고인돌·현대 교실 이미지 6종과 Skia 정지 타이포그래픽 1종
+- [개천절 이미지 프롬프트·검수 기록](knowledge/개천절-이미지-프롬프트.md): 최종 에셋 경로와 중국풍 배제 조건
 - [개천절 학습지](site/dist/worksheets/): 학년군별 학생용·교사용 각 2쪽, 총 6종
 - [개천절 오프라인 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.0.0): 승인 전 영상은 포함하지 않은 별도 패키지
 
