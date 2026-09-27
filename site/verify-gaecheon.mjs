@@ -15,6 +15,8 @@ for(const [id,g] of Object.entries(data.grades)){
  for(const s of g.slides){
   assert.ok(s.title&&s.question&&s.answer&&s.note,`${id} slide needs teacher-ready content`);
   assert.ok(fs.existsSync(path.join(root,'assets',s.image+'.png')),`${id} missing ${s.image}`);
+  if(s.video)assert.ok(fs.statSync(path.join(root,'videos',s.video+'.mp4')).size>200000,`${id} missing video ${s.video}`);
+  if(s.choices)for(const option of s.choices)if(typeof option==='object'&&option.image)assert.ok(fs.existsSync(path.join(root,'assets',option.image+'.png')),`${id} missing quiz image ${option.image}`);
   if(s.kind==='quiz')assert.ok(s.correct>=0&&s.correct<s.choices.length,`${id} invalid answer`);
  }
  for(const who of ['student','teacher']){
@@ -29,8 +31,10 @@ for(const page of ['hangeul.html','gaecheon.html'])assert.ok(landing.includes(`h
 const app=fs.readFileSync(path.join(root,'gaecheon.js'),'utf8');
 assert.ok(app.includes("student/${state.grade}"),'teacher QR must target the grade tablet route');
 assert.ok(app.includes("data-action=\"replay\""),'teacher motion replay missing');
+assert.ok(app.includes("data-action=\"sound\""),'teacher soundtrack toggle missing');
+assert.ok(app.includes('video.play()'),'teacher video autoplay missing');
 assert.ok(app.includes('PageDown'),'teacher slide shortcut missing');
 assert.ok(!app.includes('class="image-credit"'),'image provenance caption must stay off the teacher slide');
 assert.ok(fs.existsSync(path.join(root,'assets','gaecheon-fact-skia.png')),'Skia fact graphic missing');
-assert.ok(!fs.readdirSync(path.join(root,'videos')).some(x=>x.startsWith('gaecheon-')),'Gaecheonjeol video must await approval');
-console.log('Gaecheonjeol: 3 × 40-minute lessons, 12 questions, six PDFs, QR route, Skia still and history labels verified.');
+assert.ok(data.sources.some(source=>source.url.includes('museum.go.kr')),'real museum artifact source missing');
+console.log('Gaecheonjeol: 3 × 40-minute lessons, 12 questions, six PDFs, QR route, 2 soundtracked videos, images, Skia and history labels verified.');

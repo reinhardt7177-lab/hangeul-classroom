@@ -22,7 +22,7 @@ for(const name of fs.readdirSync(path.join(target,'fonts'))){
  }
 }
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
-for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden','timeline-skia','documentary-poster','gaecheon-dawn','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia']){
+for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden','timeline-skia','documentary-poster','gaecheon-dawn','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-summit-dawn','gaecheon-helping-today','gaecheon-source-study']){
  fs.copyFileSync(path.join(source,'assets',asset+'.png'),path.join(target,'assets',asset+'.png'));
 }
 fs.copyFileSync(path.join(site,'server.mjs'),path.join(path.dirname(target),'server.mjs'));
