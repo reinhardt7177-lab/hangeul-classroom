@@ -22,7 +22,9 @@ jobs:
           node site/verify-documentary-audio.mjs
       - name: Verify lesson content and worksheets
         working-directory: site
-        run: node verify.mjs
+        run: |
+          node verify.mjs
+          node verify-gaecheon.mjs
       - name: Prepare classroom files
         run: node site/package.mjs
       - uses: actions/configure-pages@v5

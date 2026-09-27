@@ -2,19 +2,30 @@
 
 초등 **1–2 / 3–4 / 5–6학년**을 위한 한글날·개천절 수업 앱 프로젝트입니다.
 
-**한글날과 개천절은 각각 독립된 수업 패키지입니다.** 공통 국경일 선택 화면에서 진입하며 대본·이미지·영상·활동·평가·학습지는 별도로 구성합니다.
+**한글날과 개천절은 각각 독립된 수업 패키지입니다.** [공통 국경일 선택 화면](https://reinhardt7177-lab.github.io/hangeul-classroom/)에서 각각 들어갑니다. 개천절 영상은 승인 전 계획만 작성했고 실제 영상은 아직 제작하지 않았습니다.
+
+## 완성된 개천절 자료
+
+국경일 벤토 그리드에서 [개천절 독립 수업](https://reinhardt7177-lab.github.io/hangeul-classroom/gaecheon.html)을 엽니다. 1–2학년 13장면, 3–4학년 15장면, 5–6학년 18장면을 **각 40분**으로 구성했습니다. 교사는 전자칠판에서 ‘다음’만 눌러 질문 → 설명 → 다음 장면을 진행하고, 글자 모션을 다시 볼 수 있습니다. 학생은 QR로 태블릿의 이야기 순서·자료 구분·홍익인간 활동에 참여합니다. 골든벨은 학년별 3 / 4 / 5문항이며 학생용·교사용 PDF 학습지 6종을 제공합니다.
+
+- [교사용 수업 안내](docs/개천절/교사용-수업안내.md)
+- [사실과 전승 검증](knowledge/개천절-사실과-전승-검증.md)
+- [영상 제작 승인 전 계획](docs/개천절/영상-승인전-제작계획.md): Kling/Higgsfield·Blender·Skia 후보 컷과 역사 고증 게이트. **영상은 제작하지 않음**
+- [개천절 이미지와 Skia 그래픽](site/dist/assets/): 한국 산세·신단수 상상·곰과 범·청동기 생활 재구성·고인돌·현대 교실 이미지 6종과 Skia 정지 타이포그래픽 1종
+- [개천절 학습지](site/dist/worksheets/): 학년군별 학생용·교사용 각 2쪽, 총 6종
+- [개천절 오프라인 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.0.0): 승인 전 영상은 포함하지 않은 별도 패키지
 
 ## 완성된 한글날 자료
 
-**한글날의 로컬 수업 앱과 인쇄 자료를 완성했습니다.** 개천절은 제작 계획 단계입니다.
+**한글날의 로컬 수업 앱과 인쇄 자료를 완성했습니다.** 기존 수업은 [한글날 전용 페이지](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html)에서 계속 사용할 수 있습니다.
 
 **교사 발표 화면을 PPT 방식으로 개선했습니다.** 전자칠판의 16:9 슬라이드에서 ‘다음’만 누르면 질문·설명·활동·정답이 순서대로 나옵니다. 1–2학년 31장, 3–4학년 34장, 5–6학년 36장입니다. 필요한 장면의 글자 조합·핵심 문구·정답 모션, 생성 영상 3편, Skia 연표 타이포그래픽 1편과 클링 도입 다큐 1편은 들어가면 자동 재생되고, 화면 위 다시 보기로 반복할 수 있습니다. 세종이 새 글자를 만든 까닭을 생각하는 장면은 클링으로 제작했습니다. 학생은 태블릿 QR로 글자 탐험·만들기·골든벨을 개별 진행합니다.
 
-- [공개 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/): 교사 전자칠판과 학생 태블릿에서 접속합니다.
-- [오프라인 수업자료 다운로드](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/latest): 영상·학습지·교사 대본을 포함한 ZIP입니다.
+- [공개 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 교사 전자칠판과 학생 태블릿에서 접속합니다.
+- [한글날 오프라인 수업자료 다운로드](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v1.0.0): 영상·학습지·교사 대본을 포함한 ZIP입니다.
 - [교사용 수업 안내](docs/한글날/교사용-수업안내.md): 진행 방법, 발문·예상 답, 평가 기준, 기기 없는 대안
 - [학생용·교사용 PDF 폴더](site/dist/worksheets/): 학년군별 학생용 3종·교사용 3종, **총 6종·각 2쪽**
-- [한글날 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/latest) · [배포용 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/): 이미지·폰트·학습지가 포함된 완성 패키지입니다.
+- [한글날 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v1.0.0) · [배포용 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 이미지·폰트·학습지가 포함된 완성 패키지입니다.
 - [학습설계와 공식 근거](knowledge/hangeul-learning-design.md): 관찰·예상·탐색·설명·적용·수정 피드백을 연결한 설계
 
 | 구성 | 현재 구현 |
@@ -27,7 +38,7 @@
 | 한글 글꼴 | Noto Sans KR·Noto Serif KR을 로컬 파일로 포함 |
 | 수업 영상 | 기존 5초 영상 4편과 새 60초 클링 도입 다큐 1편, 배경음악이 있는 도입 다큐와 무음 영상 4개. Blender 제작물은 아직 없음 |
 
-**공개 수업 주소: [https://reinhardt7177-lab.github.io/hangeul-classroom/](https://reinhardt7177-lab.github.io/hangeul-classroom/)**. 인터넷에 연결된 학생 태블릿은 ‘태블릿 QR’로 참여할 수 있습니다. 같은 와이파이는 필수가 아닙니다. 오프라인 교실 서버를 쓰려면 압축을 푼 폴더에서 `교실서버-시작.cmd`를 실행하면 교사용 로컬 서버를 열 수 있습니다(공식 Node.js 설치 필요). 교사 컴퓨터와 태블릿이 같은 네트워크라면 ‘태블릿 QR’에서 접속 주소를 골라 시험할 수 있습니다. `localhost`는 이 컴퓨터에서만 열립니다. 학생 응답의 실시간 수집·학급 집계는 없으며, 학생 화면은 개인 활동으로 사용합니다. YouTube 후보 링크의 실제 재생·길이·학년별 구간은 수업 전에 확인해야 합니다.
+**공개 국경일 선택 화면: [https://reinhardt7177-lab.github.io/hangeul-classroom/](https://reinhardt7177-lab.github.io/hangeul-classroom/)**. 인터넷에 연결된 학생 태블릿은 각 수업의 QR로 참여할 수 있습니다. 같은 와이파이는 필수가 아닙니다. 오프라인 교실 서버를 쓰려면 압축을 푼 폴더에서 `교실서버-시작.cmd`를 실행하면 교사용 로컬 서버를 열 수 있습니다(공식 Node.js 설치 필요). `localhost`는 이 컴퓨터에서만 열립니다. 학생 응답의 실시간 수집·학급 집계는 없으며, 학생 화면은 개인 활동으로 사용합니다.
 
 ## 지금 볼 문서
 
@@ -55,8 +66,8 @@
 - `public/assets/`: 생성 이미지와 시각 자산
 - `content/hangeul-data.js`: 구현한 한글날 3종의 최종 수업·평가 데이터
 - `content/lessons.json`: 초기 3–4학년 기초데이터. 현재 앱 전체를 나타내는 파일은 아닙니다.
-- `site/`: 한글날 로컬 수업 앱과 서버·검증 도구
-- `output/hangeul/`: 인쇄 PDF와 배포 패키지
+- `site/`: 공통 랜딩, 한글날·개천절 독립 수업 앱, 서버·검증 도구
+- `output/hangeul/`, `output/gaecheon/`: 국경일별 오프라인 배포 패키지
 
 공개 사이트의 교사·학생 화면은 브라우저에서 확인했습니다. 실제 교실에서는 학생 태블릿 한 대로 먼저 접속해 주세요. 영상이나 기기가 없어도 교사 화면·공책·학습지로 수업을 진행할 수 있습니다.
 

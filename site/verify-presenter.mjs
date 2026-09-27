@@ -56,16 +56,16 @@ function key(keyName,tagName='BODY',editable=false){
  return prevented;
 }
 
-const index=fs.readFileSync(path.join(dist,'index.html'),'utf8');
+const index=fs.readFileSync(path.join(dist,'hangeul.html'),'utf8');
 const scripts=[...index.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/g)].map(x=>x[1]);
 for(const src of scripts){
  if(/^https?:/.test(src)||src.startsWith('vendor/'))continue;
  const file=path.join(dist,src.split('?')[0]);
  vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
 }
-assert.equal(typeof sandbox.renderPresentation,'function','Presentation renderer must load from index.html');
-assert.equal(typeof sandbox.movePresentation,'function','Presentation navigation must load from index.html');
-assert.equal(typeof sandbox.presentationBeats,'function','Presentation beat lookup must load from index.html');
+assert.equal(typeof sandbox.renderPresentation,'function','Presentation renderer must load from hangeul.html');
+assert.equal(typeof sandbox.movePresentation,'function','Presentation navigation must load from hangeul.html');
+assert.equal(typeof sandbox.presentationBeats,'function','Presentation beat lookup must load from hangeul.html');
 assert.ok(sandbox.HANGEUL_PRESENTATION,'Presentation data must load before use');
 
 // Historical imagery gate: only reviewed assets may appear in teacher scenes.
