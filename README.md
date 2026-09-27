@@ -28,6 +28,7 @@
 - [공개 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 교사 전자칠판과 학생 태블릿에서 접속합니다.
 - [한글날 오프라인 수업자료 다운로드](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.1): 영상·학습지·교사 대본을 포함한 ZIP입니다.
 - [교사용 수업 안내](docs/한글날/교사용-수업안내.md): 진행 방법, 발문·예상 답, 평가 기준, 기기 없는 대안
+- [한글날 초등교육자료 엄선](knowledge/한글날-초등교육자료-엄선.md): 국립한글박물관·국립국어원·국사편찬위원회 자료를 1–2 / 3–4 / 5–6학년 수업에 연결
 - [학생용·교사용 PDF 폴더](site/dist/worksheets/): 학년군별 학생용 3종·교사용 3종, **총 6종·각 2쪽**
 - [한글날 수업자료 ZIP](https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.3.1) · [배포용 한글날 수업 앱](https://reinhardt7177-lab.github.io/hangeul-classroom/hangeul.html): 이미지·폰트·학습지가 포함된 완성 패키지입니다.
 - [학습설계와 공식 근거](knowledge/hangeul-learning-design.md): 관찰·예상·탐색·설명·적용·수정 피드백을 연결한 설계
