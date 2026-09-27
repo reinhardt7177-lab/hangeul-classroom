@@ -1,0 +1,20 @@
+# Local tools, credentials, transfer files and generated working copies
+.motion-tools/
+tmp/
+output/
+node_modules/
+.env
+.env.*
+.vercel/
+.openai/
+**/.openai/
+**/.sites-runtime/
+**/__pycache__/
+*.pyc
+*.log
+*.tar.gz
+
+# Early drafts and duplicate image sources remain local
+drafts/
+public/
+site/dist/assets/village-message.png

@@ -1,0 +1,44 @@
+name: Verify and deploy classroom
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: classroom-pages
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify presentation and audio controls
+        run: |
+          node site/verify-presenter.mjs
+          node site/verify-documentary-audio.mjs
+      - name: Verify lesson content and worksheets
+        working-directory: site
+        run: node verify.mjs
+      - name: Prepare classroom files
+        run: node site/package.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: output/hangeul/수업앱
+
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
