@@ -8,7 +8,7 @@ SRC=ROOT/'site'/'dist'
 OUT=ROOT/'output'/'gaecheon'
 APP=OUT/'수업앱'
 APP.mkdir(parents=True,exist_ok=True)
-for name in ['gaecheon.html','gaecheon.css','gaecheon.js','gaecheon-data.js','fonts.css']:
+for name in ['gaecheon.html','gaecheon.css','gaecheon-presenter-v2.css','gaecheon.js','gaecheon-data.js','fonts.css']:
  copy2(SRC/name,APP/name)
 copy2(SRC/'gaecheon.html',APP/'index.html')
 copytree(SRC/'fonts',APP/'fonts',dirs_exist_ok=True)

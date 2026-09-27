@@ -11,7 +11,7 @@ function copy(from,to){
   for(const child of fs.readdirSync(from))copy(path.join(from,child),path.join(to,child));
  }else fs.copyFileSync(from,to);
 }
-for(const name of ['index.html','hangeul.html','holidays.css','gaecheon.html','gaecheon.js','gaecheon-data.js','gaecheon.css','hangeul.js','hangeul.css','hangeul-data.js','hangeul-presenter.js','presenter-data.js','presenter.css','tablet.js','tablet.css','lesson-motion.js','lesson-motion.css','fonts.css','fonts','vendor','worksheets','videos']){
+for(const name of ['index.html','hangeul.html','holidays.css','gaecheon.html','gaecheon.js','gaecheon-data.js','gaecheon.css','gaecheon-presenter-v2.css','hangeul.js','hangeul.css','hangeul-data.js','hangeul-presenter.js','presenter-data.js','presenter.css','tablet.js','tablet.css','lesson-motion.js','lesson-motion.css','fonts.css','fonts','vendor','worksheets','videos']){
  copy(path.join(source,name),path.join(target,name));
 }
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
