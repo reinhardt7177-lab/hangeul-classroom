@@ -12,6 +12,9 @@ for name in ['gaecheon.html','gaecheon.css','gaecheon-presenter-v2.css','gaecheo
  copy2(SRC/name,APP/name)
 copy2(SRC/'gaecheon.html',APP/'index.html')
 copytree(SRC/'fonts',APP/'fonts',dirs_exist_ok=True)
+for name in (APP/'fonts').iterdir():
+ if name.is_file() and name.name.startswith(('noto-sans-kr-','noto-serif-kr-')) and name.suffix in ('.woff2','.woff','.ttf') and not (SRC/'fonts'/name.name).exists():
+  name.unlink()
 (APP/'vendor').mkdir(exist_ok=True);copy2(SRC/'vendor'/'qrcode.js',APP/'vendor'/'qrcode.js')
 (APP/'assets').mkdir(exist_ok=True)
 for name in ['gaecheon-dawn','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','school-sign','writing-desk','hangul-garden']:

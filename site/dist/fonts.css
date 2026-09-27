@@ -1,45 +1,45 @@
-/* Noto fonts by Google, SIL Open Font License. Subset includes the lesson content. */
+/* Noto fonts by Google, SIL Open Font License. Subset includes all classroom pages. */
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./fonts/noto-sans-kr-1.woff2) format('truetype');
+  src: url(./fonts/noto-sans-kr-1.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(./fonts/noto-sans-kr-2.woff2) format('truetype');
+  src: url(./fonts/noto-sans-kr-2.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(./fonts/noto-sans-kr-3.woff2) format('truetype');
+  src: url(./fonts/noto-sans-kr-3.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(./fonts/noto-sans-kr-4.woff2) format('truetype');
+  src: url(./fonts/noto-sans-kr-4.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(./fonts/noto-sans-kr-5.woff2) format('truetype');
+  src: url(./fonts/noto-sans-kr-5.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(./fonts/noto-sans-kr-6.woff2) format('truetype');
+  src: url(./fonts/noto-sans-kr-6.ttf) format('truetype');
 }
 
 @font-face {
@@ -47,41 +47,41 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./fonts/noto-serif-kr-1.woff2) format('truetype');
+  src: url(./fonts/noto-serif-kr-1.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Serif KR';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(./fonts/noto-serif-kr-2.woff2) format('truetype');
+  src: url(./fonts/noto-serif-kr-2.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Serif KR';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(./fonts/noto-serif-kr-3.woff2) format('truetype');
+  src: url(./fonts/noto-serif-kr-3.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Serif KR';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(./fonts/noto-serif-kr-4.woff2) format('truetype');
+  src: url(./fonts/noto-serif-kr-4.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Serif KR';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(./fonts/noto-serif-kr-5.woff2) format('truetype');
+  src: url(./fonts/noto-serif-kr-5.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Noto Serif KR';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(./fonts/noto-serif-kr-6.woff2) format('truetype');
+  src: url(./fonts/noto-serif-kr-6.ttf) format('truetype');
 }
 

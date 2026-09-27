@@ -1,13 +1,62 @@
 import fs from 'node:fs';
-const text=[fs.readFileSync('dist/hangeul.js','utf8'),fs.readFileSync('dist/hangeul-data.js','utf8')].join('');
-const chars=[...new Set((text.match(/[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9.,!?·→←]/g)||[]))].sort().join('');
-fs.mkdirSync('dist/fonts',{recursive:true});
-let css='/* Noto fonts by Google, SIL Open Font License. Subset includes the lesson content. */\n';
-for(const [family,name] of [['Noto Sans KR','noto-sans-kr'],['Noto Serif KR','noto-serif-kr']]){
- const url=new URL('https://fonts.googleapis.com/css2');url.searchParams.set('family',family+':wght@400;500;600;700;800;900');url.searchParams.set('display','swap');url.searchParams.set('text',chars);
- const res=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0 Chrome/130.0.0.0 Safari/537.36'}});if(!res.ok)throw Error('Font CSS '+res.status);
- let rules=await res.text();const urls=[...new Set([...rules.matchAll(/url\(([^)]+)\)/g)].map(m=>m[1]))];let n=0;
- for(const source of urls){const u=new URL(source);if(u.hostname!=='fonts.gstatic.com')throw Error('Unexpected font host');const r=await fetch(u);if(!r.ok)throw Error('Font '+r.status);const file=`${name}-${++n}.woff2`;fs.writeFileSync('dist/fonts/'+file,Buffer.from(await r.arrayBuffer()));rules=rules.split(source).join('./fonts/'+file)}
- css+=rules+'\n';console.log(name+': '+n+' font files');
+import path from 'node:path';
+
+// Include the teacher deck and student pages in the same Korean font subset.
+const lessonFiles = fs.readdirSync('dist')
+  .filter(name => /\.(?:js|html)$/.test(name))
+  .map(name => path.join('dist', name));
+const lessonText = lessonFiles.map(file => fs.readFileSync(file, 'utf8')).join('');
+const chars = [...new Set((lessonText.match(/[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9.,!?·→←]/g) || []))]
+  .sort().join('');
+
+fs.mkdirSync('dist/fonts', { recursive: true });
+const fontFiles = [];
+let css = '/* Noto fonts by Google, SIL Open Font License. Subset includes all classroom pages. */\n';
+
+for (const [family, name] of [
+  ['Noto Sans KR', 'noto-sans-kr'],
+  ['Noto Serif KR', 'noto-serif-kr']
+]) {
+  const url = new URL('https://fonts.googleapis.com/css2');
+  url.searchParams.set('family', `${family}:wght@400;500;600;700;800;900`);
+  url.searchParams.set('display', 'swap');
+  url.searchParams.set('text', chars);
+  const response = await fetch(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 Chrome/130.0.0.0 Safari/537.36' }
+  });
+  if (!response.ok) throw Error(`Font CSS ${response.status}`);
+  let rules = await response.text();
+  const urls = [...new Set([...rules.matchAll(/url\(([^)]+)\)/g)].map(match => match[1]))];
+  let count = 0;
+  for (const source of urls) {
+    const fontUrl = new URL(source);
+    if (fontUrl.hostname !== 'fonts.gstatic.com') throw Error('Unexpected font host');
+    const fontResponse = await fetch(fontUrl);
+    if (!fontResponse.ok) throw Error(`Font ${fontResponse.status}`);
+    const bytes = Buffer.from(await fontResponse.arrayBuffer());
+    const signature = bytes.subarray(0, 4).toString('ascii');
+    const extension = signature === 'wOF2' ? 'woff2' :
+      signature === 'wOFF' ? 'woff' :
+      bytes.subarray(0, 4).equals(Buffer.from([0, 1, 0, 0])) ? 'ttf' : null;
+    if (!extension) throw Error(`Unknown font format: ${signature}`);
+    const format = { woff2: 'woff2', woff: 'woff', ttf: 'truetype' }[extension];
+    const file = `${name}-${++count}.${extension}`;
+    fontFiles.push([path.join('dist', 'fonts', file), bytes]);
+    rules = rules.split(source).join(`./fonts/${file}`);
+    rules = rules.replace(new RegExp(`url\\(\\./fonts/${file.replaceAll('.', '\\.')}\\) format\\('[^']+'\\)`, 'g'),
+      `url(./fonts/${file}) format('${format}')`);
+  }
+  css += `${rules}\n`;
+  console.log(`${name}: ${count} font files`);
 }
-fs.writeFileSync('dist/fonts.css',css);console.log('Content subset glyphs: '+chars.length);
+
+// Replace only generated font files after every download succeeds.
+for (const [file, bytes] of fontFiles) fs.writeFileSync(file, bytes);
+fs.writeFileSync('dist/fonts.css', css);
+const currentNames = new Set(fontFiles.map(([file]) => path.basename(file)));
+for (const oldName of fs.readdirSync('dist/fonts')) {
+  if (/^noto-(?:sans|serif)-kr-\d+\.(?:woff2|woff|ttf)$/.test(oldName) && !currentNames.has(oldName)) {
+    fs.unlinkSync(path.join('dist', 'fonts', oldName));
+  }
+}
+console.log(`Content subset glyphs: ${chars.length}`);

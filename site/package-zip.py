@@ -1,10 +1,12 @@
 """Bundle the already-prepared local classroom app and teacher documents."""
 
 from pathlib import Path
+from shutil import copy2
 from zipfile import ZIP_DEFLATED, ZipFile
 
 
 root = Path(__file__).resolve().parent.parent / "output" / "hangeul"
+copy2(Path(__file__).resolve().parent.parent / "docs" / "한글날" / "교사용-수업안내.md", root / "교사용-수업안내.md")
 target = root / "한글날-수업자료.zip"
 temporary = root / "한글날-수업자료.zip.tmp"
 documents = [
