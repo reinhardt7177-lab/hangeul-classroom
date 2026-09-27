@@ -30,6 +30,7 @@ const app=fs.readFileSync(path.join(root,'gaecheon.js'),'utf8');
 assert.ok(app.includes("student/${state.grade}"),'teacher QR must target the grade tablet route');
 assert.ok(app.includes("data-action=\"replay\""),'teacher motion replay missing');
 assert.ok(app.includes('PageDown'),'teacher slide shortcut missing');
+assert.ok(!app.includes('class="image-credit"'),'image provenance caption must stay off the teacher slide');
 assert.ok(fs.existsSync(path.join(root,'assets','gaecheon-fact-skia.png')),'Skia fact graphic missing');
 assert.ok(!fs.readdirSync(path.join(root,'videos')).some(x=>x.startsWith('gaecheon-')),'Gaecheonjeol video must await approval');
 console.log('Gaecheonjeol: 3 × 40-minute lessons, 12 questions, six PDFs, QR route, Skia still and history labels verified.');

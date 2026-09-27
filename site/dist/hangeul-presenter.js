@@ -10,12 +10,6 @@ const presentationCaptions={
  'library-together':'현대 한국 학교 도서관을 상상한 교육용 삽화',
  'hangul-garden':'한글 배움을 상징한 창작 정물'
 };
-const presentationClipCaptions={
- 'writing-tools.mp4':'전통 쓰기 도구를 표현한 교육용 상상 영상 · 실제 세종의 책상 아님',
- 'classroom-note.mp4':'현대 한국 교실을 상상한 교육용 영상 · 실제 학생 촬영 아님',
- 'sejong-purpose-kling.mp4':'훈민정음 창제 이유를 설명하는 교육용 상징 영상 · 실제 세종의 모습이나 창제 현장 아님'
-};
-
 window.presentationBeats=function(grade,index){
  if(index<0||index>9)return [];
  if(index!==8){
@@ -66,7 +60,7 @@ function presentationVisual(beat){
  if(beat.type==='equation')return `<div class="p-equation-parts">${(beat.equation?.parts||[]).map((part,i)=>`${i?'<b>+</b>':''}<span>${esc(part)}</span>`).join('')}</div><div class="p-equation-result ${beat.reveal?'is-revealed':''}">${esc(beat.equation?.result||'?')}</div>`;
  if(beat.type==='ox')return beat.reveal?`<div class="p-ox-answer">${esc(beat.title.match(/^[OX]/)?.[0]||'✓')}</div>`:'<div class="p-ox-choices"><span>O</span><span>X</span></div>';
  if(beat.cards)return presentationCards(beat.cards);
- if(beat.notice&&!/상상|교육용|실제 역사|작은 글줄|자료 사진|실제 책상/.test(beat.notice))return `<div class="p-notice ${beat.reveal?'is-revealed':''}">${esc(beat.notice).replace(/\n/g,'<br>')}</div>`;
+ if(beat.notice&&!/그림|삽화|사진|실제|재서술|인용문|상징|교육용|수업용 예시|수업을 위해 만든/.test(beat.notice))return `<div class="p-notice ${beat.reveal?'is-revealed':''}">${esc(beat.notice).replace(/\n/g,'<br>')}</div>`;
  return '';
 }
 
@@ -80,7 +74,7 @@ function presentationQuiz(beat){
 function presentationSlide(beat){
  if(beat.type==='documentary')return `<article class="p-slide p-documentary has-image"><h1 id="slide-title" class="p-sr-only" tabindex="-1">${esc(beat.title)}</h1><p class="p-sr-only">세종은 글로 뜻을 전하기 어려운 백성을 위해 1443년 훈민정음을 창제했어요. 집현전 학자들은 해례 작성에 참여했고, 1446년 훈민정음 해례본이 간행됐어요. 용비어천가는 1445년 노래를 짓고 1447년 책으로 간행했어요.</p><img class="p-backdrop" src="assets/documentary-poster.png" alt="누구나 마음을 전할 수 있도록 · 세종이 꿈꾼 새로운 글자의 이야기"><video class="p-backdrop p-backdrop-video" src="videos/hangeul-documentary-kling-60s.mp4?v=bgm1" data-bgm="true" poster="assets/documentary-poster.png" muted playsinline preload="auto" aria-hidden="true"></video><p class="p-video-fallback">영상을 열지 못했어요. ‘세종은 왜 새 글자를 만들었을까?’를 이야기하고 다음으로 이어 가세요.</p></article>`;
  if(beat.type==='quiz')return presentationQuiz(beat);
- if(beat.motionVideo)return `<article class="p-slide p-motion-video has-image"><img class="p-backdrop" src="assets/timeline-skia.png" alt="1443년 창제에서 1446년 반포로 이어지는 도식"><video class="p-backdrop p-backdrop-video" src="videos/${esc(beat.motionVideo)}" poster="assets/timeline-skia.png" muted playsinline preload="auto" aria-hidden="true"></video><div class="p-copy"><span class="p-kicker">${esc(beat.kicker||presentationChapters[state.index])}</span><h1 id="slide-title" tabindex="-1">${esc(beat.title)}</h1><p class="p-subtitle">${esc(beat.subtitle||'1443년 창제, 1446년 반포를 구분해요.')}</p></div><small class="p-art-caption">Skia 타이포그래픽 · 정확한 연도와 글자를 폰트로 렌더링</small></article>`;
+ if(beat.motionVideo)return `<article class="p-slide p-motion-video has-image"><img class="p-backdrop" src="assets/timeline-skia.png" alt="1443년 창제에서 1446년 반포로 이어지는 도식"><video class="p-backdrop p-backdrop-video" src="videos/${esc(beat.motionVideo)}" poster="assets/timeline-skia.png" muted playsinline preload="auto" aria-hidden="true"></video><div class="p-copy"><span class="p-kicker">${esc(beat.kicker||presentationChapters[state.index])}</span><h1 id="slide-title" tabindex="-1">${esc(beat.title)}</h1><p class="p-subtitle">${esc(beat.subtitle||'1443년 창제, 1446년 반포를 구분해요.')}</p></div></article>`;
  if(beat.image)beat={...beat,image:beat.image.replace(/\.png$/,'')};
  const hasImage=!!beat.image;
  const clip=state.index===2&&(state.presenterBeat||0)===0&&beat.image==='writing-desk'?'writing-tools.mp4':state.index===2&&(state.presenterBeat||0)===1&&beat.image==='hero-sejong'?'sejong-purpose-kling.mp4':state.grade==='1-2'&&state.index===0&&(state.presenterBeat||0)===1&&beat.image==='classroom-note'?'classroom-note.mp4':null;
@@ -89,7 +83,6 @@ function presentationSlide(beat){
  ${hasImage?`<img class="p-backdrop" src="assets/${esc(beat.image)}.png" alt="${esc(presentationCaptions[beat.image]||'교육용 삽화')}">${clip?`<video class="p-backdrop p-backdrop-video" src="videos/${clip}" poster="assets/${esc(beat.image)}.png" muted playsinline preload="auto" aria-hidden="true"></video>`:''}<div class="p-shade"></div>`:''}
  <div class="p-copy"><span class="p-kicker">${esc(beat.kicker||presentationChapters[state.index])}</span><h1 id="slide-title" tabindex="-1">${esc(beat.title)}</h1>${beat.subtitle?`<p class="p-subtitle">${esc(beat.subtitle).replace(/\n/g,'<br>')}</p>`:''}</div>
  ${visual?`<div class="p-visual">${visual}</div>`:''}
- ${hasImage?`<small class="p-art-caption">${esc(clip?presentationClipCaptions[clip]:presentationCaptions[beat.image]||'교육용 상상 삽화')}</small>`:''}
  </article>`;
 }
 

@@ -103,6 +103,8 @@ for(const [grade,lesson] of Object.entries(sandbox.HANGEUL_DATA.grades)){
   assert.deepEqual({index:got.index,beat:got.beat},expected[n],`${grade}: forward beat ${n}`);
   assert.ok(html().length>100,`${grade}: nonempty render`);
   assert.ok(!/\bundefined\b|\bNaN\b/.test(html()),`${grade}: no unresolved values`);
+  assert.ok(!html().includes('class="p-art-caption"'),`${grade}: image provenance caption must stay off the presentation`);
+  assert.ok(!/class="p-notice[^\"]*">[^<]*(그림|삽화|사진|실제|상징|교육용)/.test(html()),`${grade}: image provenance notice must stay off the presentation`);
   if(n&&expected[n].index!==expected[n-1].index)chapterBoundaries++;
   renderedBeats++;
   if(n<expected.length-1)sandbox.movePresentation(1);
@@ -195,6 +197,8 @@ for(const grade of Object.keys(sandbox.HANGEUL_DATA.grades)){
 }
 run("startLesson('3-4',3,true)");
 assert.ok(!html().includes('videos/'),'Student tablet activity must not require watching the teacher video');
+run("startLesson('5-6',2,false)");
+assert.ok(!html().includes('상징적인 쓰기 도구 그림입니다'),'Writing-desk provenance box must not appear on the student-facing slide');
 
 console.log(JSON.stringify({status:'passed',gradeResults,renderedBeats,quizQuestions,chapterBoundaries,
  forwardAndReverse:'passed',finalExit:'passed',questionExplanationSeparation:'passed',

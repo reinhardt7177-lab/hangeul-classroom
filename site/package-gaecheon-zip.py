@@ -26,7 +26,7 @@ readme.write_text('# 개천절 오프라인 수업자료\n\n`개천절-교실서
 target=OUT/'개천절-수업자료.zip';tmp=OUT/'개천절-수업자료.zip.tmp'
 with ZipFile(tmp,'w',ZIP_DEFLATED,compresslevel=7) as z:
  for f in sorted(OUT.rglob('*')):
-  if f.is_file() and f not in (target,tmp):z.write(f,f.relative_to(OUT).as_posix())
+  if f.is_file() and f not in (target,tmp) and f.suffix.lower()!='.zip':z.write(f,f.relative_to(OUT).as_posix())
 with ZipFile(tmp) as z:
  assert z.testzip() is None
  names=set(z.namelist())
