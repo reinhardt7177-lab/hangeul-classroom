@@ -9,6 +9,11 @@
 - 이 문서는 **그림과 영상 파일 자체를 교체하는 작업**만 다룹니다.
 
 > **작업 결과(2026-09-28):** 우선순위 1–8을 모두 완료했습니다. 네 이미지와 다섯 영상 컷을 교체했고, 세종 영상 연결·다큐 라벨·학자 설명 문구·개천절 교사 노트까지 반영했습니다. 수정 전 원본은 `drafts/replaced/2026-09-28/`에 보존했습니다.
+>
+> **추가 조치(2026-09-28, 개천절 1분 도입 영상 작업 중):**
+> - 표지로 바꿔 쓴 `gaecheon-dawn.png`와 `gaecheon-dawn-kling-8s.mp4`도 다시 보니 절벽 소나무·바위 봉우리·구름바다가 황산식 산수로 읽혔습니다. `gaecheon-summit-dawn.png`와 함께 `drafts/replaced/2026-09-28/`로 옮기고, 표지는 직접 만든 1분 도입 영상(`gaecheon-documentary-60s.mp4`)과 `gaecheon-tree.png`로 바꿨습니다. 첫 화면 그림도 `gaecheon-tree.png`입니다.
+> - 재생성한 `gaecheon-community.png`에 닭 두 마리와 옥수수처럼 보이는 걸이가 있었습니다. 닭 자리는 주변 흙·풀로 덮고, 오른쪽 걸이 부분은 잘라 낸 뒤 1672×941로 맞춘 수정본으로 바꿨습니다. 원본은 `drafts/replaced/2026-09-28/gaecheon-community-before-chicken-corn-fix.png`입니다. 학습지 6종과 도입 영상도 수정본으로 다시 만들었습니다.
+> - 아래 §2-9의 새 선택 작업 두 가지는 **급하지 않습니다.** 지금 화면에는 문제 요소가 없습니다.
 
 ## 0. 공통 규칙
 
@@ -314,7 +319,8 @@ No readable text or pseudo-characters on paper, no Chinese palace, no Ming/Qing 
 
 | 대상 | 내용 |
 |---|---|
-| `gaecheon-summit-dawn.png` | 표지에서 빠져 지금은 쓰이지 않을 수 있습니다(grep으로 확인). 다시 쓰려면 2-6과 같은 기준으로 황산식 요소를 빼고 재생성합니다. |
+| `gaecheon-summit-dawn.png`, `gaecheon-dawn.png`, `gaecheon-dawn-kling-8s.mp4` | 모두 `drafts/replaced/2026-09-28/`로 옮겼고 어디에서도 쓰지 않습니다. `site/verify-gaecheon.mjs`가 `gaecheon-dawn` 참조를 막습니다. 새벽 풍경이 다시 필요하면 **새 파일 이름**으로 만들고 2-6 기준(활엽수 또는 한국 소나무, 완만한 능선, 바늘 봉우리·절벽 분재형 소나무·운해 금지)을 따릅니다. |
+| `gaecheon-community.png` 전체 재생성 (선택) | 지금 파일은 닭을 덮고 오른쪽을 잘라 낸 수정본이라 원본보다 조금 부드럽습니다. 새로 만든다면 2-4 기준에 더해 **청동기 시대 근거가 약한 닭과, 훨씬 뒤에 들어온 옥수수·고추·호박을 넣지 않고**, 벼·조·기장·콩, 반달돌칼, 민무늬 토기만 씁니다. 교체한 뒤 `python site/motion/gaecheon-documentary/make_documentary.py`로 도입 영상을, `python templates/gaecheon-worksheets.py`로 학습지를 다시 만듭니다. |
 | `gaecheon-bear-tiger.png` | 동굴 주변 바위의 격자형 업스케일 무늬(약 x900–1200, y220–420)만 부분 보정합니다. 곰은 반달가슴곰(흰 V무늬), 호랑이는 차분한 표정을 유지합니다. |
 | `writing-desk.png` | 선장본이 4침입니다(조선 서책은 대체로 5침). [visual-audit](../knowledge/visual-audit.md)의 취지대로 구멍 수만으로 고칠 필요는 없습니다. 새로 만들 때 5침으로 맞춥니다. |
 | `school-sign.png` | 인물이 저학년처럼 보여 5–6학년 화면에는 어색할 수 있습니다. 고학년 버전을 **새 파일**로 만들면 `site/dist/presenter-data.js`의 해당 장면과 `site/verify-presenter.mjs`의 `approvedAssets`도 함께 고칩니다. |

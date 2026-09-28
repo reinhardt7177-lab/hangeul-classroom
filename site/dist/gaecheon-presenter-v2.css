@@ -144,22 +144,28 @@
 @media (prefers-reduced-motion: reduce) {
  .slide-photo, .animate .kinetic-word, .animate .slide-kicker, .animate .slide-number, .animate .slide-question, .animate .slide-links, .answer.visible { animation: none !important; }
 }
-/* YouTube clip scenes: the player sits on the right while the question stays readable on the left. */
-.scene-youtube { container-type: size; }
-.scene-youtube .slide-photo { filter: blur(8px) brightness(.5); transform: scale(1.08); animation: none; }
-.scene-youtube .slide-main { max-width: min(520px, 32cqw); }
-.scene-youtube .slide-main h1 { font-size: clamp(34px, 3.4vw, 58px); }
-.scene-youtube .slide-question { font-size: clamp(18px, 1.4vw, 24px); }
-.scene-youtube .answer { padding: 14px 20px; }
-.scene-youtube .answer p { font-size: clamp(16px, 1.2vw, 20px); }
+/* Player scenes (YouTube clips and the local intro video): the player sits on the right while the question stays readable on the left. */
+.has-player { container-type: size; }
+.has-player .slide-photo { filter: blur(8px) brightness(.5); transform: scale(1.08); animation: none; }
+.has-player .slide-main { max-width: min(520px, 32cqw); }
+.has-player .slide-main h1 { font-size: clamp(34px, 3.4vw, 58px); }
+.has-player .slide-question { font-size: clamp(18px, 1.4vw, 24px); }
+.has-player .answer { padding: 14px 20px; }
+.has-player .answer p { font-size: clamp(16px, 1.2vw, 20px); }
 .yt-figure { position: absolute; z-index: 4; right: 4cqw; top: 50%; transform: translateY(-50%); width: min(54cqw, calc(62cqh * 16 / 9)); margin: 0; }
 .yt-frame { aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #061b19; border: 1px solid rgba(255,255,255,.25); box-shadow: 0 30px 80px rgba(0,12,12,.45); }
 .yt-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+.yt-frame video { display: block; width: 100%; height: 100%; background: #061b19; }
 .yt-figure figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; color: #dfe7da; font-size: 13px; text-shadow: 0 2px 10px #041513; }
 .yt-figure figcaption a { color: #f5c37d; font-weight: 700; white-space: nowrap; }
+.yt-figure figcaption button { flex: none; padding: 0; border: 0; background: none; color: #f5c37d; font-size: inherit; font-weight: 700; white-space: nowrap; text-shadow: inherit; }
+/* Intro video script inside the teacher note: time on the left, the on-screen sentence on the right. */
+.doc-script { margin: 0 0 16px; padding: 0; list-style: none; font-size: 14px; line-height: 1.6; }
+.doc-script li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px solid #ece6d8; }
+.doc-script b { color: #9a6b2a; font-variant-numeric: tabular-nums; }
 @media (max-width: 700px) {
- .scene-youtube .slide-main { max-width: 100%; }
- .scene-youtube .slide-content { padding-bottom: calc((100vw - 44px) * 9 / 16 + 120px); }
+ .has-player .slide-main { max-width: 100%; }
+ .has-player .slide-content { padding-bottom: calc((100vw - 44px) * 9 / 16 + 120px); }
  .yt-figure { top: auto; bottom: 80px; transform: none; left: 22px; right: 22px; width: auto; }
  .yt-figure figcaption { font-size: 11px; }
 }

@@ -21,8 +21,10 @@ for(const name of fs.readdirSync(path.join(target,'fonts'))){
   fs.unlinkSync(path.join(target,'fonts',name));
  }
 }
+// The Huangshan-like dawn picture and clip were archived to drafts/replaced; drop copies left by earlier builds.
+for(const retired of ['videos/gaecheon-dawn-kling-8s.mp4','assets/gaecheon-dawn.png','assets/gaecheon-summit-dawn.png'])fs.rmSync(path.join(target,retired),{force:true});
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
-for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden','timeline-skia','documentary-poster','gaecheon-dawn','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-summit-dawn','gaecheon-helping-today','gaecheon-source-study']){
+for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden','timeline-skia','documentary-poster','gaecheon-documentary-poster','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-helping-today','gaecheon-source-study']){
  fs.copyFileSync(path.join(source,'assets',asset+'.png'),path.join(target,'assets',asset+'.png'));
 }
 fs.copyFileSync(path.join(site,'server.mjs'),path.join(path.dirname(target),'server.mjs'));

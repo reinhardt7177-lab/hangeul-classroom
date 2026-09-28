@@ -12,10 +12,16 @@ for(const [id,g] of Object.entries(data.grades)){
  assert.equal(g.slides.filter(s=>s.kind==='quiz').length,expectedQuiz[id]);
  assert.ok(g.slides.some(s=>s.kind==='activity'),`${id} requires tablet activity`);
  assert.ok(g.slides.some(s=>/전승/.test(s.answer)),`${id} must describe the transmission as a tradition`);
+ assert.ok(g.slides[0].documentary,`${id} must open with the local intro video`);
  for(const s of g.slides){
   assert.ok(s.title&&s.question&&s.answer&&s.note,`${id} slide needs teacher-ready content`);
   assert.ok(fs.existsSync(path.join(root,'assets',s.image+'.png')),`${id} missing ${s.image}`);
   if(s.video)assert.ok(fs.statSync(path.join(root,'videos',s.video+'.mp4')).size>200000,`${id} missing video ${s.video}`);
+  if(s.documentary){
+   assert.ok(fs.statSync(path.join(root,'videos',s.documentary.file+'.mp4')).size>5000000,`${id} missing intro video`);
+   assert.ok(fs.existsSync(path.join(root,'assets',s.documentary.poster+'.png')),`${id} missing intro poster`);
+   assert.equal(s.documentary.script.length,12,`${id} intro script must list all 12 five-second scenes`);
+  }
   if(s.choices)for(const option of s.choices)if(typeof option==='object'&&option.image)assert.ok(fs.existsSync(path.join(root,'assets',option.image+'.png')),`${id} missing quiz image ${option.image}`);
   if(s.kind==='quiz')assert.ok(s.correct>=0&&s.correct<s.choices.length,`${id} invalid answer`);
  }
@@ -29,6 +35,10 @@ for(const name of ['3·1절','제헌절','광복절','개천절','한글날'])as
 assert.ok(!/[三法光]/.test(landing),'landing must use Korean/number symbols rather than decorative Hanja');
 for(const page of ['hangeul.html','gaecheon.html'])assert.ok(landing.includes(`href="${page}"`),`landing missing ${page}`);
 const app=fs.readFileSync(path.join(root,'gaecheon.js'),'utf8');
+// The dawn landscape reads as the Chinese Huangshan idiom (cliff pines, stone spires), so no page may show it.
+for(const [name,text] of [['data',fs.readFileSync(path.join(root,'gaecheon-data.js'),'utf8')],['app',app],['landing',landing]])
+ assert.ok(!text.includes('gaecheon-dawn'),`${name} still uses the Huangshan-like dawn image`);
+assert.ok(app.includes('class="doc-video"')&&app.includes('controls'),'intro video player missing');
 assert.ok(app.includes("student/${state.grade}"),'teacher QR must target the grade tablet route');
 assert.ok(app.includes("data-action=\"replay\""),'teacher motion replay missing');
 assert.ok(app.includes("data-action=\"sound\""),'teacher soundtrack toggle missing');
@@ -37,4 +47,4 @@ assert.ok(app.includes('PageDown'),'teacher slide shortcut missing');
 assert.ok(!app.includes('class="image-credit"'),'image provenance caption must stay off the teacher slide');
 assert.ok(fs.existsSync(path.join(root,'assets','gaecheon-fact-skia.png')),'Skia fact graphic missing');
 assert.ok(data.sources.some(source=>source.url.includes('museum.go.kr')),'real museum artifact source missing');
-console.log('Gaecheonjeol: 3 × 40-minute lessons, 12 questions, six PDFs, QR route, 2 soundtracked videos, images, Skia and history labels verified.');
+console.log('Gaecheonjeol: 3 × 40-minute lessons, 12 questions, six PDFs, QR route, local 60s intro video on every cover, story clip, images, Skia and history labels verified.');
