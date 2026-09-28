@@ -171,6 +171,7 @@ for(const grade of Object.keys(sandbox.HANGEUL_DATA.grades)){
 for(const asset of ['writing-tools.mp4','classroom-note.mp4','sejong-purpose-kling.mp4']){
  assert.ok(fs.statSync(path.join(dist,'videos',asset)).size>100_000,`Missing or empty video: ${asset}`);
 }
+assert.ok(presenterSource.includes('sejong-purpose-kling'),'Reviewed Sejong purpose clip must be referenced by the presenter');
 assert.ok(fs.statSync(path.join(dist,'videos','hangeul-timeline-skia.mp4')).size>40_000,'Missing Skia typography video');
 assert.ok(fs.statSync(path.join(dist,'assets','timeline-skia.png')).size>10_000,'Missing Skia final-frame poster');
 assert.ok(fs.statSync(path.join(dist,'videos','hangeul-documentary-kling-60s.mp4')).size>1_000_000,'Missing documentary video');
@@ -187,8 +188,9 @@ for(const grade of Object.keys(sandbox.HANGEUL_DATA.grades)){
  assert.ok(html().includes('videos/writing-tools.mp4'),`${grade}: story insert must be present`);
  assert.ok(html().includes('poster="assets/writing-desk.png"'),`${grade}: still-image video fallback required`);
  sandbox.movePresentation(1);
- assert.ok(html().includes('videos/sejong-purpose-kling.mp4'),`${grade}: Sejong's purpose clip must follow the writing challenge`);
- assert.ok(html().includes('poster="assets/hero-sejong.png"'),`${grade}: Sejong clip needs a still fallback`);
+ assert.ok(html().includes('videos/sejong-purpose-kling.mp4'),`${grade}: reviewed Sejong purpose clip must play`);
+ assert.ok(html().includes('poster="assets/hero-sejong.png"'),`${grade}: Sejong clip needs the reviewed still fallback`);
+ assert.ok(html().includes('src="assets/hero-sejong.png"'),`${grade}: Sejong's purpose beat must show the reviewed still hero-sejong.png`);
  if(grade!=='1-2'){
   sandbox.movePresentation(1);
   assert.ok(html().includes('videos/hangeul-timeline-skia.mp4'),`${grade}: typography timeline should follow Sejong's purpose`);

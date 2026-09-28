@@ -41,7 +41,7 @@ timeline=[
  {'index':4,'at':15,'kind':'video','clip':3,'eyebrow':'쉽게 배우고 편히 쓰는 글자','lines':['누구나 쉽게 배우고 쓸','새 글자를 만들고자 했어요.']},
  {'index':5,'at':20,'kind':'card','year':'1443','eyebrow':'새 글자의 탄생','title':['훈민정음 창제'],'detail':'세종이 새로운 글자 스물여덟 자를 만들었어요.'},
  {'index':6,'at':25,'kind':'video','clip':4,'eyebrow':'1445 · 새로운 글자로 지은 노래','lines':['새 글자로 지은 노래,','『용비어천가』가 만들어졌어요.']},
- {'index':7,'at':30,'kind':'video','clip':5,'eyebrow':'원리와 쓰임을 설명하다','lines':['집현전 학자들은 새 글자의','원리와 쓰임을 설명했어요.']},
+ {'index':7,'at':30,'kind':'video','clip':5,'eyebrow':'원리와 쓰임을 설명하다','lines':['학자들은 세종의 명을 받아 새 글자의','원리와 쓰임을 설명했어요.']},
  {'index':8,'at':35,'kind':'card','year':'1446','eyebrow':'글자를 설명하는 책','title':['『훈민정음』 해례본 간행'],'detail':'왜 만들었는지, 어떻게 쓰는지 밝혔어요.'},
  {'index':9,'at':40,'kind':'card','year':'1447','eyebrow':'노래에서 책으로','title':['『용비어천가』 간행'],'detail':'1445년 노래 작성 → 1447년 책 간행'},
  {'index':10,'at':45,'kind':'video','clip':6,'eyebrow':'시간이 흐른 뒤','lines':['시간이 흐르며 한글을 배우고','쓰는 사람들이 늘어났어요.']},
@@ -69,8 +69,10 @@ for a in timeline:
   s=surface(True);c=s.getCanvas()
   gradient=skia.GradientShader.MakeLinear([(0,350),(0,720)],[color('#071c17',0),color('#071c17',248)])
   c.drawRect(skia.Rect.MakeXYWH(0,340,W,380),skia.Paint(Shader=gradient))
-  rect(c,62,61,200,33,'#0b2521',5,190)
-  txt(c,'교육용 상징 재연' if a['clip']!=7 else '현대 한국 교실 · 상상 영상',74,85,17,'#f1e6ce',REG)
+  label='교육용 상징 재연' if a['clip']!=7 else '현대 한국 도서관 · 상상 영상'
+  label_width=skia.Font(REG,17).measureText(label)+24
+  rect(c,62,61,label_width,33,'#0b2521',5,235)
+  txt(c,label,74,85,17,'#f1e6ce',REG)
   txt(c,a['eyebrow'],68,513,23,'#eed39e',BOLD)
   for k,line in enumerate(a['lines']):txt(c,line,68,573+k*53,39,'#fffaf0',BOLD)
   rect(c,68,660,1144,2,'#e4d4b0',0,90)

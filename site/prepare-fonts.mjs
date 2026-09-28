@@ -6,7 +6,8 @@ const lessonFiles = fs.readdirSync('dist')
   .filter(name => /\.(?:js|html)$/.test(name))
   .map(name => path.join('dist', name));
 const lessonText = lessonFiles.map(file => fs.readFileSync(file, 'utf8')).join('');
-const chars = [...new Set((lessonText.match(/[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9.,!?·→←]/g) || []))]
+// ㄱ-ㆎ covers all compatibility jamo, including the obsolete ㅿ·ㆁ·ㆆ·ㆍ used when explaining the original 28 letters.
+const chars = [...new Set((lessonText.match(/[가-힣ㄱ-ㆎA-Za-z0-9.,!?·→←]/g) || []))]
   .sort().join('');
 
 fs.mkdirSync('dist/fonts', { recursive: true });

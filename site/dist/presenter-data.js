@@ -133,6 +133,21 @@ window.HANGEUL_PRESENTATION = {
       ],
       [
         {
+          "type": "youtube",
+          "title": "노래 속 글자 모양을 찾아요",
+          "subtitle": "‘제자원리가’를 들으며 ㄱ, ㄴ, ㅁ, ㅅ, ㅇ 가운데 기억에 남는 모양을 찾아봐요.",
+          "kicker": "유튜브 영상",
+          "cue": "노래가 끝나면 기억에 남은 글자를 손가락이나 몸으로 만들어 볼까요?",
+          "timerSeconds": 176,
+          "youtube": {
+            "id": "V98gOhTag04",
+            "start": 0,
+            "end": 176,
+            "title": "즐겁게 노래로 따라부르는 ‘제자원리가’",
+            "channel": "국립한글박물관 공식 채널"
+          }
+        },
+        {
           "type": "image",
           "title": "안내판에 무엇을 쓰면 좋을까요?",
           "subtitle": "처음 온 친구가 교실을 찾고 있어요. 어떤 글자가 도움이 될까요?",
@@ -183,9 +198,9 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "글자로 쓰거나 그림을 그려도 좋아요. 다 만들면 짝에게 보여 주세요.",
           "image": "classroom-note.png",
           "kicker": "잠깐 멈추고 활동해요",
-          "cue": "지금 4분 동안 만들고 2분 동안 짝과 나누겠습니다. 쓰기 어려우면 말로 설명해도 좋아요.",
+          "cue": "1분 동안 받을 사람을 떠올리고, 4분 동안 만들고, 3분 동안 짝과 나눠요. 쓰기 어려우면 말로 설명해도 좋아요.",
           "reveal": false,
-          "timerSeconds": 360
+          "timerSeconds": 480
         },
         {
           "type": "image",
@@ -315,7 +330,7 @@ window.HANGEUL_PRESENTATION = {
         {
           "type": "image",
           "title": "내 뜻을 글로 전하기 어렵다면?",
-          "subtitle": "옛날에는 한자를 배우기 어려워 글로 뜻을 전하기 힘든 사람이 많았어요. 무엇이 필요했을까요?",
+          "subtitle": "옛날에는 우리말을 한자로 그대로 적기 어렵고 한자를 배우기도 어려워, 글로 뜻을 전하기 힘든 사람이 많았어요. 무엇이 필요했을까요?",
           "image": "writing-desk.png",
           "kicker": "문제를 생각해요",
           "cue": "당시 사람들에게 어떤 도움이 필요했을지 먼저 예상해 봅시다.",
@@ -336,7 +351,7 @@ window.HANGEUL_PRESENTATION = {
           "type": "cards",
           "title": "만든 때와 널리 알린 때는 달라요",
           "motionVideo": "hangeul-timeline-skia.mp4",
-          "subtitle": "1443년에 창제하고 1446년에 반포했어요. 창제는 만들기, 반포는 널리 알리기예요.",
+          "subtitle": "1443년에 새 글자를 만들고(창제), 1446년에 글자를 설명한 책 『훈민정음』을 펴내 널리 알렸어요(반포).",
           "kicker": "사건을 연결해요",
           "cue": "‘만듦’과 ‘널리 알림’을 각각 어느 연도에 연결할지 함께 읽어 봅시다.",
           "reveal": true,
@@ -423,6 +438,21 @@ window.HANGEUL_PRESENTATION = {
         }
       ],
       [
+        {
+          "type": "youtube",
+          "title": "소리 내는 곳을 본뜬 글자",
+          "subtitle": "ㄱ, ㄴ, ㅁ, ㅅ, ㅇ은 무엇의 모양을 본떴을까요? 영상에서 찾아봐요.",
+          "kicker": "유튜브 영상",
+          "cue": "영상을 본 뒤 ‘ㄱ’과 ‘ㄴ’을 소리 내며 혀가 어디에 닿는지 느껴 볼까요?",
+          "timerSeconds": 118,
+          "youtube": {
+            "id": "Kpgm4XQNhzo",
+            "start": 68,
+            "end": 186,
+            "title": "한글창제의 원리(2020 재편집)",
+            "channel": "국립한글박물관 공식 채널"
+          }
+        },
         {
           "type": "image",
           "title": "친구가 이해하지 못한다면?",
@@ -632,7 +662,7 @@ window.HANGEUL_PRESENTATION = {
         {
           "type": "image",
           "title": "누구에게 어떤 어려움이 있었을까요?",
-          "subtitle": "우리말은 있었지만 한자를 배우기 어려운 사람이 많았어요. 글로 뜻을 전하지 못하면 어떤 도움이 필요할까요?",
+          "subtitle": "우리말은 있었지만 중국말과 달라 한자로 그대로 적기 어려웠고, 한자를 배우기 어려운 사람도 많았어요. 글로 뜻을 전하지 못하면 어떤 도움이 필요할까요?",
           "image": "writing-desk.png",
           "kicker": "문제를 예상해요",
           "cue": "당시 사람들에게 어떤 도움이 필요했을지 먼저 예상해 봅시다.",
@@ -751,6 +781,21 @@ window.HANGEUL_PRESENTATION = {
         }
       ],
       [
+        {
+          "type": "youtube",
+          "title": "한글날은 왜 10월 9일일까?",
+          "subtitle": "영상에서 날짜를 정한 근거 자료를 찾아봐요. 새 자료가 발견되자 한글날 날짜도 바뀌었어요.",
+          "kicker": "유튜브 영상",
+          "cue": "날짜의 근거가 된 자료는 무엇이었나요? 영상의 설명과 나의 느낌을 나누어 말해 볼까요?",
+          "timerSeconds": 129,
+          "youtube": {
+            "id": "XhrJZWo5flw",
+            "start": 122,
+            "end": 251,
+            "title": "한글날이 10월 9일이 아니었다고? [만화로 즐기는 한글 이야기]",
+            "channel": "국립한글박물관 공식 채널"
+          }
+        },
         {
           "type": "image",
           "title": "좋은 안내문은 어떻게 알아볼까요?",
@@ -890,7 +935,7 @@ window.HANGEUL_PRESENTATION = {
         {
           "type": "finish",
           "title": "모두를 위한 글의 설계자가 되었어요",
-          "subtitle": "한글의 창제 이유와 원리를 알게 되었어요. 이제 읽는 사람이 이해할 수 있는 글을 써서 그 가치를 이어 가요.",
+          "subtitle": "한글을 만든 까닭을 알고, 그 까닭과 원리가 『훈민정음』 해례본에 남아 있다는 것을 알게 되었어요. 이제 읽는 사람이 이해할 수 있는 글을 써서 그 가치를 이어 가요.",
           "image": "hangul-garden.png",
           "kicker": "함께 해냈어요",
           "cue": "오늘 다시 확인하고 싶은 개념 하나를 기억하며 수업을 마칩니다.",
