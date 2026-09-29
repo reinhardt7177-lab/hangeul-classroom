@@ -1,7 +1,0 @@
-fonts/*.ttf
-out/*
-!out/hangeul-reel.mp4
-!out/cover.jpg
-!out/cuts.png
-blender/*.blend
-blender/*.blend1
