@@ -4,6 +4,9 @@ import {fileURLToPath} from 'node:url';
 const site=path.dirname(fileURLToPath(import.meta.url));
 const source=path.join(site,'dist');
 const target=path.resolve(site,'../output/hangeul/수업앱');
+// Start from an empty folder so files removed from dist (retired font subsets, archived pictures,
+// deleted videos) never linger in the portable app, the offline ZIP or a Cloudflare upload.
+fs.rmSync(target,{recursive:true,force:true});
 fs.mkdirSync(target,{recursive:true});
 function copy(from,to){
  if(fs.statSync(from).isDirectory()){
@@ -14,15 +17,6 @@ function copy(from,to){
 for(const name of ['index.html','hangeul.html','holidays.css','gaecheon.html','gaecheon.js','gaecheon-data.js','gaecheon.css','gaecheon-presenter-v2.css','hangeul.js','hangeul.css','hangeul-data.js','hangeul-presenter.js','presenter-data.js','presenter.css','tablet.js','tablet.css','lesson-motion.js','lesson-motion.css','fonts.css','fonts','vendor','worksheets','videos']){
  copy(path.join(source,name),path.join(target,name));
 }
-// The portable folder may exist from an earlier build. Keep its font folder in
-// sync so retired generated subsets are not shipped in offline ZIPs.
-for(const name of fs.readdirSync(path.join(target,'fonts'))){
- if(/^noto-(?:sans|serif)-kr-\d+\.(?:woff2|woff|ttf)$/.test(name) && !fs.existsSync(path.join(source,'fonts',name))){
-  fs.unlinkSync(path.join(target,'fonts',name));
- }
-}
-// The Huangshan-like dawn picture and clip were archived to drafts/replaced; drop copies left by earlier builds.
-for(const retired of ['videos/gaecheon-dawn-kling-8s.mp4','assets/gaecheon-dawn.png','assets/gaecheon-summit-dawn.png'])fs.rmSync(path.join(target,retired),{force:true});
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
 for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden','timeline-skia','documentary-poster','gaecheon-documentary-poster','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-helping-today','gaecheon-source-study']){
  fs.copyFileSync(path.join(source,'assets',asset+'.png'),path.join(target,'assets',asset+'.png'));

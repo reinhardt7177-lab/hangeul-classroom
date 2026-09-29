@@ -1,26 +1,23 @@
 """Build the separate offline Gaecheonjeol class package with verified video assets."""
 from pathlib import Path
-from shutil import copy2,copytree
+from shutil import copy2,copytree,rmtree
 from zipfile import ZipFile,ZIP_DEFLATED
 
 ROOT=Path(__file__).resolve().parents[1]
 SRC=ROOT/'site'/'dist'
 OUT=ROOT/'output'/'gaecheon'
 APP=OUT/'수업앱'
+# Start from an empty app folder so files removed from dist never linger in the ZIP.
+rmtree(APP,ignore_errors=True)
 APP.mkdir(parents=True,exist_ok=True)
 for name in ['gaecheon.html','gaecheon.css','gaecheon-presenter-v2.css','gaecheon.js','gaecheon-data.js','fonts.css']:
  copy2(SRC/name,APP/name)
 copy2(SRC/'gaecheon.html',APP/'index.html')
 copytree(SRC/'fonts',APP/'fonts',dirs_exist_ok=True)
-for name in (APP/'fonts').iterdir():
- if name.is_file() and name.name.startswith(('noto-sans-kr-','noto-serif-kr-')) and name.suffix in ('.woff2','.woff','.ttf') and not (SRC/'fonts'/name.name).exists():
-  name.unlink()
 (APP/'vendor').mkdir(exist_ok=True);copy2(SRC/'vendor'/'qrcode.js',APP/'vendor'/'qrcode.js')
 (APP/'assets').mkdir(exist_ok=True)
 for name in ['gaecheon-documentary-poster','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-helping-today','gaecheon-source-study','school-sign','writing-desk','hangul-garden']:
  copy2(SRC/'assets'/f'{name}.png',APP/'assets'/f'{name}.png')
-# The Huangshan-like dawn picture and clip were archived to drafts/replaced; drop copies left by earlier builds.
-for old in ['videos/gaecheon-dawn-kling-8s.mp4','assets/gaecheon-dawn.png','assets/gaecheon-summit-dawn.png']:(APP/old).unlink(missing_ok=True)
 (APP/'videos').mkdir(exist_ok=True)
 for name in ['gaecheon-documentary-60s.mp4','gaecheon-bear-tiger-kling-8s.mp4']:
  copy2(SRC/'videos'/name,APP/'videos'/name)

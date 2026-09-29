@@ -1,5 +1,6 @@
 # Local tools, credentials, transfer files and generated working copies
 .motion-tools/
+.wrangler/
 tmp/
 output/
 node_modules/

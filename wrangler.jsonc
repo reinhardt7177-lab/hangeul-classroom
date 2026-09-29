@@ -1,0 +1,25 @@
+{
+  // 오늘의 국경일 — https://holiday.mumuworld.com
+  //
+  //   node site/package.mjs   — GitHub Pages와 같은 폴더(output/hangeul/수업앱)를 만든다
+  //   npx wrangler deploy     — 저장소 루트에서 실행. 로그인이 풀렸으면 npx wrangler login을
+  //                             선생님이 직접 한다(브라우저가 열린다).
+  //
+  // site/dist를 통째로 올리지 않는다. package.mjs가 검수를 마친 파일만 골라 담는다.
+  "name": "mumu-holiday",
+  "compatibility_date": "2026-09-28",
+  // 영상만 Worker를 거친다. 아이폰·아이패드 사파리가 요구하는 206 부분 응답을 돌려주려고.
+  // 나머지 파일은 정적 파일로 바로 나간다.
+  "main": "site/cloudflare-worker.js",
+  "assets": {
+    "directory": "./output/hangeul/수업앱",
+    "binding": "ASSETS",
+    "run_worker_first": ["/videos/*"]
+  },
+  // 배포 버전 id로 영상 캐시를 나눈다. 새로 배포하면 예전 영상이 남지 않는다.
+  "version_metadata": { "binding": "VERSION" },
+
+  // workers.dev 주소는 닫고 이 도메인 하나만 연다.
+  "workers_dev": false,
+  "routes": [{ "pattern": "holiday.mumuworld.com", "custom_domain": true }]
+}

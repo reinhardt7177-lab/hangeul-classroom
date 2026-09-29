@@ -43,7 +43,7 @@ const INTRO_VIDEO={documentary:{file:'gaecheon-documentary-60s',poster:'gaecheon
  ['0:50','옛이야기와 역사, 두 가지를 나누어 읽어요. 옛이야기는 전해 오는 이야기, 유물과 기록은 역사의 단서예요.'],
  ['0:55','이제 함께 생각해요. 우리는 개천절을 어떻게 기억할까요?']
 ]}};
-const INTRO_NOTE='1분 도입 영상은 광고 없이, 인터넷이 없어도 재생됩니다. 옛이야기 장면과 그림은 상상 재현이에요. 아래 대본을 읽어 주거나, 영상을 본 뒤 마지막 질문으로 대화를 엽니다. ';
+const INTRO_NOTE='1분 도입 영상은 유튜브가 아니라 앱 안의 영상이라 광고가 없습니다. 옛이야기 장면과 그림은 상상 재현이에요. 아래 대본을 읽어 주거나, 영상을 본 뒤 마지막 질문으로 대화를 엽니다. ';
 // YouTube clips between scenes. Checked 2026-09-28: KBS키즈 official channel, embedding allowed,
 // Korean captions read for each range.
 const KBS_SAMGUK={id:'LGAgP0n85OU',title:'사람이 되고 싶은 곰과 호랑이 이야기? · 처음 만나는 삼국유사 1회',channel:'KBS키즈 공식 채널 · 큰별 최태성 선생님'};
