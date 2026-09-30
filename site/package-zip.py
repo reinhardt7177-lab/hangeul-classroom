@@ -1,26 +1,32 @@
-"""Bundle the already-prepared local classroom app and teacher documents."""
+"""Bundle the prepared local classroom app (run `node site/package.mjs` first) with the teacher documents.
+
+Every document is copied fresh from the repository, so the ZIP never ships an older copy left in output/.
+"""
 
 from pathlib import Path
 from shutil import copy2
 from zipfile import ZIP_DEFLATED, ZipFile
 
 
-root = Path(__file__).resolve().parent.parent / "output" / "hangeul"
-copy2(Path(__file__).resolve().parent.parent / "docs" / "한글날" / "교사용-수업안내.md", root / "교사용-수업안내.md")
+repo = Path(__file__).resolve().parent.parent
+root = repo / "output" / "hangeul"
+# name inside the ZIP -> source in the repository
+sources = {
+    "사용안내.md": "docs/한글날/오프라인-사용안내.md",
+    "교사용-수업안내.md": "docs/한글날/교사용-수업안내.md",
+    "시각고증-검수.md": "knowledge/한글날-조선시각고증-검수.md",
+    "영상제작-계획.md": "docs/한글날/영상제작-계획.md",
+    "모션그래픽-제작현황.md": "docs/한글날/모션그래픽-제작현황.md",
+    "도입-다큐-교사대본.md": "docs/한글날/도입-다큐-교사대본.md",
+    "도입다큐-최종내용검증.md": "knowledge/한글날-도입다큐-최종내용검증.md",
+    "배포-운영안내.md": "docs/한글날/배포-운영안내.md",
+}
+for name, source in sources.items():
+    copy2(repo / source, root / name)
 target = root / "한글날-수업자료.zip"
 temporary = root / "한글날-수업자료.zip.tmp"
-documents = [
-    "사용안내.md",
-    "교사용-수업안내.md",
-    "시각고증-검수.md",
-    "영상제작-계획.md",
-    "모션그래픽-제작현황.md",
-    "도입-다큐-교사대본.md",
-    "도입다큐-최종내용검증.md",
-    "배포-운영안내.md",
-    "server.mjs",
-    "교실서버-시작.cmd",
-]
+# server.mjs and the start script are written next to the app by package.mjs
+documents = [*sources, "server.mjs", "교실서버-시작.cmd"]
 files = sorted(p for p in (root / "수업앱").rglob("*") if p.is_file())
 files.extend(root / name for name in documents)
 for file in files:
@@ -46,6 +52,9 @@ with ZipFile(temporary) as archive:
     }
     if not required <= names:
         raise RuntimeError(f"Missing video entries: {required - names}")
+    retired = sorted(n for n in names if any(k in n for k in ("gaecheon-dawn", "summit-dawn", "hangeul-reel")))
+    if retired:
+        raise RuntimeError(f"Retired files in the archive: {retired}")
     count = len(names)
 
 temporary.replace(target)

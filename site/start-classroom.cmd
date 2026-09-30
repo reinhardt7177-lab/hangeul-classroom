@@ -7,7 +7,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo 한글날 교실 서버를 시작합니다.
+echo 오늘의 국경일(한글날·개천절) 교실 서버를 시작합니다.
 echo 교사 컴퓨터에서 http://localhost:4198/ 주소를 열어 주세요.
 echo 수업 중에는 이 창을 열어 두고, 수업이 끝나면 Ctrl+C를 눌러 종료하세요.
 node server.mjs
