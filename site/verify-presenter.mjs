@@ -84,10 +84,10 @@ let renderedBeats=0,quizQuestions=0,chapterBoundaries=0;
 const gradeResults=[];
 for(const [grade,lesson] of Object.entries(sandbox.HANGEUL_DATA.grades)){
  const chapters=sandbox.HANGEUL_PRESENTATION[grade]??sandbox.HANGEUL_PRESENTATION.grades?.[grade];
- assert.ok(Array.isArray(chapters),`${grade}: ten chapter arrays required`);
- assert.equal(chapters.length,10,`${grade}: chapter count`);
+ assert.ok(Array.isArray(chapters),`${grade}: chapter arrays required`);
+ assert.equal(chapters.length,lesson.slides.length,`${grade}: chapter count matches activity data`);
  const expected=[];
- for(let chapter=0;chapter<10;chapter++){
+ for(let chapter=0;chapter<lesson.slides.length;chapter++){
   const beats=sandbox.presentationBeats(grade,chapter);
   assert.ok(Array.isArray(beats)&&beats.length,`${grade}/${chapter}: no empty chapter`);
   if(chapter===8)assert.equal(beats.length,2+lesson.quiz.length*2,`${grade}: intro + question/explanation pairs + finish`);

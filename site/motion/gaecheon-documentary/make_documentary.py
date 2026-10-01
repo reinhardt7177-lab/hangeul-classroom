@@ -1,4 +1,4 @@
-"""Build the 60-second Gaecheonjeol intro video (12 scenes x 5 s) without generating new AI imagery.
+"""Build the 60-second Gaecheonjeol intro video (12 scenes x 5 s).
 
 Only illustrations and clips that already passed the visual review are used (Korean ridge tree,
 semi-subterranean pit-house village, table-type dolmen, bear and tiger clip, modern classrooms).
@@ -39,23 +39,23 @@ if not (BOLD and REG and SERIF):
 FOOTER = '교육용 영상 · 옛이야기 장면과 그림은 상상 재현'
 TIMELINE = [
     {'kind': 'card', 'eyebrow': '10월 3일 개천절', 'title': ['하늘이 열린 이야기,', '나라의 시작을 기억하는 날'], 'detail': '옛이야기와 역사를 함께 살펴봐요'},
-    {'kind': 'still', 'image': 'gaecheon-tree', 'move': 'in', 'chip': '옛이야기를 상상한 그림', 'eyebrow': '‘개천’은 하늘을 연다는 뜻',
+    {'kind': 'still', 'image': 'gaecheon-story-hwanung', 'move': 'in', 'chip': '옛이야기를 상상한 그림', 'eyebrow': '‘개천’은 하늘을 연다는 뜻',
      'lines': ['옛이야기에서 환웅이 하늘을 열고', '신단수 아래로 내려왔대요.']},
     {'kind': 'clip', 'video': 'gaecheon-bear-tiger-kling-8s', 'start': 1.5, 'chip': '옛이야기를 상상한 영상', 'eyebrow': '곰과 범의 이야기',
      'lines': ['곰은 끝까지 참아 웅녀가 되었고,', '범은 참지 못했대요.']},
-    {'kind': 'still', 'image': 'gaecheon-community', 'move': 'left', 'chip': '청동기 마을 교육용 재구성', 'eyebrow': '단군왕검과 고조선',
+    {'kind': 'still', 'image': 'gaecheon-story-dangun', 'move': 'left', 'chip': '옛이야기를 상상한 그림', 'eyebrow': '단군왕검과 고조선',
      'lines': ['단군왕검이 고조선을 세웠다고 전해요.', '우리 역사에서 처음 등장하는 나라예요.']},
     {'kind': 'still', 'image': 'gaecheon-source-study', 'move': 'right', 'chip': '현대 도서관 교육용 삽화', 'eyebrow': '이야기를 적은 옛 책',
      'lines': ['고려의 스님 일연이 1281년 무렵', '『삼국유사』에 이 이야기를 적었어요.']},
-    {'kind': 'still', 'image': 'gaecheon-dolmen', 'move': 'in', 'chip': '탁자식 고인돌 교육용 재구성', 'eyebrow': '유물로 살펴보는 고조선',
-     'lines': ['탁자식 고인돌과 비파형 동검은', '고조선 시대를 알려 주는 단서예요.']},
+    {'kind': 'still', 'image': 'gaecheon-dolmen', 'move': 'in', 'chip': '탁자식 고인돌 교육용 재구성', 'eyebrow': '청동기 문화를 살피는 자료',
+     'lines': ['고인돌과 동검은 청동기 문화의 자료예요.', '출토지와 시기를 함께 확인해요.']},
     {'kind': 'card', 'eyebrow': '옛이야기에 담긴 마음', 'title': ['홍익인간'], 'detail': '널리 사람을 이롭게 한다는 뜻이에요.'},
     {'kind': 'still', 'image': 'gaecheon-helping-today', 'move': 'left', 'chip': '현대 교실 교육용 삽화', 'eyebrow': '오늘의 홍익인간',
      'lines': ['서로 돕고 배려하는 마음으로', '오늘의 교실에서 이어 가요.']},
     {'kind': 'card', 'year': '1949', 'eyebrow': '나라가 정한 국경일', 'title': ['개천절 10월 3일'], 'detail': '1909년부터 기념해 온 날을 나라가 국경일로 정했어요.'},
     {'kind': 'flag', 'eyebrow': '개천절에 하는 일', 'title': '태극기를 달아요', 'detail': '깃봉과 깃면 사이를 띄우지 않고 달아요.'},
-    {'kind': 'compare', 'eyebrow': '옛이야기와 역사', 'title': '두 가지를 나누어 읽어요',
-     'left': ('gaecheon-bear-tiger', '옛이야기', '전해 오는 이야기'), 'right': ('gaecheon-dolmen', '유물과 기록', '역사의 단서')},
+    {'kind': 'compare', 'eyebrow': '이야기도 기록으로 전해져요', 'title': '자료로 무엇을 확인할까요?',
+     'left': ('gaecheon-source-study', '문헌', '이야기의 기록도 살펴요'), 'right': ('gaecheon-dolmen', '유적 그림', '실제 사진과 비교해요')},
     {'kind': 'card', 'eyebrow': '이제 함께 생각해요', 'title': ['우리는 개천절을', '어떻게 기억할까요?'], 'detail': '오늘 배울 이야기와 역사를 차근차근 살펴봐요.'},
 ]
 
@@ -271,7 +271,7 @@ def build_segment(a, n):
     overlay = draw_overlay(a, n)
     if a['kind'] == 'still':
         z, x, y = pan_expr(a['move'])
-        base = f"[0:v]scale=3840:2160:flags=lanczos,zoompan=z='{z}':x='{x}':y='{y}':d=1:s=1920x1080:fps={FPS}[b]"
+        base = f"[0:v]scale=3840:2160:force_original_aspect_ratio=increase:flags=lanczos,crop=3840:2160,zoompan=z='{z}':x='{x}':y='{y}':d=1:s=1920x1080:fps={FPS}[b]"
         encode([*loop, '-i', str(ASSETS / f"{a['image']}.png"), *loop, '-i', str(overlay)],
                base + ";[1:v]format=rgba,fade=in:st=0:d=0.45:alpha=1[o];[b][o]overlay=0:0[v]", out)
     else:

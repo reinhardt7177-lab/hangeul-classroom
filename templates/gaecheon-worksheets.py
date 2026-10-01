@@ -2,10 +2,12 @@
 
 Run from the repository root:  python templates/gaecheon-worksheets.py
 Pages are laid out top-down. Any block that would cross the footer raises instead of
-overflowing silently, and every PDF must come out at exactly two pages.
+overflowing silently. Grades 1–4 have two pages; grades 5–6 have three pages.
 """
 from pathlib import Path
 import shutil
+import json
+import re
 import tempfile
 from xml.sax.saxutils import escape
 from PIL import Image
@@ -34,6 +36,7 @@ LOOK='그림을 보며 “무엇이 보이나요?”와 “무엇을 짐작하�
 GOJOSEON='고조선은 우리 역사에서 처음 등장하는 국가로 배우되, 단군 서사의 모든 장면이 확인된 사건이라고 단정하지 않습니다.'
 SOURCE_LINE='근거: 행정안전부 국경일 안내 / 우리역사넷 「우리 역사 속 최초의 국가, 고조선」 / 한국민족문화대백과 개천절'
 LEVELS=(('충분함',GREEN),('보완하기',GOLD),('함께 다시 보기',MUTED))
+RESOURCES=json.loads(re.fullmatch(r'\s*window\.LEARNING_RESOURCES\s*=\s*(\{.*\})\s*;?\s*',(ROOT/'site/dist/learning-resources.js').read_text(encoding='utf-8'),re.S).group(1))
 
 SHEETS={
  '1-2':{'name':'1–2학년','title':'하늘이 열린 이야기','page2':'그림을 보고 말해요','image':'gaecheon-bear-tiger',
@@ -66,10 +69,10 @@ SHEETS={
         'goal':'문헌, 유물, 상상 재구성을 구분하고 근거를 들어 설명해요.',
         'tasks':[('1. 자료의 종류를 적어요.','『삼국유사』 / 비파형 동검 / 교육용 생성 마을 그림','문헌 / 실제 출토 유물 / 상상 재구성',['']),
                  ('2. 주장과 근거','“단군이 정확히 양력 10월 3일 나라를 세웠다.”를 근거에 맞게 고쳐 써요.','예: 개천절은 해마다 10월 3일에 고조선의 시작을 기념하는 날이다. 『삼국유사』 등 옛 기록에는 건국한 달·날이 없고, 10월 3일은 대종교가 음력으로 기념하던 날을 1949년 법으로 양력에 정한 기념일임',['','']),
-                 ('3. 유물이 알려 주는 범위','비파형 동검의 분포로 알 수 있는 것 1개와 알 수 없는 것 1개를 적어요.','청동기 문화의 분포는 탐구 가능 / 특정 인물의 대화나 정확한 건국일은 알 수 없음',['알 수 있는 것:','알 수 없는 것:']),
+                 ('3. 유물이 알려 주는 범위','송국리 동검 사진·소장품 정보로 알 수 있는 것과 없는 것을 적어요.','모양·동합금 재질·부여 송국리 출토 / 정확한 건국일·전체 문화 분포·확정 국경은 알 수 없음',['알 수 있는 것:','알 수 없는 것:']),
                  ('4. 원문 읽기','『삼국유사』 원문에서 곰이 여자의 몸이 되기까지 걸린 날은? ( 100일 / 21일 ) — 흔히 알려진 이야기와 다른 점을 적어요.','21일(삼칠일). 원문은 100일 동안 햇빛을 보지 말라고 했지만 곰은 금기한 지 21일 만에 여자의 몸이 되었다고 적음. 흔히 말하는 “100일 뒤”와 다름',['다른 점:'])],
-        'teacher_notes':['뒤쪽 ①(범금 8조) 예시 답: 첫째 → 생명을 소중히 여김 / 둘째 → 농사를 지어 곡식이 중요함 / 셋째 → 개인 재산과 노비라는 신분이 있었고 돈(화폐)으로 죄를 갚기도 함. 출처: 『한서』 지리지(8개 조항 가운데 3개만 전함).',
-                         '뒤쪽 ②(실천 제안서) 기준: 도움받는 사람에게 먼저 묻는 계획이 있는가, 실행 방법과 역할이 구체적인가, 까닭에 근거가 있는가. 특정 학생을 ‘도움이 필요한 사람’으로 지목하는 제안은 상황·환경을 바꾸는 방법으로 고치게 합니다.',
+        'teacher_notes':['2쪽 법으로 짐작하기: 첫째 → 사람을 죽인 일에 엄한 벌 / 둘째 → 곡식으로 손해를 갚음 / 셋째 → 재산·노비 신분에 관한 규칙. 조항과 해석을 구분해요. 옛 사회의 기록이지 오늘 따를 규칙은 아닙니다. 출처: 『한서』 지리지.',
+                         '3쪽 실천 제안서: 상대에게 먼저 묻는가, 방법과 역할이 구체적인가, 까닭에 근거가 있는가를 봅니다. 특정 학생을 도움받는 사람으로 지목하지 않고 상황·환경을 바꾸는 방법을 찾습니다. 친구의 질문 뒤에 고친 점과 이유도 확인합니다.',
                          LOOK,
                          '기원전 2333년은 『동국통감』(1485)이 요 임금 즉위 25년 무진년을 건국 해로 본 데서 나온 연도입니다(『삼국유사』는 ‘요 즉위 50년 경인년’). 실증된 건국 연도로 제시하지 않아요.',
                          GOJOSEON,
@@ -78,6 +81,17 @@ SHEETS={
                   '자료의 종류는 구분하지만 고쳐 쓴 문장에 근거(옛 기록, 1949년 법)가 빠졌거나, 실천 제안서의 까닭이 ‘착하게’처럼 막연하다. 근거 한 가지를 더 찾게 한다.',
                   '기록이 있다는 사실을 곧 실증으로 보거나 기념일과 건국일을 같게 본다. 자료 판단 문항과 교사 노트의 연표(1909 대종교 → 1949 법)로 다시 확인한다.']}
 }
+
+# The app and printable cards share the same event order and resource wording.
+SHEETS['1-2']['story']=[(RESOURCES['story']['cards'][i]['image'],RESOURCES['story']['cards'][i]['label'],i+1) for i in RESOURCES['story']['order']]
+SHEETS['1-2']['teacher_notes'][1]='앞쪽 이야기 순서: 환웅이 내려옴(1) → 곰과 범의 약속(2) → 웅녀가 된 곰(3) → 단군과 고조선(4). 빈칸은 시작입니다. 웅녀 뒤의 곰 모습은 변화 전을 떠올리는 그림 표현입니다.'
+SHEETS['1-2']['levels'][0]='10월 3일을 고르고 네 사건 카드를 순서대로 놓으며 한 장면을 “옛이야기 속에서는”을 붙여 말한다.'
+SHEETS['3-4']['goal']='문헌과 유물이 알려 주는 점을 비교하고, 짝의 질문을 듣고 설명을 고쳐요.'
+SHEETS['3-4']['teacher_notes'].insert(0,'앞쪽 자료 비교표: 문헌은 이야기의 전승을, 동검은 형태와 청동기 기술을 살펴볼 단서를 전합니다. 재질·출토지는 소장품 설명에서 확인합니다. 친구의 질문을 듣고 고친 이유까지 확인합니다.')
+SHEETS['3-4']['levels']=['날짜와 뜻을 설명하고 문헌과 유물의 확인 범위를 비교하며 짝의 질문을 듣고 설명을 고친다.','자료 이름은 맞지만 알려 주는 것과 확인하지 못하는 것을 혼동한다. 사진과 설명의 근거를 따로 짚게 한다.','전승의 기록을 장면 전체의 실증으로 생각한다. 자료의 형태와 확인 범위를 따로 다시 살펴본다.']
+SHEETS['5-6']['pages']=3
+SHEETS['5-6']['tasks'][2]=('2. 사진과 설명을 구별해요','동검 사진에서 본 것 / 소장품 설명에서 알게 된 것 / 확인할 수 없는 것을 나누어 적어요.','칼몸 모양 / 동합금·부여 송국리 출토 / 정확한 건국일·확정 국경',['사진:','설명:','확인 불가:'])
+SHEETS['5-6']['tasks'][3]=('3. 원문에서 차이를 찾아요','약속한 기간과 곰의 변화까지 걸린 기간은 각각 얼마인가요? 두 숫자가 가리키는 일을 구별해요.','100일은 약속의 기간, 21일은 이야기 속 변화까지 걸린 기간',['약속:','변화:'])
 
 def style(size,bold=False,color=INK,leading=None):
  # Korean separates words with spaces, so wrap at spaces (like CSS keep-all) instead of CJK per-character breaks.
@@ -114,7 +128,7 @@ def header(c,spec,audience,title,page):
  c.setFont('MalgunBold',20);c.drawString(L,H-65,title)
  c.setFont('Malgun',10);c.drawRightString(R,H-39,f'{spec["name"]} · {audience}')
  c.setFillColor(MUTED);c.setFont('Malgun',9);c.drawString(L,32,spec.get('footer','전승은 전승으로, 발굴 자료는 근거로 살펴보아요.'))
- c.drawRightString(R,32,f'{page} / 2');line(c,47)
+ c.drawRightString(R,32,f'{page} / {spec.get("pages",2)}');line(c,47)
 
 # ---- 1–2학년: 큰 글씨, 고르기·번호 쓰기·그리기·말하기 중심 ----
 def pill(c,x,top,text,size=12.5,fill=CREAM,color=GOLD):
@@ -138,15 +152,15 @@ def word_boxes(c,words,top,h,size,circled=()):
  return top-h
 
 def story_cards(c,spec,top,teacher):
- gap=18;w=(CW-gap*2)/3;h=w/2.2;box=30
+ gap=18;w=(CW-gap)/2;h=116;box=28;row_h=h+62
  for i,(image,label,number) in enumerate(spec['story']):
-  x=L+i*(w+gap);image_box(c,image,x,top,w,h,8,700)
-  assert pdfmetrics.stringWidth(label,'MalgunBold',16)<w-6,label
-  c.setFillColor(INK);c.setFont('MalgunBold',16);c.drawCentredString(x+w/2,top-h-19,label)
-  bx=x+w/2-box/2;by=top-h-26-box
+  x=L+(i%2)*(w+gap);card_top=top-(i//2)*row_h
+  c.drawImage(str(ASSETS/f'{image}.png'),x,card_top-h,width=w,height=h,preserveAspectRatio=True,anchor='c')
+  c.setFillColor(INK);c.setFont('MalgunBold',15);c.drawCentredString(x+w/2,card_top-h-18,label)
+  bx=x+w/2-box/2;by=card_top-h-24-box
   c.setFillColor(WHITE);c.setStrokeColor(INK);c.setLineWidth(1.5);c.roundRect(bx,by,box,box,6,stroke=1,fill=1)
   if teacher:c.setFillColor(GOLD);c.setFont('MalgunBold',20);c.drawCentredString(bx+box/2,by+8.5,str(number))
- return top-h-26-box
+ return top-2*row_h+10
 
 def boxed(c,text,top,size,markup=True,fill=PALE,pad=11,leading=None):
  p=Paragraph(text if markup else escape(text),style(size,False,INK,leading));_,ph=p.wrap(CW-pad*2,900)
@@ -161,16 +175,12 @@ def young_page1(c,spec,teacher,path):
  y=bottom-14
  y=ask(c,1,'개천절은 언제일까요? 알맞은 날짜에 동그라미 해요.',y)
  y=word_boxes(c,['3월 1일','7월 17일','10월 3일','10월 9일'],y-2,46,20,('10월 3일',) if teacher else ())-18
- y=ask(c,2,'이야기 순서대로 □ 안에 1, 2, 3을 써요.',y)
+ y=ask(c,2,'이야기 순서대로 □ 안에 1, 2, 3, 4를 써요.',y)
  y=story_cards(c,spec,y-2,teacher)-18
  y=ask(c,3,'빈칸에 알맞은 말을 써요.',y)
  blank='<font name="MalgunBold" color="#BA754E"><u>&nbsp;&nbsp;&nbsp;시작&nbsp;&nbsp;&nbsp;</u></font>' if teacher else '______________'
  y=boxed(c,f'개천절은 10월 3일,<br/>우리 역사에서 처음 세워진 나라의 {blank}을 기억하는 날',y-2,16,leading=25)-18
- y=ask(c,4,'모두에게 도움이 되는 행동을 그려요.',y)
- top=y-2;guard(top-180,path,'drawing box')
- c.setFillColor(WHITE);c.setStrokeColor(INK);c.setLineWidth(1.3);c.roundRect(L,BOTTOM,CW,top-BOTTOM,12,stroke=1,fill=1)
- if teacher:para(c,'예: 친구와 함께 교실 물건을 정리하는 모습, 넘어진 친구를 일으켜 주는 모습. 그림을 가리키며 누구에게 어떤 도움이 되는지 말하게 합니다. 글로 쓰지 않아도 됩니다.',L+14,top-12,CW-28,11,False,GOLD)
- else:c.setFillColor(MUTED);c.setFont('Malgun',12);c.drawString(L+14,BOTTOM+12,'다 그리면 누구에게 도움이 되는지 짝에게 말해요.')
+ guard(y,path,'four story cards and meaning')
 
 def check_row(c,labels,top,size=16):
  x=L
@@ -181,7 +191,7 @@ def check_row(c,labels,top,size=16):
  return top-22
 
 def young_page2(c,spec,path):
- y=image_box(c,spec['image'],L,TOP,CW,235,10)
+ y=image_box(c,spec['image'],L,TOP,CW,150,10)
  y=para(c,'옛이야기를 상상해서 그린 그림이에요. 진짜 사진이 아니에요.',L,y-5,CW,10,False,MUTED)-16
  y=ask(c,1,'그림에서 보이는 것에 동그라미 해요.',y)
  y=word_boxes(c,['곰','범','동굴','소나무','자동차','비행기'],y-4,50,19)-26
@@ -195,24 +205,64 @@ def young_page2(c,spec,path):
   if x+w>R:x=L;top-=40
   c.setFillColor(CREAM);c.roundRect(x,top-32,w,32,16,stroke=0,fill=1);c.setFillColor(INK);c.setFont('MalgunBold',16);c.drawString(x+11,top-22,word);x+=w+8
  y=check_row(c,['짝에게 말했어요','짝의 이야기를 들었어요'],top-32-26)
+ y=ask(c,3,'모두에게 도움이 되는 행동을 그려요.',y-24)
+ guard(y-125,path,'helping drawing')
+ c.setStrokeColor(RULE);c.roundRect(L,y-125,CW,125,10,stroke=1,fill=0)
+ y-=125
  guard(y,path,'speaking checklist')
 
 # ---- 3–4 / 5–6학년 ----
+def source_excerpt(c,y):
+ r=RESOURCES['samguk']
+ text='<font name="MalgunBold">'+escape(r['title'])+'</font><br/>'+'<br/>'.join(escape(q['label']+' · '+q['original'])+'<br/>'+escape('수업용 풀이 · '+q['paraphrase']) for q in r['quotes'])
+ y=boxed(c,text,y,10.5,leading=16)
+ c.linkURL(r['url'],(L,y,R,y+95),relative=0)
+ return y
+
+def comparison_page1(c,spec,teacher,path):
+ y=para(c,spec['goal'],L,TOP,CW,12,True)-20
+ y=ask(c,1,'개천절의 날짜와 기념하는 뜻을 적어요.',y)
+ if teacher:y=para(c,'예: 10월 3일, 하늘이 열렸다는 이야기와 고조선의 시작을 기리는 날',L,y,CW,11,False,GOLD)-18
+ else:y-=30;line(c,y);y-=18
+ y=ask(c,2,'문헌과 유물이 알려 주는 점을 비교해요.',y)
+ y=source_excerpt(c,y)-12
+ photo=ASSETS/'bronze-dagger-songgukri.jpg'
+ c.drawImage(str(photo),L,y-96,width=65,height=96,preserveAspectRatio=True,anchor='c')
+ para(c,'송국리 동검 실제 사진',L+82,y,CW-82,12,True)
+ para(c,RESOURCES['artifact']['metadata']+'\n국립중앙박물관 소장·사진 / 공공누리 제1유형',L+82,y-25,CW-82,10,False,MUTED)
+ y-=110
+ if teacher:
+  y=boxed(c,'문헌: 이야기의 전승을 알려 줌.<br/>사진: 칼몸의 모양을 관찰함.<br/>소장품 설명: 재질과 출토지를 확인함.<br/>확인 불가: 변화 장면의 실증, 정확한 고대 건국 날짜.',y,11,leading=18)-18
+ else:y=form_box(c,'자료 비교표',[('문헌이 전하는 것',1),('사진에서 본 것',1),('설명에서 알게 된 것',1),('확인할 수 없는 것',1)],y,path)-18
+ y=form_box(c,'짝의 질문을 듣고 설명을 고쳐요',[('짝의 질문',1),('고친 설명과 까닭',1)],y,path)
+ guard(y,path,'source comparison')
+
 def task_page1(c,spec,teacher,path):
+ compact=spec['name']=='5–6학년'
  y=para(c,'오늘의 목표',L,TOP,CW,12,True,GOLD)-3
  y=para(c,spec['goal'],L,y,CW,12)-18
  if not teacher:c.setFont('Malgun',10);c.setFillColor(MUTED);c.drawString(L,y,'이름: ___________________     날짜: ___________________');y-=30
- for question,prompt,answer,lines in spec['tasks']:
+ for question,prompt,answer,lines in (spec['tasks'] if not compact else [spec['tasks'][i] for i in (0,2,3)]):
   c.setFillColor(PALE);c.roundRect(L-2,y-32,CW+4,38,8,stroke=0,fill=1)
   y=para(c,question,L+8,y-3,CW-16,12,True)-20
-  y=para(c,prompt,L+8,y,CW-16,11)-8
-  if teacher:y=para(c,'지도·예상 답: '+answer,L+8,y,CW-16,10,False,GOLD);guard(y,path,question);y-=24
+  if question.startswith('2. 사진'):
+   # Original collection photograph: contain the complete blade, never crop it.
+   photo=ASSETS/'bronze-dagger-songgukri.jpg'
+   c.drawImage(str(photo),L+8,y-82,width=62,height=82,preserveAspectRatio=True,anchor='c',mask='auto')
+   para(c,prompt,L+82,y,CW-90,11)
+   para(c,'부여 송국리 출토 · 동합금 · 신수 3094\n국립중앙박물관 소장·사진 / 공공누리 제1유형',L+82,y-38,CW-90,8.5,False,MUTED)
+   c.linkURL('https://www.museum.go.kr/MUSEUM/contents/M0502000000.do?relicId=2040&schM=view&searchId=search',(L+8,y-82,R,y),relative=0)
+   y-=94
+  else:
+   if question.startswith('3. 원문'):y=source_excerpt(c,y)-8
+   y=para(c,prompt,L+8,y,CW-16,11)-8
+  if teacher:y=para(c,'지도·예상 답: '+answer,L+8,y,CW-16,10,False,GOLD);guard(y,path,question);y-=18 if compact else 24
   else:
    for label in lines:
-    y-=29;x0=L+8
+    y-=24 if compact else 29;x0=L+8
     if label:c.setFont('Malgun',10);c.setFillColor(MUTED);c.drawString(x0,y+4,label);x0+=pdfmetrics.stringWidth(label,'Malgun',10)+8
     line(c,y,x0,R-8)
-   guard(y,path,question);y-=24 if lines else 14
+   guard(y,path,question);y-=(18 if compact else 24) if lines else 14
 
 # ---- 3–4 / 5–6 뒤쪽: 발표 화면의 교실 활동(약속 카드·범금 8조·실천 제안서)과 같은 칸 ----
 def form_box(c,title,rows,top,path,hint=None):
@@ -240,8 +290,14 @@ def promise_page2(c,spec,path):
 def proposal_page2(c,spec,path):
  y=image_box(c,spec['image'],L,TOP,CW,120,10)
  y=para(c,'교육용 생성 삽화 · 실제 발굴 현장이나 특정 마을의 복원이 아닙니다.',L,y-5,CW,9,False,MUTED)-18
- y=form_box(c,'① 범금 8조로 짐작한 고조선 사회',[('첫째: 사람을 죽이면 사형 →',1),('둘째: 다치게 하면 곡식으로 갚음 →',1),('셋째: 훔치면 노비, 50만 전으로 용서 →',1)],y,path,'각 조항으로 알 수 있는 사회의 모습을 한 가지씩 적어요.')-22
- y=form_box(c,'② 홍익인간 실천 제안서',[('문제',1),('도움받는 사람 · 먼저 물어볼 질문',1),('실행 방법과 역할',2),('모두에게 이로운 까닭',2)],y,path,'우리 학교의 작은 문제 하나를 골라 모둠에서 제안해요.')
+ y=form_box(c,'홍익인간 실천 제안서',[('문제',1),('상대에게 먼저 물어볼 말',1),('실행 방법과 역할',2),('모두에게 이로운 까닭',2),('다른 의견을 듣고 고친 점',2)],y,path,'친구는 도움을 원하지 않고 한 사람에게 역할이 몰렸어요. 상대의 뜻과 부담을 고려해요.')
+
+def claim_page2(c,spec,teacher,path):
+ y=para(c,'살펴볼 주장: “단군이 정확히 양력 10월 3일 나라를 세웠다.”',L,TOP,CW,13,True)-18
+ y=boxed(c,'기념일 자료 · 1909년 대종교가 음력으로 기념하던 날을 1949년 법으로 양력 10월 3일에 기념하도록 정했어요. 옛 기록에는 고조선 건국의 달과 날이 없어요.\n출처: 한국민족문화대백과 개천절 / 국경일에 관한 법률',y,11,leading=18)-20
+ if teacher:y=para(c,'예상 답: 개천절은 10월 3일에 고조선의 시작을 기념하는 날이다. 이 기념일 자료로 고대 사건의 정확한 날짜를 확인할 수는 없다.',L,y,CW,11,False,GOLD)-18
+ y=form_box(c,'주장과 근거를 연결해요',[('고친 주장',2),('사용한 자료와 근거',2),('확인할 수 없는 것',1),('짝의 질문 후 고친 점',2)],y,path)-24
+ y=form_box(c,'범금 8조로 짐작한 고조선 사회',[('사형 조항에서 짐작한 것',1),('곡식으로 갚는 조항에서 짐작한 것',1),('노비와 재산 조항에서 짐작한 것',1)],y,path,'전해지는 조항: 사람을 죽이면 사형, 다치게 하면 곡식으로 갚음, 훔치면 노비로 삼음. 조항과 추론을 구분하고 오늘 따를 규칙으로 설명하지 않아요. 출처: 한서 지리지.')
 
 def levels(c,rows,y,path):
  y=para(c,'평가 기준  ·  학습지는 골든벨 대신 쓰거나 다음 시간·가정에서 씁니다.',L,y,CW,11,True)-8
@@ -267,13 +323,16 @@ def draw(grade,audience,spec):
  c=canvas.Canvas(str(path),pagesize=A4,pageCompression=1);c.setTitle(f'개천절 {spec["name"]} {audience}');c.setAuthor('오늘의 국경일')
  c.setSubject('개천절 학습지' if not teacher else '개천절 학습지 정답·지도 해설')
  header(c,spec,audience,spec['title'],1)
- (young_page1 if grade=='1-2' else task_page1)(c,spec,teacher,path)
- c.showPage();header(c,spec,audience,spec['page2'],2)
- if teacher:teacher_page2(c,spec,path)
+ (young_page1 if grade=='1-2' else comparison_page1 if grade=='3-4' else task_page1)(c,spec,teacher,path)
+ c.showPage();header(c,spec,audience,'근거를 연결해 설명해요' if grade=='5-6' else spec['page2'],2)
+ if grade=='5-6':
+  claim_page2(c,spec,teacher,path)
+  c.showPage();header(c,spec,audience,'지도와 평가 기준' if teacher else '상대의 뜻을 존중하는 실천',3)
+  (teacher_page2 if teacher else proposal_page2)(c,spec,path)
+ elif teacher:teacher_page2(c,spec,path)
  elif grade=='1-2':young_page2(c,spec,path)
- elif grade=='3-4':promise_page2(c,spec,path)
- else:proposal_page2(c,spec,path)
- c.save();assert len(PdfReader(str(path)).pages)==2
+ else:promise_page2(c,spec,path)
+ c.save();assert len(PdfReader(str(path)).pages)==spec.get('pages',2)
  return path
 
 if __name__=='__main__':

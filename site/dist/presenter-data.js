@@ -8,7 +8,7 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "친구가 쪽지를 건네고 있어요. 무엇을 적어 주면 마음이 전해질까요?",
           "image": "classroom-note.png",
           "kicker": "그림을 살펴요",
-          "cue": "그림을 10초 동안 살핀 뒤 쪽지에 쓰고 싶은 말을 한두 명이 말해 봅시다.",
+          "cue": "그림을 살핀 뒤 쪽지에 쓰고 싶은 말을 한두 명이 말해 봅시다.",
           "reveal": false
         },
         {
@@ -113,7 +113,6 @@ window.HANGEUL_PRESENTATION = {
             ],
             "result": "?"
           },
-          "timerSeconds": 30
         },
         {
           "type": "equation",
@@ -138,7 +137,6 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "‘제자원리가’를 들으며 ㄱ, ㄴ, ㅁ, ㅅ, ㅇ 가운데 기억에 남는 모양을 찾아봐요.",
           "kicker": "유튜브 영상",
           "cue": "노래가 끝나면 기억에 남은 글자를 손가락이나 몸으로 만들어 볼까요?",
-          "timerSeconds": 176,
           "youtube": {
             "id": "V98gOhTag04",
             "start": 0,
@@ -198,9 +196,8 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "글자로 쓰거나 그림을 그려도 좋아요. 다 만들면 짝에게 보여 주세요.",
           "image": "classroom-note.png",
           "kicker": "잠깐 멈추고 활동해요",
-          "cue": "1분 동안 받을 사람을 떠올리고, 4분 동안 만들고, 3분 동안 짝과 나눠요. 쓰기 어려우면 말로 설명해도 좋아요.",
+          "cue": "받을 사람을 떠올리고, 쪽지를 만든 뒤 짝과 나눠요. 쓰기 어려우면 말로 설명해도 좋아요.",
           "reveal": false,
-          "timerSeconds": 480
         },
         {
           "type": "image",
@@ -221,7 +218,6 @@ window.HANGEUL_PRESENTATION = {
           "kicker": "기억을 꺼내요",
           "cue": "날짜 그림을 다시 보지 않고 손이나 답 카드로 동시에 답해 봅시다.",
           "reveal": false,
-          "timerSeconds": 15
         },
         {
           "type": "ox",
@@ -240,7 +236,6 @@ window.HANGEUL_PRESENTATION = {
           "kicker": "내 말로 떠올려요",
           "cue": "짝과 한 가지씩 답을 나누고 나서 다음 화면의 정리를 봅시다.",
           "reveal": false,
-          "timerSeconds": 30
         },
         {
           "type": "recap",
@@ -418,7 +413,6 @@ window.HANGEUL_PRESENTATION = {
             ],
             "result": "?"
           },
-          "timerSeconds": 30
         },
         {
           "type": "equation",
@@ -444,7 +438,6 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "ㄱ, ㄴ, ㅁ, ㅅ, ㅇ은 무엇의 모양을 본떴을까요? 영상에서 찾아봐요.",
           "kicker": "유튜브 영상",
           "cue": "영상을 본 뒤 ‘ㄱ’과 ‘ㄴ’을 소리 내며 혀가 어디에 닿는지 느껴 볼까요?",
-          "timerSeconds": 118,
           "youtube": {
             "id": "Kpgm4XQNhzo",
             "start": 68,
@@ -500,9 +493,8 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "처음 읽는 친구도 할 일을 알 수 있게 써요. 다 쓰면 짝이 읽고 이해한 행동을 말해 줘요.",
           "image": "school-sign.png",
           "kicker": "잠깐 멈추고 활동해요",
-          "cue": "3분 동안 바꾸고 2분 동안 서로 읽어 봅시다. 어려우면 ‘도서’를 ‘책’으로 바꾸는 것부터 시작하세요.",
+          "cue": "안내문을 바꾸고 서로 읽어 봅시다. 어려우면 ‘도서’를 ‘책’으로 바꾸는 것부터 시작하세요.",
           "reveal": false,
-          "timerSeconds": 300
         },
         {
           "type": "compare",
@@ -533,7 +525,6 @@ window.HANGEUL_PRESENTATION = {
           "kicker": "기억을 꺼내요",
           "cue": "연표를 다시 보지 않고 먼저 답한 뒤, 두 사건 중 무엇이 헷갈리는지 짝에게 말해 봅시다.",
           "reveal": false,
-          "timerSeconds": 20
         },
         {
           "type": "ox",
@@ -553,7 +544,6 @@ window.HANGEUL_PRESENTATION = {
           "kicker": "내 말로 설명해요",
           "cue": "자료를 보지 않고 짝과 한 문장씩 말한 뒤 다음 정리와 비교해 봅시다.",
           "reveal": false,
-          "timerSeconds": 30
         },
         {
           "type": "recap",
@@ -758,7 +748,6 @@ window.HANGEUL_PRESENTATION = {
               "text": "문자를 생각해요."
             }
           ],
-          "timerSeconds": 45
         },
         {
           "type": "cards",
@@ -787,7 +776,6 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "영상에서 날짜를 정한 근거 자료를 찾아봐요. 새 자료가 발견되자 한글날 날짜도 바뀌었어요.",
           "kicker": "유튜브 영상",
           "cue": "날짜의 근거가 된 자료는 무엇이었나요? 영상의 설명과 나의 느낌을 나누어 말해 볼까요?",
-          "timerSeconds": 129,
           "youtube": {
             "id": "XhrJZWo5flw",
             "start": 122,
@@ -843,9 +831,8 @@ window.HANGEUL_PRESENTATION = {
           "subtitle": "읽는 사람이 해야 할 일을 알 수 있게 써요. 짝이 읽고 빠진 정보가 없는지 확인해요.",
           "image": "school-sign.png",
           "kicker": "잠깐 멈추고 활동해요",
-          "cue": "3분 동안 고쳐 쓰고 2분 동안 짝과 검토합시다. 도움이 필요하면 ‘명일→내일’의 수정 이유부터 생각하세요.",
+          "cue": "고쳐 쓰고 짝과 검토합시다. 도움이 필요하면 ‘명일→내일’의 수정 이유부터 생각하세요.",
           "reveal": false,
-          "timerSeconds": 300
         },
         {
           "type": "compare",
@@ -876,7 +863,6 @@ window.HANGEUL_PRESENTATION = {
           "kicker": "기억을 꺼내요",
           "cue": "도움 없이 먼저 답한 뒤, 맞거나 틀린 까닭을 한 문장으로 정리해 봅시다.",
           "reveal": false,
-          "timerSeconds": 20
         },
         {
           "type": "ox",
@@ -895,7 +881,6 @@ window.HANGEUL_PRESENTATION = {
           "kicker": "근거를 꺼내요",
           "cue": "‘바꾼 표현→독자의 이해→정확한 정보’의 순서로 자신의 수정을 짝에게 설명해 봅시다.",
           "reveal": false,
-          "timerSeconds": 40
         },
         {
           "type": "recap",

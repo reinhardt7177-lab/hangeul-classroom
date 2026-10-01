@@ -12,6 +12,10 @@ repo = Path(__file__).resolve().parent.parent
 root = repo / "output" / "hangeul"
 # name inside the ZIP -> source in the repository
 sources = {
+    "리뉴얼-출처대장.md": "knowledge/리뉴얼-출처대장.md",
+    "이야기카드-이미지-제작기록.md": "knowledge/이야기카드-이미지-제작기록.md",
+    "학습내용과-시각자료-수정계획.md": "docs/학습내용과-시각자료-수정계획-2026-10-01.md",
+    "리뉴얼-실행기록.md": "docs/리뉴얼-실행계획과-검증기록.md",
     "사용안내.md": "docs/한글날/오프라인-사용안내.md",
     "교사용-수업안내.md": "docs/한글날/교사용-수업안내.md",
     "시각고증-검수.md": "knowledge/한글날-조선시각고증-검수.md",
@@ -49,6 +53,13 @@ with ZipFile(temporary) as archive:
         "수업앱/videos/hangeul-timeline-skia.mp4",
         "수업앱/videos/hangeul-documentary-kling-60s.mp4",
         "수업앱/assets/documentary-poster.png",
+        "수업앱/learning-resources.js",
+        "수업앱/assets/gochang-dolmen-steve46814.jpg",
+        "수업앱/assets/hunminjeongeum-haerye-facsimile.jpg",
+        "수업앱/assets/gaecheon-story-hwanung.png",
+        "수업앱/assets/gaecheon-story-promise.png",
+        "수업앱/assets/gaecheon-story-ungnyeo.png",
+        "수업앱/assets/gaecheon-story-dangun.png",
     }
     if not required <= names:
         raise RuntimeError(f"Missing video entries: {required - names}")

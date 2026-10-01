@@ -25,6 +25,7 @@ jobs:
         run: |
           node verify.mjs
           node verify-gaecheon.mjs
+          node verify-renewal.mjs
       - name: Prepare classroom files
         run: node site/package.mjs
       - uses: actions/configure-pages@v5
