@@ -36,6 +36,7 @@ copy2(ROOT/'knowledge'/'리뉴얼-출처대장.md',OUT/'리뉴얼-출처대장.m
 copy2(ROOT/'knowledge'/'이야기카드-이미지-제작기록.md',OUT/'이야기카드-이미지-제작기록.md')
 copy2(ROOT/'docs'/'학습내용과-시각자료-수정계획-2026-10-01.md',OUT/'학습내용과-시각자료-수정계획.md')
 copy2(ROOT/'docs'/'리뉴얼-실행계획과-검증기록.md',OUT/'리뉴얼-실행기록.md')
+copy2(ROOT/'docs'/'전체장면-진행과-학습지-해설-버튼-수정계획-2026-10-01.md',OUT/'전체장면-진행과-학습지-해설-수정기록.md')
 for src,name in [(ROOT/'docs'/'개천절'/'교사용-수업안내.md','교사용-수업안내.md'),(ROOT/'docs'/'개천절'/'영상-제작기록.md','영상-제작기록.md'),(ROOT/'docs'/'개천절'/'도입-영상-교사대본.md','도입-영상-교사대본.md'),(ROOT/'knowledge'/'개천절-사실과-전승-검증.md','사실과-전승-검증.md'),(ROOT/'knowledge'/'개천절-초등교육자료-엄선.md','초등교육자료-엄선.md'),(ROOT/'knowledge'/'개천절-평가-타당도-검토.md','평가-타당도-검토.md')]:copy2(src,OUT/name)
 readme=OUT/'사용안내.md'
 readme.write_text('# 개천절 오프라인 수업자료\n\n`개천절-교실서버-시작.cmd`를 실행한 뒤 http://localhost:4198/ 를 여세요. Node.js가 필요합니다. 학생 태블릿 QR은 같은 교실 네트워크에서 접근 가능한 교사 컴퓨터 주소로 열어야 합니다. 인터넷 공개 주소는 https://reinhardt7177-lab.github.io/hangeul-classroom/gaecheon.html 입니다. 첫 장면의 1분 도입 영상은 교사가 재생 버튼을 눌러 소리와 함께 봅니다(대본: `도입-영상-교사대본.md`). 곰과 범 장면의 8초 영상은 조용히 자동 재생되며, 화면 위의 소리 켜기와 다시 보기를 사용할 수 있습니다.\n',encoding='utf-8')

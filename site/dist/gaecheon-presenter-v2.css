@@ -67,7 +67,7 @@
 .micro-option.right { background: rgba(31,107,73,.95); border-color: #a9e1b5; }
 .micro-option.wrong { background: rgba(128,55,43,.95); border-color: #f1a996; }
 .micro-option>span { flex: none; display: grid; place-items: center; width: 25px; height: 25px; color: #244639; background: #f4ca8c; border-radius: 50%; font-size: 12px; }
-.micro-explain { margin: 9px 0 0; color: #f7e9cc; font-size: 14px; line-height: 1.45; }
+.micro-explain { max-width: 920px; margin: 12px 0 0; padding: 12px 16px; border: 1px solid rgba(247,233,204,.32); border-radius: 12px; background: rgba(4,28,24,.84); color: #fff6df; font-size: clamp(16px,1.6vw,24px); line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
 /* Links to real artifacts and sites: small glass pills under the question, readable over the dark image. */
 .slide-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: clamp(14px,2.2vh,20px); max-width: 880px; }
 .animate .slide-links { animation: question-enter .9s .62s both; }
