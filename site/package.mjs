@@ -23,10 +23,12 @@ for(const name of ['index.html','hangeul.html','holidays.css','gaecheon.html','g
  copy(path.join(source,name),path.join(target,name));
 }
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
-for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden','timeline-skia','documentary-poster','gaecheon-documentary-poster','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-helping-today','gaecheon-source-study','gaecheon-story-hwanung','gaecheon-story-promise','gaecheon-story-ungnyeo','gaecheon-story-dangun']){
- fs.copyFileSync(path.join(source,'assets',asset+'.png'),path.join(target,'assets',asset+'.png'));
+// Deploy only reviewed WebP derivatives; source PNG/JPEG files stay in the repository.
+const imageManifest=JSON.parse(fs.readFileSync(path.join(site,'image-assets.json'),'utf8'));
+for(const {file} of imageManifest.images){
+ if(!/^[\w-]+\.webp$/.test(file))throw Error('Invalid image asset: '+file);
+ fs.copyFileSync(path.join(source,'assets',file),path.join(target,'assets',file));
 }
 fs.copyFileSync(path.join(site,'server.mjs'),path.join(path.dirname(target),'server.mjs'));
-for(const asset of ['bronze-dagger-songgukri.jpg','gochang-dolmen-steve46814.jpg','hunminjeongeum-haerye-facsimile.jpg'])fs.copyFileSync(path.join(source,'assets',asset),path.join(target,'assets',asset));
 fs.copyFileSync(path.join(site,'start-classroom.cmd'),path.join(path.dirname(target),'교실서버-시작.cmd'));
 console.log('Portable lesson app prepared: '+target);

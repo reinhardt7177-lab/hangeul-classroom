@@ -26,6 +26,6 @@ assert.equal(vm.runInContext("esc('<img onerror=1>')",context),'&lt;img onerror=
 vm.runInContext("startLesson('3-4',6);state.checkReveal=true;renderLesson()",context);assert.ok(elements.get('app').innerHTML.includes('정답 X'));
 vm.runInContext("startLesson('5-6',5)",context);for(const token of ['09:00','체육관','실내화'])assert.ok(elements.get('app').innerHTML.includes(token));
 const source=fs.readFileSync(new URL('hangeul.js',dist),'utf8');assert.ok(!source.includes("picture('village-message'"));
-for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden'])assert.ok(fs.existsSync(new URL(`assets/${asset}.png`,dist)));
+for(const asset of ['hero-sejong','writing-desk','school-sign','classroom-note','library-together','hangul-garden'])assert.ok(fs.existsSync(new URL(`assets/${asset}.webp`,dist)));
 assert.ok(fs.existsSync(new URL('vendor/qrcode.js',dist)));assert.ok(fs.existsSync(new URL('fonts.css',dist)));
 console.log(JSON.stringify({status:'passed',renderedScenes:scenes,renderedQuizQuestions:questions,worksheetFiles:6,composition:'한·글·너',inputEscaping:'passed',middleCheck:'X',highActivity:'4 essential facts retained',unverifiedVillageImage:'not referenced'},null,2));

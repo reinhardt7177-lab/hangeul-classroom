@@ -23,9 +23,9 @@ copytree(SRC/'fonts',APP/'fonts',dirs_exist_ok=True)
 (APP/'vendor').mkdir(exist_ok=True);copy2(SRC/'vendor'/'qrcode.js',APP/'vendor'/'qrcode.js')
 (APP/'assets').mkdir(exist_ok=True)
 for name in ['gaecheon-documentary-poster','gaecheon-tree','gaecheon-bear-tiger','gaecheon-community','gaecheon-classroom','gaecheon-dolmen','gaecheon-fact-skia','gaecheon-helping-today','gaecheon-source-study','school-sign','writing-desk','hangul-garden','gaecheon-story-hwanung','gaecheon-story-promise','gaecheon-story-ungnyeo','gaecheon-story-dangun']:
- copy2(SRC/'assets'/f'{name}.png',APP/'assets'/f'{name}.png')
+ copy2(SRC/'assets'/f'{name}.webp',APP/'assets'/f'{name}.webp')
 (APP/'videos').mkdir(exist_ok=True)
-for name in ['bronze-dagger-songgukri.jpg','gochang-dolmen-steve46814.jpg']:copy2(SRC/'assets'/name,APP/'assets'/name)
+for name in ['bronze-dagger-songgukri.webp','gochang-dolmen-steve46814.webp']:copy2(SRC/'assets'/name,APP/'assets'/name)
 for name in ['gaecheon-documentary-60s.mp4','gaecheon-bear-tiger-kling-8s.mp4']:
  copy2(SRC/'videos'/name,APP/'videos'/name)
 (APP/'worksheets').mkdir(exist_ok=True)
@@ -48,11 +48,11 @@ with ZipFile(tmp) as z:
  assert z.testzip() is None
  names=set(z.namelist())
  assert '수업앱/index.html' in names and '수업앱/worksheets/gaecheon-5-6-teacher.pdf' in names
- assert '수업앱/videos/gaecheon-documentary-60s.mp4' in names and '수업앱/assets/gaecheon-documentary-poster.png' in names
+ assert '수업앱/videos/gaecheon-documentary-60s.mp4' in names and '수업앱/assets/gaecheon-documentary-poster.webp' in names
  assert not any('gaecheon-dawn' in n or 'summit-dawn' in n for n in names)
  assert '수업앱/videos/gaecheon-bear-tiger-kling-8s.mp4' in names
  assert '수업앱/learning-resources.js' in names
- assert '수업앱/assets/gochang-dolmen-steve46814.jpg' in names
- assert all(f'수업앱/assets/gaecheon-story-{scene}.png' in names for scene in ['hwanung','promise','ungnyeo','dangun'])
+ assert '수업앱/assets/gochang-dolmen-steve46814.webp' in names
+ assert all(f'수업앱/assets/gaecheon-story-{scene}.webp' in names for scene in ['hwanung','promise','ungnyeo','dangun'])
 tmp.replace(target)
 print(f'{target} / {len(names)} files / {target.stat().st_size} bytes')

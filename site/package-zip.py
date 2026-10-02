@@ -53,14 +53,14 @@ with ZipFile(temporary) as archive:
         "수업앱/videos/sejong-purpose-kling.mp4",
         "수업앱/videos/hangeul-timeline-skia.mp4",
         "수업앱/videos/hangeul-documentary-kling-60s.mp4",
-        "수업앱/assets/documentary-poster.png",
+        "수업앱/assets/documentary-poster.webp",
         "수업앱/learning-resources.js",
-        "수업앱/assets/gochang-dolmen-steve46814.jpg",
-        "수업앱/assets/hunminjeongeum-haerye-facsimile.jpg",
-        "수업앱/assets/gaecheon-story-hwanung.png",
-        "수업앱/assets/gaecheon-story-promise.png",
-        "수업앱/assets/gaecheon-story-ungnyeo.png",
-        "수업앱/assets/gaecheon-story-dangun.png",
+        "수업앱/assets/gochang-dolmen-steve46814.webp",
+        "수업앱/assets/hunminjeongeum-haerye-facsimile.webp",
+        "수업앱/assets/gaecheon-story-hwanung.webp",
+        "수업앱/assets/gaecheon-story-promise.webp",
+        "수업앱/assets/gaecheon-story-ungnyeo.webp",
+        "수업앱/assets/gaecheon-story-dangun.webp",
     }
     if not required <= names:
         raise RuntimeError(f"Missing video entries: {required - names}")

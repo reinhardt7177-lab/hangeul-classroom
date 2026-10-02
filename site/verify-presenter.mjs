@@ -40,7 +40,14 @@ sandbox.window=sandbox;
 sandbox.history={replaceState(_state,_title,url){sandbox.location.hash=String(url).includes('#')?'#'+String(url).split('#')[1]:String(url)}};
 const context=vm.createContext(sandbox);
 const run=code=>vm.runInContext(code,context);
-const html=()=>element('app').innerHTML;
+const html=()=>{
+ const rendered=element('app').innerHTML;
+ for(const [,asset] of rendered.matchAll(/(?:src|poster)="assets\/([^"?]+)"/g)){
+  assert.ok(asset.endsWith('.webp')&&!asset.includes('.webp.webp'),`Invalid image path: ${asset}`);
+  assert.ok(fs.existsSync(path.join(dist,'assets',asset)),`Missing rendered image: ${asset}`);
+ }
+ return rendered;
+};
 const position=()=>JSON.parse(run('JSON.stringify({grade:state.grade,index:state.index,beat:state.presenterBeat,view:state.view,student:state.student})'));
 const plain=s=>String(s).replace(/<[^>]*>/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s+/g,' ').trim();
 function key(keyName,tagName='BODY',editable=false){
@@ -69,7 +76,7 @@ assert.equal(typeof sandbox.presentationBeats,'function','Presentation beat look
 assert.ok(sandbox.HANGEUL_PRESENTATION,'Presentation data must load before use');
 
 // Historical imagery gate: only reviewed assets may appear in teacher scenes.
-const approvedAssets=new Set(['hero-sejong.png','writing-desk.png','school-sign.png','classroom-note.png','library-together.png','hangul-garden.png']);
+const approvedAssets=new Set(['hero-sejong.webp','writing-desk.webp','school-sign.webp','classroom-note.webp','library-together.webp','hangul-garden.webp']);
 const presentationSource=fs.readFileSync(path.join(dist,'presenter-data.js'),'utf8');
 for(const [,asset] of presentationSource.matchAll(/"image": "([^"]+)"/g)){
  assert.ok(approvedAssets.has(asset),`Unreviewed historical/visual asset in presentation: ${asset}`);
@@ -173,7 +180,11 @@ for(const asset of ['writing-tools.mp4','classroom-note.mp4','sejong-purpose-kli
 }
 assert.ok(presenterSource.includes('sejong-purpose-kling'),'Reviewed Sejong purpose clip must be referenced by the presenter');
 assert.ok(fs.statSync(path.join(dist,'videos','hangeul-timeline-skia.mp4')).size>40_000,'Missing Skia typography video');
-assert.ok(fs.statSync(path.join(dist,'assets','timeline-skia.png')).size>10_000,'Missing Skia final-frame poster');
+// Compressed file size is no longer a quality gate; the lossless manifest is pixel-verified.
+const imageManifest=JSON.parse(fs.readFileSync(new URL('./image-assets.json',import.meta.url),'utf8'));
+const timelinePoster=imageManifest.images.find(image=>image.file==='timeline-skia.webp');
+assert.ok(timelinePoster?.width>0&&timelinePoster?.height>0,'Missing Skia final-frame manifest');
+assert.equal(fs.statSync(path.join(dist,'assets',timelinePoster.file)).size,timelinePoster.bytes,'Missing Skia final-frame poster');
 assert.ok(fs.statSync(path.join(dist,'videos','hangeul-documentary-kling-60s.mp4')).size>1_000_000,'Missing documentary video');
 run("startLesson('1-2',0,false)");
 assert.ok(html().includes('videos/hangeul-documentary-kling-60s.mp4'),'Teacher lesson must begin with the documentary');
@@ -183,18 +194,18 @@ for(const grade of Object.keys(sandbox.HANGEUL_DATA.grades)){
  run(`startLesson('${grade}',0,false)`);
  assert.ok(html().includes('videos/hangeul-documentary-kling-60s.mp4'),`${grade}: documentary opener missing`);
  assert.ok(html().includes('data-action="video-toggle"'),`${grade}: documentary needs pause/resume`);
- assert.ok(html().includes('poster="assets/documentary-poster.png"'),`${grade}: documentary needs a fallback poster`);
+ assert.ok(html().includes('poster="assets/documentary-poster.webp"'),`${grade}: documentary needs a fallback poster`);
  run(`startLesson('${grade}',2,false)`);
  assert.ok(html().includes('videos/writing-tools.mp4'),`${grade}: story insert must be present`);
- assert.ok(html().includes('poster="assets/writing-desk.png"'),`${grade}: still-image video fallback required`);
+ assert.ok(html().includes('poster="assets/writing-desk.webp"'),`${grade}: still-image video fallback required`);
  sandbox.movePresentation(1);
  assert.ok(html().includes('videos/sejong-purpose-kling.mp4'),`${grade}: reviewed Sejong purpose clip must play`);
- assert.ok(html().includes('poster="assets/hero-sejong.png"'),`${grade}: Sejong clip needs the reviewed still fallback`);
- assert.ok(html().includes('src="assets/hero-sejong.png"'),`${grade}: Sejong's purpose beat must show the reviewed still hero-sejong.png`);
+ assert.ok(html().includes('poster="assets/hero-sejong.webp"'),`${grade}: Sejong clip needs the reviewed still fallback`);
+ assert.ok(html().includes('src="assets/hero-sejong.webp"'),`${grade}: Sejong's purpose beat must show the reviewed still hero-sejong.webp`);
  if(grade!=='1-2'){
   sandbox.movePresentation(1);
   assert.ok(html().includes('videos/hangeul-timeline-skia.mp4'),`${grade}: typography timeline should follow Sejong's purpose`);
-  assert.ok(html().includes('poster="assets/timeline-skia.png"'),`${grade}: timeline needs an exact-text fallback`);
+  assert.ok(html().includes('poster="assets/timeline-skia.webp"'),`${grade}: timeline needs an exact-text fallback`);
  }
 }
 run("startLesson('3-4',3,true)");

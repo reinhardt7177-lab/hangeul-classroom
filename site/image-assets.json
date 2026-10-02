@@ -1,0 +1,246 @@
+{
+  "encoding": "lossless",
+  "resized": false,
+  "images": [
+    {
+      "source": "hero-sejong.png",
+      "file": "hero-sejong.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2100530,
+      "bytes": 1465052,
+      "sourceSha256": "45a5dca4311c584121f1cf06dc5a844e1243bc75569a63c4676790bfbf3ec64f",
+      "sha256": "950d4d41be022e02c38b3df3887bb1d1d9f37a3eb6ad2c0b65741a90506aeea4"
+    },
+    {
+      "source": "writing-desk.png",
+      "file": "writing-desk.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2344508,
+      "bytes": 1671926,
+      "sourceSha256": "6c454c4ca517018bc81f98387991960b83f56fe3d7f383105a90dcade5b14a40",
+      "sha256": "f374a83e118fad00792683ada58de15385297c99144c17e89b23ac2ad869a811"
+    },
+    {
+      "source": "school-sign.png",
+      "file": "school-sign.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 1869457,
+      "bytes": 1387002,
+      "sourceSha256": "1f92c6344a34455f98dd04c04be7c15d1ada3c49027e2f0bc3964ba7bc0b47c2",
+      "sha256": "79d1b89dc77a3360eff1e9a6e9c9ec05fb00bb8249b90b4a9811af2e9486ab8e"
+    },
+    {
+      "source": "classroom-note.png",
+      "file": "classroom-note.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 1963547,
+      "bytes": 1424308,
+      "sourceSha256": "298a26d6af005f7ba3e9d305c4a7ca6796e9c94a6951546830cd1c366891c80b",
+      "sha256": "c735f681e5e1502ff72c881dabb4fcf573298a61b01af35de96fac2f71989426"
+    },
+    {
+      "source": "library-together.png",
+      "file": "library-together.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2208331,
+      "bytes": 1592138,
+      "sourceSha256": "4adb78f47cd7354be9e98239e0adf86d4d4c21a05c607dca1add5b5ae4efb348",
+      "sha256": "581f2e36b37f03df392c070a70cd59184335fe5d71fa899944f3889050557cb5"
+    },
+    {
+      "source": "hangul-garden.png",
+      "file": "hangul-garden.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2308743,
+      "bytes": 1600540,
+      "sourceSha256": "8678d25ab202413e92151b89d3755d67adb9f2f8f55ff8237ac3fdb7be2c328d",
+      "sha256": "115fcf161b87babf0a98b634093a65c1e8e7e886f118545b51b5a19c94d42928"
+    },
+    {
+      "source": "timeline-skia.png",
+      "file": "timeline-skia.webp",
+      "width": 1280,
+      "height": 720,
+      "sourceBytes": 19121,
+      "bytes": 4928,
+      "sourceSha256": "d4dbbd29c9efe41704786b01b393e1daefdc9f653caf3afce08cd3ff9f0351d5",
+      "sha256": "06ca9a9af61f34d019fda06058659d27d90bf20783dee437724c8637b17375ad"
+    },
+    {
+      "source": "documentary-poster.png",
+      "file": "documentary-poster.webp",
+      "width": 1920,
+      "height": 1080,
+      "sourceBytes": 55748,
+      "bytes": 12818,
+      "sourceSha256": "4f1a38e7b19a7daf0469a05313aa60782e30d24ddad5e0272f829e1a58657212",
+      "sha256": "3198f90c3bd9c1630c9648da657a26d2915ebec161a624cb26a3e3ade198a6f4"
+    },
+    {
+      "source": "gaecheon-documentary-poster.png",
+      "file": "gaecheon-documentary-poster.webp",
+      "width": 1920,
+      "height": 1080,
+      "sourceBytes": 67415,
+      "bytes": 16332,
+      "sourceSha256": "3641e5fdee5a91baa2719f1b6442bebf9e669b8b6c2287e263a3c468a7190514",
+      "sha256": "ebcbceee76d9d5d93f81270f4bc4b80c2970afcd92cbf53f28a0963ebefe9928"
+    },
+    {
+      "source": "gaecheon-tree.png",
+      "file": "gaecheon-tree.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2921766,
+      "bytes": 2233538,
+      "sourceSha256": "3e1818b67d7f55855ca15e8d0869d178e51b0490e56682b25484f415ce31fe8a",
+      "sha256": "801dff9ef950b40d852415da512a5cb4e5353172feca6d2a2b5d33c4f1766d54"
+    },
+    {
+      "source": "gaecheon-bear-tiger.png",
+      "file": "gaecheon-bear-tiger.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2982664,
+      "bytes": 2215470,
+      "sourceSha256": "cceb4e19b8e38b38d9bf4f9402eb4f4ab6eea59f7bd1bb7569b208c69d3c1d32",
+      "sha256": "20bed3a48f76d5329dd40ea29284bb6bae515dd6c9f53bc9533bcd410109384e"
+    },
+    {
+      "source": "gaecheon-community.png",
+      "file": "gaecheon-community.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 3112912,
+      "bytes": 2305586,
+      "sourceSha256": "24e3d65868851f9032bafebbb86111a05a50b6e06b4f16acf03708112d8fc486",
+      "sha256": "16d73378c56b6c0c65d14435a73616b9020480d6bfe2dad8ae8a36795545bacc"
+    },
+    {
+      "source": "gaecheon-classroom.png",
+      "file": "gaecheon-classroom.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 1841950,
+      "bytes": 1362528,
+      "sourceSha256": "8d6609d1191fce40da0d799ffb7cca9080b985ca2c6e66cd378709e53683359a",
+      "sha256": "6df7264c532a992076d0833be002f1a4fc11fb98d00e596bf9f50db3fd5f155f"
+    },
+    {
+      "source": "gaecheon-dolmen.png",
+      "file": "gaecheon-dolmen.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2705518,
+      "bytes": 2007942,
+      "sourceSha256": "0e994da0d611299f3ed19ed6a6f9e45334ff2d987f693d75b9e68f11dd1948fd",
+      "sha256": "b5e05674eed72319c2e4b420eed88cea59c975eec37aed0e653e18a76beb21e5"
+    },
+    {
+      "source": "gaecheon-fact-skia.png",
+      "file": "gaecheon-fact-skia.webp",
+      "width": 1400,
+      "height": 420,
+      "sourceBytes": 45447,
+      "bytes": 23002,
+      "sourceSha256": "d751097b67daf4ae2ac49e08ac7df3e1ecb309fdc13672b86650ed69757aa836",
+      "sha256": "e9474f54d24cd9d0ca19751ecd8c72f88bff61449f15bc29217a6cb31493d2d4"
+    },
+    {
+      "source": "gaecheon-helping-today.png",
+      "file": "gaecheon-helping-today.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 2064133,
+      "bytes": 1510398,
+      "sourceSha256": "a63be28e90cf0845f753211cbc15f95439ed304886443eca9865faa09298bc33",
+      "sha256": "b0f0362f5ea63a44a5a4816c7ee7b550b419b27ad1056485b92b24c73f95ef6f"
+    },
+    {
+      "source": "gaecheon-source-study.png",
+      "file": "gaecheon-source-study.webp",
+      "width": 1672,
+      "height": 941,
+      "sourceBytes": 1719909,
+      "bytes": 1249382,
+      "sourceSha256": "ace5c37948630e0dab4edfd94b4af13651f9c82f699389fff1b8065052ed0c8d",
+      "sha256": "5da98cd8ca6664d3cc248940fb5563d4f1dd2c6f6058ded04ccf2e09121b8ab4"
+    },
+    {
+      "source": "gaecheon-story-hwanung.png",
+      "file": "gaecheon-story-hwanung.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceBytes": 2812824,
+      "bytes": 2028762,
+      "sourceSha256": "97401e9fd3dc2d47bc95889d46e56d26566443560f0048aae967a6e38d805c8d",
+      "sha256": "6bea860f5ead28adbfe17f451d6551e2dcebbd0b4b6ab2f459f43a8340c1a661"
+    },
+    {
+      "source": "gaecheon-story-promise.png",
+      "file": "gaecheon-story-promise.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceBytes": 3165869,
+      "bytes": 2144176,
+      "sourceSha256": "c7b93a186cb50ecc1d1584cdc75ccd0a983f8c386cfc8106135891e2b68bcf8a",
+      "sha256": "839e7b7d9827c56505a663f0dab5298cf8c800b111e88b903524dcbbf88b8d71"
+    },
+    {
+      "source": "gaecheon-story-ungnyeo.png",
+      "file": "gaecheon-story-ungnyeo.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceBytes": 3084717,
+      "bytes": 2059214,
+      "sourceSha256": "698b437746379115a300b201abeafe5972e3ef2b7cfb217a2f63fa2a2ac8e934",
+      "sha256": "bbcaba763318ec78c6e4620b6184ce09c3bd39939e4de859b1fe661593a55627"
+    },
+    {
+      "source": "gaecheon-story-dangun.png",
+      "file": "gaecheon-story-dangun.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceBytes": 2979979,
+      "bytes": 2001870,
+      "sourceSha256": "0704c26a9c117ebf8973b4bc79a1f2f6f43dd858616a2b9301aad88344f161a7",
+      "sha256": "76089b9a74a1d622d28c2b4c2ade0579b07dab32f7c750aafd86084ae0675dbe"
+    },
+    {
+      "source": "bronze-dagger-songgukri.jpg",
+      "file": "bronze-dagger-songgukri.webp",
+      "width": 2253,
+      "height": 3000,
+      "sourceBytes": 1710120,
+      "bytes": 1432422,
+      "sourceSha256": "0bf0f92b3d35be0962726f4bf63f602dde958f1dc84e53522ebc2e5a181f2f08",
+      "sha256": "4f9c15862592ca0159bb3d270c5a737dfabdc70691cde75a1d698abd29980b07"
+    },
+    {
+      "source": "gochang-dolmen-steve46814.jpg",
+      "file": "gochang-dolmen-steve46814.webp",
+      "width": 1280,
+      "height": 856,
+      "sourceBytes": 1290471,
+      "bytes": 1712888,
+      "sourceSha256": "6ab83449a1071668ff0c3a183d1983fa2ba8e90dd56ae82673e4283c2f504098",
+      "sha256": "10c6393fb841661b2259e3b65c7d512565d263dfa9fdba2541591c9b986e47e0"
+    },
+    {
+      "source": "hunminjeongeum-haerye-facsimile.jpg",
+      "file": "hunminjeongeum-haerye-facsimile.webp",
+      "width": 1920,
+      "height": 1280,
+      "sourceBytes": 1288357,
+      "bytes": 1460544,
+      "sourceSha256": "6bee6015dc35ae86cda80ccbb62922dec908bcbcd931cc8ec436173781b23673",
+      "sha256": "96a64654cd9012f2bc9341e533c5239ce20f4ae9d3ed67f9e8474ac989530618"
+    }
+  ]
+}

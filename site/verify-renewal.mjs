@@ -35,7 +35,7 @@ context.esc=value=>String(value??'');context.tabHeading=(title,body)=>`${title} 
 context.state={grade:'5-6',activity:{drafts:{},classes:{}}};
 for(const name of ['learning-resources.js','gaecheon-data.js','gaecheon-inquiry.js','hangeul-inquiry.js'])vm.runInContext(fs.readFileSync(new URL(name,dist),'utf8'),context);
 assert.match(context.gaecheonInquiryBody('story'),/1949년/,'Independent student inquiry includes chronology');
-assert.match(context.gaecheonInquiryBody('story'),/bronze-dagger-songgukri.jpg/);
+assert.match(context.gaecheonInquiryBody('story'),/bronze-dagger-songgukri.webp/);
 assert.match(context.gaecheonInquiryBody('act'),/역할의 구체성/);
 context.state.grade='3-4';assert.match(context.gaecheonInquiryBody('story'),/두 자료가 알려 주는/);
 assert.doesNotMatch(context.gaecheonInquiryBody('story'),/gc-claim/);
@@ -53,7 +53,7 @@ const reading=gaecheon.grades['5-6'].slides.find(s=>s.kind==='reading');
 assert.match(reading.question,/100일/);assert.match(reading.question,/21일/);
 assert.equal(reading.cards[0].text,resource.samguk.quotes[0].original);
 assert.equal(reading.cards[1].text,resource.samguk.quotes[1].original);
-assert.match(context.dolmenComparison(),/gochang-dolmen-steve46814.jpg/);
+assert.match(context.dolmenComparison(),/gochang-dolmen-steve46814.webp/);
 assert.match(context.dolmenComparison(),/CC BY-SA 3.0/);
 assert.match(context.renderHangeulInquiry(context.hangeulInquiryBeats('5-6',2)[0]),/1946년/);
 library.register('gaecheon',{title:'개천절',pdf:'gaecheon',grades:gaecheon.grades,start(){}});
@@ -101,6 +101,10 @@ for(const grade of ['1-2','3-4','5-6']){
  for(let index=0;index<count;index++){
   assert.equal(vm.runInContext('state.index',navCtx),index);assert.equal(vm.runInContext('state.beat',navCtx),0);
   assert.match(rendered.innerHTML,/전체 장면/);assert.ok(rendered.innerHTML.includes(`${index+1} / ${count}`));
+  for(const [,asset] of rendered.innerHTML.matchAll(/(?:src|poster)="assets\/([^"?]+)"/g)){
+   assert.ok(asset.endsWith('.webp')&&!asset.includes('.webp.webp'),`Invalid rendered image: ${asset}`);
+   assert.ok(fs.existsSync(new URL('assets/'+asset,dist)),`Missing rendered image: ${asset}`);
+  }
   vm.runInContext('next()',navCtx);assert.equal(vm.runInContext('state.beat',navCtx),1);
   if(index<count-1)vm.runInContext('next()',navCtx);
  }

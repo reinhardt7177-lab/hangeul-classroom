@@ -6,18 +6,25 @@ import json
 
 ROOT=Path(__file__).resolve().parents[1]
 DIST=ROOT/'site/dist'
+images=json.loads((ROOT/'site/image-assets.json').read_text(encoding='utf-8'))['images']
 common=['learning-resources.js','lesson-library.js','lesson-library.css','gaecheon.html','gaecheon-data.js','gaecheon.js','gaecheon-presenter-v2.css','gaecheon-inquiry.js']
-common += [f'assets/gaecheon-story-{scene}.png' for scene in ('hwanung','promise','ungnyeo','dangun')]
-common += ['assets/bronze-dagger-songgukri.jpg','assets/gochang-dolmen-steve46814.jpg','videos/gaecheon-documentary-60s.mp4']
+common += [f'assets/gaecheon-story-{scene}.webp' for scene in ('hwanung','promise','ungnyeo','dangun')]
+common += ['assets/bronze-dagger-songgukri.webp','assets/gochang-dolmen-steve46814.webp','videos/gaecheon-documentary-60s.mp4']
 common += [f'worksheets/gaecheon-{grade}-{audience}.pdf' for grade in ('1-2','3-4','5-6') for audience in ('student','teacher')]
 reports=[]
 for topic,filename in [('gaecheon','개천절-수업자료.zip'),('hangeul','한글날-수업자료.zip')]:
     required=common.copy()
     if topic=='hangeul':
-        required+=['hangeul.html','hangeul.js','hangeul-presenter.js','hangeul-inquiry.js','assets/hunminjeongeum-haerye-facsimile.jpg']
+        required+=['hangeul.html','hangeul.js','hangeul-presenter.js','hangeul-inquiry.js','assets/hunminjeongeum-haerye-facsimile.webp']
         required+=[f'worksheets/hangul-{grade}-{audience}.pdf' for grade in ('1-2','3-4','5-6') for audience in ('student','teacher')]
     with ZipFile(ROOT/'output'/topic/filename) as archive:
         assert archive.testzip() is None
+        image_names=[name for name in archive.namelist() if name.startswith('수업앱/assets/')]
+        assert all(name.endswith('.webp') for name in image_names),image_names
+        for image in images:
+            name='수업앱/assets/'+image['file']
+            if topic=='hangeul' or name in image_names:
+                assert sha256(archive.read(name)).hexdigest()==image['sha256'],name
         for name in required:
             assert sha256(archive.read('수업앱/'+name)).digest()==sha256((DIST/name).read_bytes()).digest(),name
         for name,source in [('리뉴얼-출처대장.md','knowledge/리뉴얼-출처대장.md'),('이야기카드-이미지-제작기록.md','knowledge/이야기카드-이미지-제작기록.md'),('학습내용과-시각자료-수정계획.md','docs/학습내용과-시각자료-수정계획-2026-10-01.md')]:
