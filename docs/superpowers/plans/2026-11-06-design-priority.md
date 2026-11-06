@@ -70,4 +70,15 @@
 - [x] Commit only related files, fast-forward the existing `main`, and push to the existing GitHub repository.
 - [x] Verify Cloudflare authentication, deploy the same packaged app, and await GitHub Pages success.
 - [x] Compare public assets with the local package on both origins, including PDFs/video range response, and inspect representative public mobile/desktop screens. GitHub: all 85 full files. Cloudflare: 84 full files, plus HTTP 200 and exact length for one 21.7MB PDF; its complete second-origin transfer remains unverified because of slow transfer. This documented verification limit does not change the unmodified PDF; its complete GitHub and ZIP copies match.
-- [ ] Publish new offline ZIP release assets without replacing older releases, then report exact public links and remaining limitations.
+- [x] Publish new offline ZIP release assets without replacing older releases, then report exact public links and remaining limitations.
+
+## Publication evidence
+
+App commit: `1b38a19ae3bb5ef493eefbe8629bb55a7db5f0f5`. GitHub Pages run: https://github.com/reinhardt7177-lab/hangeul-classroom/actions/runs/42171289183 (success). Cloudflare version: `99dc9d04-8b94-4636-9a05-a9c7e7deef43`.
+
+Release: https://github.com/reinhardt7177-lab/hangeul-classroom/releases/tag/v2.7.0, published 2026-11-06T06:24:14Z, target `f830506eee1bb86cd76be30453b6cdb3ec5363d5`. Both 101-entry ZIPs pass freshness/integrity; GitHub asset digests match local SHA256:
+
+- `hangeul-classroom-v2.7.0.zip`: `2e8b2d06d1ca8898bb0c0f4002d778faed3de25f7224763304195859353cd6ab`, 120094948 bytes.
+- `gaecheon-classroom-v2.7.0.zip`: `43381e877b1fd776a4b6ae500afb83e2ecef28de6a4e1c1d47137a8a4451b92c`, 126379778 bytes.
+
+Public browser evidence: `output/design-priority-2026-11-06/public-mobile-reading.png`, `public-desktop-reading.png`, `public-student.png`. Whole-file verification exception for the large CF PDF is stated above and in the completion report; do not describe CF as 85 complete-byte matches.
