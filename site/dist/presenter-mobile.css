@@ -1,0 +1,206 @@
+/* Small screens read a slide; classroom displays keep the existing 16:9 deck. */
+@media (max-width: 700px) {
+ .presentation-mode .presenter-shell {
+  height: 100dvh;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+ }
+ .presentation-mode .presenter-top {
+  height: auto;
+  min-height: 52px;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+ }
+ .presentation-mode .presenter-top-tools { flex-wrap: wrap; gap: 6px; }
+ .presentation-mode .presenter-top .btn,
+ .presentation-mode .presenter-top-tools #motion-replay {
+  min-height: 40px;
+  font-size: .875rem;
+  padding: 8px 10px;
+ }
+ .presentation-mode .presenter-main {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  container-type: normal;
+  padding: 12px;
+  overscroll-behavior: contain;
+ }
+ .presentation-mode .presentation-stage {
+  width: 100%;
+  aspect-ratio: auto;
+  container-type: normal;
+  overflow: visible;
+  box-shadow: none;
+ }
+ .presentation-mode .presentation-stage .p-slide {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  min-height: 0;
+  padding: 20px;
+  overflow: visible;
+  border-radius: 5px;
+  overflow-wrap: anywhere;
+  animation: mobile-slide-enter .2s ease-out;
+ }
+ .presentation-mode .presentation-stage .p-slide.has-image {
+  background: #173521;
+  color: #fff8e7;
+ }
+ /* Poster and video share a grid cell: a failed video exposes the same still image. */
+ .presentation-mode .presentation-stage .p-slide > .p-backdrop {
+  position: relative;
+  inset: auto;
+  grid-area: 1 / 1;
+  width: calc(100% + 40px);
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: -20px -20px 0;
+  object-fit: cover;
+  z-index: 0;
+ }
+ .presentation-mode .presentation-stage .p-slide > video.p-backdrop {
+  object-fit: contain;
+  background: #0b2521;
+ }
+ .presentation-mode .presentation-stage .p-shade { display: none; }
+ .presentation-mode .presentation-stage .p-slide .p-copy,
+ .presentation-mode .presentation-stage .p-slide .p-visual {
+  position: static;
+  inset: auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  padding: 0;
+  color: inherit;
+ }
+ .presentation-mode .presentation-stage .p-slide .p-copy h1,
+ .presentation-mode .presentation-stage .p-documentary > h1 {
+  font-size: 1.75rem;
+  line-height: 1.4;
+  letter-spacing: -.03em;
+  margin: 0 0 12px;
+ }
+ .presentation-mode .presentation-stage .p-subtitle,
+ .presentation-mode .presentation-stage .p-card p,
+ .presentation-mode .presentation-stage .p-option p,
+ .presentation-mode .presentation-stage .p-feedback p,
+ .presentation-mode .presentation-stage .p-notice,
+ .presentation-mode .presentation-stage .p-wait-message,
+ .presentation-mode .presentation-stage .p-open-answer p,
+ .presentation-mode .presentation-stage .p-documentary > p.p-sr-only {
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 100%;
+ }
+ .presentation-mode .presentation-stage .p-documentary > .p-sr-only {
+  position: static !important;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  clip: auto;
+  overflow: visible;
+  white-space: normal;
+ }
+ .presentation-mode .presentation-stage .p-kicker,
+ .presentation-mode .presentation-stage .p-card-number,
+ .presentation-mode .presentation-stage .p-open-answer span,
+ .presentation-mode .presentation-stage .p-youtube-figure figcaption {
+  font-size: .875rem;
+  line-height: 1.6;
+ }
+ .presentation-mode .presentation-stage .p-cards-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  height: auto;
+  gap: 12px;
+ }
+ .presentation-mode .presentation-stage .p-card { padding: 16px; border-radius: 12px; }
+ .presentation-mode .presentation-stage .p-card h2 { font-size: 1.25rem; line-height: 1.5; }
+ .presentation-mode .presentation-stage .p-quiz-options,
+ .presentation-mode .presentation-stage .p-feedback,
+ .presentation-mode .presentation-stage .p-open-answer,
+ .presentation-mode .presentation-stage .p-wait-message,
+ .presentation-mode .presentation-stage .p-youtube-figure {
+  position: static;
+  inset: auto;
+  width: auto;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  transform: none;
+ }
+ .presentation-mode .presentation-stage .p-quiz-options {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+ }
+ .presentation-mode .presentation-stage .p-option { padding: 12px; gap: 12px; border-radius: 10px; }
+ .presentation-mode .presentation-stage .p-option > span {
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+ }
+ .presentation-mode .presentation-stage .p-option b { font-size: 1.25rem; }
+ .presentation-mode .presentation-stage .p-feedback {
+  padding: 14px;
+  gap: 6px;
+  align-items: flex-start;
+  flex-direction: column;
+ }
+ .presentation-mode .presentation-stage .p-feedback strong { font-size: 1rem; white-space: normal; }
+ .presentation-mode .presentation-stage .p-open-answer,
+ .presentation-mode .presentation-stage .p-notice { padding: 16px; border-radius: 12px; }
+ .presentation-mode .presentation-stage .p-equation .p-visual { padding: 20px; border-radius: 12px; }
+ .presentation-mode .presentation-stage .p-equation-parts { gap: 12px; font-size: 2rem; }
+ .presentation-mode .presentation-stage .p-equation-parts b { font-size: 1.25rem; }
+ .presentation-mode .presentation-stage .p-equation-result,
+ .presentation-mode .presentation-stage .p-ox-answer { font-size: 5rem; }
+ .presentation-mode .presentation-stage .p-ox-choices { gap: 12px; }
+ .presentation-mode .presentation-stage .p-ox-choices span { font-size: 3rem; }
+ .presentation-mode .presentation-stage .p-inquiry-card { padding: 20px; }
+ .presentation-mode .presentation-stage .p-inquiry-card .learning-evidence {
+  width: 100%;
+  min-width: 0;
+  padding: 16px;
+  font-size: 1rem;
+ }
+ .presentation-mode .presentation-stage .p-video-fallback {
+  position: static;
+  font-size: 1rem;
+  padding: 12px;
+ }
+ .presentation-mode .presentation-stage .p-youtube-figure figcaption { flex-wrap: wrap; gap: 8px; }
+ .presentation-mode .presenter-controls {
+  grid-template-rows: auto auto;
+  padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+  gap: 8px;
+ }
+ .presentation-mode .presenter-cue { display: block; }
+ .presentation-mode .presenter-cue > span { display: none; }
+ .presentation-mode .presenter-cue p {
+  font-size: .875rem;
+  line-height: 1.5;
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+ }
+ .presentation-mode .presenter-nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+ }
+ .presentation-mode .presenter-tools { grid-column: 1 / -1; flex-wrap: wrap; gap: 6px; }
+ .presentation-mode .presenter-tools .btn { min-height: 40px; font-size: .875rem; padding: 8px 10px; }
+ .presentation-mode .presenter-status { margin: 0; }
+ .presentation-mode .presenter-actions { gap: 6px; }
+ .presentation-mode .presenter-actions .btn { min-height: 44px; font-size: .875rem; padding: 10px; }
+}
+@keyframes mobile-slide-enter {
+ from { opacity: .4; }
+ to { opacity: 1; }
+}

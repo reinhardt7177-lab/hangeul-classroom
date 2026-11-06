@@ -1,0 +1,30 @@
+/* Keep the existing green / cream / orange world; readable tones have explicit roles. */
+:root {
+ --readable-muted: #526557;
+ --readable-accent: #a24e2d;
+ --readable-action: #a54c2b;
+}
+.mast .mark small, .mast-side, .intro-facts span, .section-head p,
+main > footer, .brand small, .grade-card p, .page-footer,
+.tablet-header small, .tablet-footnote, .tablet-mode .prompt,
+.tablet-mode .note, .student-title > p, .activity-tabs button:not(.on) {
+ color: var(--readable-muted);
+}
+.intro .eyebrow, .holiday-section .eyebrow,
+.tablet-mode .mini-label, .student-title .overline {
+ color: var(--readable-accent);
+}
+.pending p { color: var(--readable-muted); }
+.pending .tile-symbol { color: #758374; }
+.btn.orange, .presenter-actions [data-action="next"] {
+ background: var(--readable-action);
+ color: #fff;
+}
+/* The student exit belongs after the activity, never over a letter or an input. */
+.tablet-mode .all-holidays-link {
+ position: static;
+ display: inline-flex;
+ align-items: center;
+ min-height: 44px;
+ margin: 0 20px 24px;
+}

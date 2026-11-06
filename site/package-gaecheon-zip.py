@@ -19,6 +19,7 @@ APP.mkdir(parents=True,exist_ok=True)
 for name in ['gaecheon.html','gaecheon.css','gaecheon-presenter-v2.css','gaecheon.js','gaecheon-data.js','learning-resources.js','gaecheon-inquiry.js','lesson-library.js','lesson-library.css','activity-qr.js','fonts.css']:
  copy2(SRC/name,APP/name)
 copy2(SRC/'gaecheon.html',APP/'index.html')
+copy2(SRC/'classroom-a11y.css',APP/'classroom-a11y.css')
 copytree(SRC/'fonts',APP/'fonts',dirs_exist_ok=True)
 (APP/'vendor').mkdir(exist_ok=True);copy2(SRC/'vendor'/'qrcode.js',APP/'vendor'/'qrcode.js')
 (APP/'assets').mkdir(exist_ok=True)

@@ -7,7 +7,7 @@ import json
 ROOT=Path(__file__).resolve().parents[1]
 DIST=ROOT/'site/dist'
 images=json.loads((ROOT/'site/image-assets.json').read_text(encoding='utf-8'))['images']
-common=['learning-resources.js','lesson-library.js','lesson-library.css','gaecheon.html','gaecheon-data.js','gaecheon.js','gaecheon-presenter-v2.css','gaecheon-inquiry.js']
+common=['learning-resources.js','lesson-library.js','lesson-library.css','classroom-a11y.css','gaecheon.html','gaecheon-data.js','gaecheon.js','gaecheon-presenter-v2.css','gaecheon-inquiry.js']
 common += [f'assets/gaecheon-story-{scene}.webp' for scene in ('hwanung','promise','ungnyeo','dangun')]
 common += ['assets/bronze-dagger-songgukri.webp','assets/gochang-dolmen-steve46814.webp','videos/gaecheon-documentary-60s.mp4']
 common += [f'worksheets/gaecheon-{grade}-{audience}.pdf' for grade in ('1-2','3-4','5-6') for audience in ('student','teacher')]
@@ -15,7 +15,7 @@ reports=[]
 for topic,filename in [('gaecheon','개천절-수업자료.zip'),('hangeul','한글날-수업자료.zip')]:
     required=common.copy()
     if topic=='hangeul':
-        required+=['hangeul.html','hangeul.js','hangeul-presenter.js','hangeul-inquiry.js','assets/hunminjeongeum-haerye-facsimile.webp']
+        required+=['hangeul.html','hangeul.js','hangeul-presenter.js','hangeul-inquiry.js','presenter-mobile.css','assets/hunminjeongeum-haerye-facsimile.webp']
         required+=[f'worksheets/hangul-{grade}-{audience}.pdf' for grade in ('1-2','3-4','5-6') for audience in ('student','teacher')]
     with ZipFile(ROOT/'output'/topic/filename) as archive:
         assert archive.testzip() is None
