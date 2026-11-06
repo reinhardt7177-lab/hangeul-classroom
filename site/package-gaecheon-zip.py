@@ -34,6 +34,7 @@ for f in (SRC/'worksheets').glob('gaecheon-*.pdf'):copy2(f,APP/'worksheets'/f.na
 copy2(ROOT/'site'/'server.mjs',OUT/'server.mjs')
 copy2(ROOT/'site'/'start-gaecheon-classroom.cmd',OUT/'개천절-교실서버-시작.cmd')
 copy2(ROOT/'knowledge'/'리뉴얼-출처대장.md',OUT/'리뉴얼-출처대장.md')
+copy2(ROOT/'docs'/'디자인-우선수정-완료기록-2026-11-06.md',OUT/'디자인-우선수정-기록.md')
 copy2(ROOT/'knowledge'/'이야기카드-이미지-제작기록.md',OUT/'이야기카드-이미지-제작기록.md')
 copy2(ROOT/'docs'/'학습내용과-시각자료-수정계획-2026-10-01.md',OUT/'학습내용과-시각자료-수정계획.md')
 copy2(ROOT/'docs'/'리뉴얼-실행계획과-검증기록.md',OUT/'리뉴얼-실행기록.md')

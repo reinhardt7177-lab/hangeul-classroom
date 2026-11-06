@@ -32,8 +32,8 @@
 
 **Interfaces:** consumes real browser layout JSON and Lighthouse JSON; produces pass/fail for contrast, readable mobile text, full cues, unobstructed student controls and intact desktop aspect ratio.
 
-- [ ] Capture the current 390px/320px mobile presenter, student return link and desktop stage.
-- [ ] Run the verifier against baseline evidence. Expected: assertion failures for tiny text and the fixed student link; baseline Lighthouse contrast checks also fail.
+- [x] Capture the current 390px/320px mobile presenter, student return link and desktop stage.
+- [x] Run the verifier against baseline evidence. Expected: assertion failures for tiny text and the fixed student link; baseline Lighthouse contrast checks also fail.
 
 ## Task 2: Correct contrast without replacing the palette
 
@@ -41,9 +41,9 @@
 
 **Interfaces:** new stylesheet is loaded after existing theme styles, and shipped in both packages.
 
-- [ ] Add semantic muted-text/accent/action colors for the audited failing selectors. Keep base background/image/color-family values unchanged.
-- [ ] Remove the landing cards' unnecessary `aria-label` so their visible labels are their native accessible names.
-- [ ] Repeat the five Lighthouse accessibility samples. Expected: `color-contrast` passes on each; home label/content mismatch is gone. Existing heading-order issues are separately recorded, not disguised.
+- [x] Add semantic muted-text/accent/action colors for the audited failing selectors. Keep base background/image/color-family values unchanged.
+- [x] Remove the landing cards' unnecessary `aria-label` so their visible labels are their native accessible names.
+- [x] Repeat the five Lighthouse accessibility samples. Expected: `color-contrast` passes on each; home label/content mismatch is gone. Existing heading-order issues are separately recorded, not disguised.
 
 ## Task 3: Reflow presenter and remove the student overlay
 
@@ -51,19 +51,19 @@
 
 **Interfaces:** at <=700px the existing presenter grid keeps tools and navigation visible, while the main region scrolls; at desktop the existing stage is unchanged.
 
-- [ ] Give mobile slides a single-column reading layout with >=16px body text, visible headings, reflowed cards/quiz/equation/inquiry/video, and a complete wrapping teacher cue.
-- [ ] Keep the student return link in normal flow, not as an overlay. Preserve the teacher/home modes' behavior.
-- [ ] Re-capture browser evidence at 320/390px, desktop 1024/1280px, and representative scene types. Expected: the design evidence verifier passes; images and videos retain the previous file hashes.
+- [x] Give mobile slides a single-column reading layout with >=16px body text, visible headings, reflowed cards/quiz/equation/inquiry/video, and a complete wrapping teacher cue.
+- [x] Keep the student return link in normal flow, not as an overlay. Preserve the teacher/home modes' behavior.
+- [x] Re-capture browser evidence at 320/390px, desktop 1024/1280px, and representative scene types. Expected: the design evidence verifier passes; images and videos retain the previous file hashes.
 
 ## Task 4: Verify, review and package
 
 **Files:** existing verifiers and package scripts; report update.
 
-- [ ] Run all six existing Node verifiers and the image pixel/hash verification. Expected: all pass.
-- [ ] Build both ZIPs and run `verify-content-packages.py`. Expected: current styles included, integrity passes.
-- [ ] Run the Impeccable detector once on the completed changes; separate existing aesthetic warnings from verified defects.
-- [ ] Obtain a fresh whole-change code review, fix important findings with regression evidence, then rerun relevant tests.
-- [ ] Record remaining report items and actual-device limitations without claiming complete accessibility conformance.
+- [x] Run all six existing Node verifiers and the image pixel/hash verification. Expected: all pass.
+- [x] Build both ZIPs and run `verify-content-packages.py`. Expected: current styles included, integrity passes.
+- [x] Run the Impeccable detector once on the completed changes; separate existing aesthetic warnings from verified defects.
+- [x] Obtain a fresh whole-change code review, fix important findings with regression evidence, then rerun relevant tests.
+- [x] Record remaining report items and actual-device limitations without claiming complete accessibility conformance.
 
 ## Task 5: Publish verified revision
 

@@ -30,6 +30,7 @@ for topic,filename in [('gaecheon','개천절-수업자료.zip'),('hangeul','한
         for name,source in [('리뉴얼-출처대장.md','knowledge/리뉴얼-출처대장.md'),('이야기카드-이미지-제작기록.md','knowledge/이야기카드-이미지-제작기록.md'),('학습내용과-시각자료-수정계획.md','docs/학습내용과-시각자료-수정계획-2026-10-01.md')]:
             assert archive.read(name)==(ROOT/source).read_bytes(),name
         assert archive.read('교사용-수업안내.md')==(ROOT/'docs'/('한글날' if topic=='hangeul' else '개천절')/'교사용-수업안내.md').read_bytes()
+        assert archive.read('디자인-우선수정-기록.md')==(ROOT/'docs/디자인-우선수정-완료기록-2026-11-06.md').read_bytes()
         assert archive.read('전체장면-진행과-학습지-해설-수정기록.md')==(ROOT/'docs/전체장면-진행과-학습지-해설-버튼-수정계획-2026-10-01.md').read_bytes()
         reports.append({'topic':topic,'entries':len(archive.namelist()),'current_revision_files':len(required),'integrity':'passed'})
 print(json.dumps(reports,ensure_ascii=False))

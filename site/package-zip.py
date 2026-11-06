@@ -12,6 +12,7 @@ repo = Path(__file__).resolve().parent.parent
 root = repo / "output" / "hangeul"
 # name inside the ZIP -> source in the repository
 sources = {
+    "디자인-우선수정-기록.md": "docs/디자인-우선수정-완료기록-2026-11-06.md",
     "전체장면-진행과-학습지-해설-수정기록.md": "docs/전체장면-진행과-학습지-해설-버튼-수정계획-2026-10-01.md",
     "리뉴얼-출처대장.md": "knowledge/리뉴얼-출처대장.md",
     "이야기카드-이미지-제작기록.md": "knowledge/이야기카드-이미지-제작기록.md",
