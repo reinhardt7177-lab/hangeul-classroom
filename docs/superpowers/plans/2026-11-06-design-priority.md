@@ -67,7 +67,7 @@
 
 ## Task 5: Publish verified revision
 
-- [ ] Commit only related files, fast-forward the existing `main`, and push to the existing GitHub repository.
-- [ ] Verify Cloudflare authentication, deploy the same packaged app, and await GitHub Pages success.
-- [ ] Compare public assets with the local package on both origins, including PDFs/video range response, and inspect representative public mobile/desktop screens.
+- [x] Commit only related files, fast-forward the existing `main`, and push to the existing GitHub repository.
+- [x] Verify Cloudflare authentication, deploy the same packaged app, and await GitHub Pages success.
+- [x] Compare public assets with the local package on both origins, including PDFs/video range response, and inspect representative public mobile/desktop screens. GitHub: all 85 full files. Cloudflare: 84 full files, plus HTTP 200 and exact length for one 21.7MB PDF; its complete second-origin transfer remains unverified because of slow transfer. This documented verification limit does not change the unmodified PDF; its complete GitHub and ZIP copies match.
 - [ ] Publish new offline ZIP release assets without replacing older releases, then report exact public links and remaining limitations.
