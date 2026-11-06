@@ -10,13 +10,16 @@ function syncMusicButton(video){
  button.setAttribute('aria-pressed',String(audible));
 }
 async function playLessonVideo(target){
- try{await target.video.play();}
- catch(error){
-  if(error.name==='NotAllowedError'&&target.video.dataset.bgm==='true'&&!target.video.muted){
-   target.video.muted=true;
-   syncMusicButton(target.video);
-   await target.video.play();
-  }else throw error;
+ for(let attempt=0;attempt<2;attempt++){
+  try{await target.video.play();return;}
+  catch(error){
+   // pause() intentionally interrupts pending playback; keep the user's paused frame.
+   if(error.name==='AbortError'&&target.video.paused)return;
+   if(attempt===0&&error.name==='NotAllowedError'&&target.video.dataset.bgm==='true'&&!target.video.muted){
+    target.video.muted=true;
+    syncMusicButton(target.video);
+   }else throw error;
+  }
  }
 }
 window.motionToggleLabel=()=>lessonMotionDisabled()?'모션 켜기':'모션 끄기';
@@ -106,7 +109,7 @@ document.addEventListener('click',e=>{
   if(target?.kind!=='video')return;
   const button=e.target.closest('button');
   if(target.video.ended){window.runHangeulMotion(true);return;}
-  if(target.video.paused){playLessonVideo(target).then(()=>{target.stage.setAttribute('data-motion-state','playing');button.textContent='영상 잠시 멈춤'}).catch(()=>{target.stage.setAttribute('data-motion-state','fallback');target.video.style.display='none';button.hidden=true});}
+  if(target.video.paused){playLessonVideo(target).then(()=>{if(target.video.paused)return;target.stage.setAttribute('data-motion-state','playing');button.textContent='영상 잠시 멈춤'}).catch(()=>{target.stage.setAttribute('data-motion-state','fallback');target.video.style.display='none';button.hidden=true});}
   else{target.video.pause();target.stage.setAttribute('data-motion-state','paused');button.textContent='이어서 보기';}
  }
  if(action==='motion-toggle'){

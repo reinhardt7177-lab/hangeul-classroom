@@ -38,6 +38,17 @@ if(evidence.slides)check('all measured slide paragraphs remain readable and cont
   assert.ok(slide.nextVisible,`${slide.grade}/${slide.step}: next button outside viewport`);
  }
 });
+const luminance=color=>{
+ const channels=color.match(/[\d.]+/g)?.map(Number);
+ assert.ok(channels?.length===3,'Supply an opaque rendered RGB color: '+color);
+ const linear=channels.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});
+ return .2126*linear[0]+.7152*linear[1]+.0722*linear[2];
+};
+for(const sample of evidence.contrastSamples||[])check(sample.name+': rendered text contrast',()=>{
+ const a=luminance(sample.foreground),b=luminance(sample.background);
+ const ratio=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+ assert.ok(ratio>=sample.minimum,`${ratio.toFixed(2)}:1 is below ${sample.minimum}:1`);
+});
 for(const file of reports){
  const report=JSON.parse(fs.readFileSync(file,'utf8'));
  check(`${file}: text contrast`,()=>assert.equal(report.audits['color-contrast'].score,1,'Rendered contrast audit failed'));

@@ -50,6 +50,8 @@
   background: #173521;
   color: #fff8e7;
  }
+ .presentation-mode .presentation-stage .p-activity.has-image .p-subtitle { color: #e7ecdd; }
+ .presentation-mode .presentation-stage .p-activity.has-image .p-kicker { color: #ffd394; }
  /* Poster and video share a grid cell: a failed video exposes the same still image. */
  .presentation-mode .presentation-stage .p-slide > .p-backdrop {
   position: relative;
@@ -155,7 +157,7 @@
  .presentation-mode .presentation-stage .p-feedback strong { font-size: 1rem; white-space: normal; }
  .presentation-mode .presentation-stage .p-open-answer,
  .presentation-mode .presentation-stage .p-notice { padding: 16px; border-radius: 12px; }
- .presentation-mode .presentation-stage .p-equation .p-visual { padding: 20px; border-radius: 12px; }
+ .presentation-mode .presentation-stage .p-equation .p-visual { padding: 20px; border-radius: 12px; color: #fff3d6; }
  .presentation-mode .presentation-stage .p-equation-parts { gap: 12px; font-size: 2rem; }
  .presentation-mode .presentation-stage .p-equation-parts b { font-size: 1.25rem; }
  .presentation-mode .presentation-stage .p-equation-result,
