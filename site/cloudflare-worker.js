@@ -1,9 +1,9 @@
-// Cloudflare Worker for holiday.mumuworld.com. Only /videos/* comes through here (run_worker_first
-// in wrangler.jsonc); every other file is served straight from the static asset store.
+// Cloudflare Worker for holiday.mumuworld.com. Media requests use this handler;
+// other files are served directly from the static asset store.
 //
 // Why: the asset store ignores the Range header and always answers 200 with the whole file, and
-// iPhone/iPad Safari will not play a <video> without 206 partial responses. Cloudflare's cache does
-// answer Range requests from a stored full copy, so each video is put in the cache once per deploy
+// some browsers require 206 partial responses for media. Cloudflare's cache does
+// answer Range requests from a stored full copy, so each media file is cached once per deploy
 // and every request is served from there. The cache slices natively, so the Worker stays far below
 // the free plan's CPU limit even for the 20 MB documentary.
 export default {
@@ -11,7 +11,7 @@ export default {
     if (request.method !== 'GET') return env.ASSETS.fetch(request);
     const url = new URL(request.url);
     const plain = new Request(url.origin + url.pathname);
-    // One cache entry per deploy, so a replaced video never outlives the version that shipped it.
+    // Scope cached media to the version that shipped it.
     const key = `${plain.url}?v=${env.VERSION.id}`;
     const range = request.headers.get('Range');
     const lookup = new Request(key, range ? { headers: { Range: range } } : {});

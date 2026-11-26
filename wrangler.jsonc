@@ -8,15 +8,15 @@
   // site/dist를 통째로 올리지 않는다. package.mjs가 검수를 마친 파일만 골라 담는다.
   "name": "mumu-holiday",
   "compatibility_date": "2026-09-28",
-  // 영상만 Worker를 거친다. 아이폰·아이패드 사파리가 요구하는 206 부분 응답을 돌려주려고.
+  // 영상과 음악은 Worker를 거쳐 206 부분 응답을 지원한다.
   // 나머지 파일은 정적 파일로 바로 나간다.
   "main": "site/cloudflare-worker.js",
   "assets": {
     "directory": "./output/hangeul/수업앱",
     "binding": "ASSETS",
-    "run_worker_first": ["/videos/*"]
+    "run_worker_first": ["/videos/*", "/audio/*"]
   },
-  // 배포 버전 id로 영상 캐시를 나눈다. 새로 배포하면 예전 영상이 남지 않는다.
+  // 배포 버전 id로 미디어 캐시를 나눈다.
   "version_metadata": { "binding": "VERSION" },
 
   // workers.dev 주소는 닫고 이 도메인 하나만 연다.
