@@ -1,5 +1,15 @@
 # 오늘의 국경일
 
+## 3·1절 수업
+
+공통 국경일 선택 화면에서 3·1절을 열고 초등 1–2·3–4·5–6학년을 고릅니다. 세 학년군은 역사 자료를 각각 그림 순서, 지역 지도, 주장과 근거로 탐구합니다. 안중근의 옥중 글, 조마리아의 독립운동, 유관순의 감시 카드와 광복까지의 기록을 읽는 장면에는 창작 배경음악과 교사 발문을 함께 제공합니다. 전자칠판에서는 설명·정답을 차례로 공개하고, 태블릿은 활동별 QR로 접속합니다. 골든벨 15문항과 학생용·교사용 A4 학습지 6종이 포함됩니다.
+
+- [공개 3·1절 수업 앱](https://holiday.mumuworld.com/samil.html)
+- [3·1절 수업 안내 및 자료 출처](docs/3·1절/교사용-수업안내.md)
+- [학생·교사 인쇄 자료](site/dist/worksheets/)
+
+저장소에서 미리 보려면 `node site/server.mjs`를 실행한 뒤 http://localhost:4198/samil.html 을 여세요.
+
 초등 **1–2 / 3–4 / 5–6학년**을 위한 한글날·개천절 수업 앱 프로젝트입니다.
 
 **한글날과 개천절은 각각 독립된 수업 패키지입니다.** [공통 국경일 선택 화면](https://reinhardt7177-lab.github.io/hangeul-classroom/)에서 각각 들어갑니다. 같은 내용을 **[holiday.mumuworld.com](https://holiday.mumuworld.com)**(Cloudflare)에서도 엽니다. 이 주소는 저장소 루트에서 `node site/package.mjs` 다음 `npx wrangler deploy`로 다시 올립니다(설정: `wrangler.jsonc`). 영상은 아이폰·아이패드 사파리에서도 재생되도록 `site/cloudflare-worker.js`가 부분 요청(206)으로 보냅니다. 개천절 수업에는 새 교육용 이미지, 직접 만든 1분 도입 영상, 배경음악이 있는 곰·범 8초 영상을 포함했습니다.

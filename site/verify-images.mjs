@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 const root=import.meta.dirname,dist=path.join(root,'dist');
 const manifest=JSON.parse(fs.readFileSync(path.join(root,'image-assets.json'),'utf8'));
 assert.equal(manifest.encoding,'lossless');assert.equal(manifest.resized,false);
-assert.equal(manifest.images.length,24);
+assert.equal(manifest.images.length,30);
 const hash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const known=new Set();
 for(const item of manifest.images){

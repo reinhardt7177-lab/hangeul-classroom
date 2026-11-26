@@ -2,13 +2,15 @@ name: Verify and deploy classroom
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: classroom-pages
+  group: ${{ github.event_name == 'pull_request' && format('classroom-pr-{0}', github.event.number) || 'classroom-pages' }}
   cancel-in-progress: false
 
 jobs:
@@ -25,16 +27,20 @@ jobs:
         run: |
           node verify.mjs
           node verify-gaecheon.mjs
+          node verify-samil.mjs
           node verify-renewal.mjs
           node verify-images.mjs
       - name: Prepare classroom files
         run: node site/package.mjs
       - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
       - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           path: output/hangeul/수업앱
 
   deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
     permissions:

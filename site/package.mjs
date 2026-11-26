@@ -23,6 +23,10 @@ for(const name of ['index.html','hangeul.html','holidays.css','gaecheon.html','g
  copy(path.join(source,name),path.join(target,name));
 }
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
+for(const name of ['samil.html','samil.css','samil.js','samil-data.js','samil-landing.css','audio/samil-words-left.mp3']){
+ fs.mkdirSync(path.dirname(path.join(target,name)),{recursive:true});
+ copy(path.join(source,name),path.join(target,name));
+}
 for(const name of ['classroom-a11y.css','presenter-mobile.css'])copy(path.join(source,name),path.join(target,name));
 // Deploy only reviewed WebP derivatives; source PNG/JPEG files stay in the repository.
 const imageManifest=JSON.parse(fs.readFileSync(path.join(site,'image-assets.json'),'utf8'));

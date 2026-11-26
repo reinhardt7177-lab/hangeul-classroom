@@ -241,6 +241,66 @@
       "bytes": 1460544,
       "sourceSha256": "6bee6015dc35ae86cda80ccbb62922dec908bcbcd931cc8ec436173781b23673",
       "sha256": "96a64654cd9012f2bc9341e533c5239ce20f4ae9d3ed67f9e8474ac989530618"
+    },
+    {
+      "source": "samil-seoul.jpg",
+      "file": "samil-seoul.webp",
+      "width": 2160,
+      "height": 1514,
+      "sourceBytes": 794000,
+      "bytes": 1804084,
+      "sourceSha256": "20a95e12eaf4dff46a9e71e76b787b630bbc75d0e9d48381847e0af872d85a28",
+      "sha256": "0d8cbd8ee56a677d60f58da1e13e6a34c4f258ec72d4f9a462838d7d02ca054a"
+    },
+    {
+      "source": "samil-declaration.jpg",
+      "file": "samil-declaration.webp",
+      "width": 3000,
+      "height": 2250,
+      "sourceBytes": 5350094,
+      "bytes": 6337994,
+      "sourceSha256": "d4375d07ff8b2439d9cfccf2165dff58db2a9d6aef40098b2838205b427e361a",
+      "sha256": "eac3e3acd8558d178a6ae71620e5904d9e68a421a8875b6cc281887580d68aeb"
+    },
+    {
+      "source": "samil-flag.jpg",
+      "file": "samil-flag.webp",
+      "width": 1050,
+      "height": 700,
+      "sourceBytes": 539500,
+      "bytes": 708422,
+      "sourceSha256": "b4edec46434afcab90658fc844d20063b4ecb2390fb59304a8ebd4eccf44c432",
+      "sha256": "2fc5d54abf095e139abb4d43e5255844a51c73aa5f8ec1932d404f92b6aedf2a"
+    },
+    {
+      "source": "samil-map.png",
+      "file": "samil-map.webp",
+      "width": 720,
+      "height": 1040,
+      "sourceBytes": 15059,
+      "bytes": 5168,
+      "sourceSha256": "5ec99a33dd986fd86aef458b691eb889f5fad633e34d7218ff525f31692ddc66",
+      "sha256": "0fbfd040d0b4d8693d8c13488d3664ad7b706b392715ee631784151deec3f276"
+    },
+    {
+      "source": "samil-ahn-visit.jpg",
+      "file": "samil-ahn-visit.webp",
+      "width": 783,
+      "height": 549,
+      "sourceBytes": 106617,
+      "bytes": 261462,
+      "sourceSha256": "b1c8d809b2b17afdf77ec4ac5f082447b1be88e20ac91893b08bce33a78d5210",
+      "sha256": "cbb7d72c51c7c96d983d0793f0baeb5e5cbc16afd537efb14bc5b4f4cb976a35"
+    },
+    {
+      "source": "samil-yu-record.jpg",
+      "file": "samil-yu-record.webp",
+      "width": 1359,
+      "height": 993,
+      "sourceBytes": 145616,
+      "bytes": 745524,
+      "sourceSha256": "f0cf557a09b0675e4fdd4ba69dc56026656d08f8c66dd8774fe469c32e592895",
+      "sha256": "fabf4d374efd5e4c162216fdad71dc58b2ce6b393d93b2efdb33cac238478205"
     }
   ]
 }

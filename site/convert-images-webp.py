@@ -22,6 +22,8 @@ SOURCES = [
     'gaecheon-story-promise.png', 'gaecheon-story-ungnyeo.png', 'gaecheon-story-dangun.png',
     'bronze-dagger-songgukri.jpg', 'gochang-dolmen-steve46814.jpg',
     'hunminjeongeum-haerye-facsimile.jpg',
+    'samil-seoul.jpg', 'samil-declaration.jpg', 'samil-flag.jpg', 'samil-map.png',
+    'samil-ahn-visit.jpg', 'samil-yu-record.jpg',
 ]
 
 

@@ -1,0 +1,9 @@
+.tile.samil .tile-wash { background: linear-gradient(90deg, #142a34f5, #142a344d); }
+.tile.samil img { object-position: center 55%; }
+.tile.samil h3 { font-size: clamp(2rem, 4vw, 3.1rem); }
+.tile.samil .tile-link:focus-visible { outline-offset: -5px; }
+@media (max-width: 620px) {
+  .tile.samil .tile-content { padding: 0.8rem 1.2rem; }
+  .tile.samil h3 { margin-bottom: 0.3rem; }
+  .tile.samil .tile-content p { margin-bottom: 0.4rem; }
+}
