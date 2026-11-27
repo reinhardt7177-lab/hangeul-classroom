@@ -47,6 +47,7 @@ for (const [id, grade] of Object.entries(grades)) {
     const html = renderRoute('#lesson/' + id + '/' + index);
     assert.ok(html.includes((index + 1) + ' / ' + count), 'Unreachable lesson scene');
     assert.match(html, /class="s-explanation" aria-live="polite" hidden/);
+    assert.match(html, /data-action="scenes"/);
     if (grade.slides[index]?.type === 'map') {
       assert.match(html, /samil-map\.webp/);
       assert.match(html, /data-action="place" data-id="pyeongyang"/);
@@ -54,13 +55,23 @@ for (const [id, grade] of Object.entries(grades)) {
     scenes++;
   }
 }
-assert.match(renderRoute('#student/3-4/activity'), /지도에서 날짜 비교하기/);
-assert.match(renderRoute('#student/5-6/quiz'), /3·1절 골든벨/);
+const tabletMap = renderRoute('#student/3-4/activity');
+assert.match(tabletMap, /지도에서 날짜 비교하기/);
+assert.equal([...tabletMap.matchAll(/data-origin="pin"/g)].length, 3);
+assert.equal([...tabletMap.matchAll(/data-origin="list"/g)].length, 3);
+for (const [id, grade] of Object.entries(grades)) {
+  const quiz = renderRoute('#student/' + id + '/quiz');
+  assert.match(quiz, /3·1절 골든벨/);
+  assert.equal([...quiz.matchAll(/class="s-student-question"/g)].length, 1);
+  assert.equal([...quiz.matchAll(/data-action="choice"/g)].length, grade.quiz[0].options.length);
+  assert.match(quiz, /data-action="quiz-next" disabled/);
+}
 const high = grades['5-6'].slides;
 const letterIndex = high.findIndex(slide => slide.record?.links.includes('ahnLetter'));
 const letter = renderRoute('#lesson/5-6/' + letterIndex);
 assert.match(letter, /어머님 전상서/);
 assert.match(letter, /마음 편안히 지내시기를 바랍니다/);
+assert.match(letter, /data-action="artifact" data-id="ahn"/);
 assert.match(letter, /data-action="toggle-score">음악 재생/);
 assert.match(letter, /<audio[^>]+src="audio\/samil-words-left.mp3"/);
 assert.doesNotMatch(letter, /<audio[^>]+autoplay/);

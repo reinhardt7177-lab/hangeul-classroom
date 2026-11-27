@@ -6,6 +6,7 @@
   const dialog = document.getElementById('samil-dialog');
   const answers = new Map();
   const activities = new Map();
+  const quizzes = new Map();
   const openNotes = new Set();
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -44,17 +45,32 @@
     const source = sources[key];
     return `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(text ?? source.title)} ↗</a>`;
   };
-  const attribution = key => {
-    const source = sources[key];
-    return `<figcaption>${assetLink(key)} <span>${esc(source.credit)}</span></figcaption>`;
-  };
+  function sourceFigure(key, modifier = '') {
+    const { source } = visuals[key];
+    return `<figure class="s-figure ${modifier}">${photo(key)}
+      <figcaption class="s-figure-label">
+        <div>${assetLink(source)} <span>${esc(sources[source].credit)}</span></div>
+        <button class="s-button s-enlarge" data-action="artifact" data-id="${key}" type="button"
+          aria-label="${esc(sources[source].title)} 확대">확대 <span aria-hidden="true">+</span></button>
+      </figcaption></figure>`;
+  }
 
-  function openDialog(title, body, trigger) {
+  function openDialog(title, body, trigger, kind = '') {
     dialogTrigger = trigger || document.activeElement;
+    dialog.dataset.kind = kind;
     dialog.innerHTML = `<div class="s-dialog-head"><h2 id="samil-dialog-title">${esc(title)}</h2>
       <button type="button" class="s-button" data-action="close">닫기</button></div>${body}`;
     if (!dialog.open) dialog.showModal();
     dialog.querySelector('[data-action="close"]').focus();
+  }
+
+  function showArtifact(button) {
+    const { id } = button.dataset;
+    const source = sources[visuals[id].source];
+    openDialog(source.title, `<div class="s-artifact-tools">${assetLink(visuals[id].source, '출처 열기')}
+        <button class="s-button" type="button" data-action="zoom" aria-pressed="false">원본 크기</button></div>
+      <div class="s-artifact-sheet" tabindex="0" role="region" aria-label="확대 사료">${photo(id)}</div>
+      <p class="s-artifact-credit">${esc(source.credit)}</p>`, button, 'artifact');
   }
 
   function home() {
@@ -108,8 +124,7 @@
         ${context ? `<p class="s-archive-context">${esc(context)}</p>` : ''}
         <ul class="s-archive-sources" aria-label="내용 출처">${links.map(key => `<li>${assetLink(key)}</li>`).join('')}</ul>
       </div>
-      ${visual ? `<div class="s-archive-reproduction"><figure class="s-figure s-archive-photo">
-        ${photo(slide.visual)}${attribution(visual.source)}</figure></div>` : ''}
+      ${visual ? `<div class="s-archive-reproduction">${sourceFigure(slide.visual, 's-archive-photo')}</div>` : ''}
       <aside class="s-archive-question" aria-label="교실 토의">${question}</aside>
     </article>`;
   }
@@ -145,19 +160,27 @@
     });
   }
 
-  function mapVisual(selected, interactive) {
+  function mapVisual(selected, interactive, visited = new Set()) {
     const place = places.find(item => item.id === selected) || places[0];
     return `<figure class="s-map">
       <div class="s-map-body">
         <div class="s-map-image">
           <img src="assets/samil-map.webp" alt="한반도 해안선 지도. 위에서부터 평양, 서울, 천안 아우내 순으로 표시되어 있어요.">
-          ${places.map((item, index) => `<span aria-hidden="true" class="s-map-pin${item.id === place.id ? ' active' : ''}"
-            style="--x:${item.x}%;--y:${item.y}%">${index + 1}</span>`).join('')}
+          ${places.map((item, index) => {
+            const active = item.id === place.id;
+            const number = `<span>${index + 1}</span>`;
+            return `<div class="s-map-anchor s-map-${item.id}" style="--x:${item.x}%;--y:${item.y}%">
+              ${interactive
+                ? `<button type="button" class="s-map-pin" data-action="place" data-id="${item.id}" data-origin="pin"
+                    aria-pressed="${active}" aria-label="${item.name}${visited.has(item.id) ? ` · ${item.date}` : ''}">${number}</button>`
+                : `<span class="s-map-pin" aria-hidden="true">${number}</span>`}</div>`;
+          }).join('')}
         </div>
         <div class="s-map-information">
           <div class="s-places">${places.map((item, index) => interactive
-            ? `<button type="button" class="s-button s-place" data-action="place" data-id="${item.id}" aria-pressed="${item.id === place.id}">
-                 <span>${index + 1}</span> ${item.name}</button>`
+            ? `<button type="button" class="s-button s-place" data-action="place" data-id="${item.id}" data-origin="list"
+                 aria-pressed="${item.id === place.id}"><span>${index + 1}</span> ${item.name}
+                 ${visited.has(item.id) ? `<strong class="s-place-date">${item.date}</strong>` : ''}</button>`
             : `<div class="s-map-list"><span>${index + 1} · ${item.name}</span><strong>${item.date}</strong></div>`).join('')}</div>
           ${interactive ? `<div class="s-map-detail" aria-live="polite">
             <strong>1919년 ${place.date} · ${place.name}</strong><p>${esc(place.detail)}</p>
@@ -168,22 +191,22 @@
     </figure>`;
   }
 
-  function visualFor(slide, mapSelection) {
+  function visualFor(slide, mapSelection, visited) {
     const key = slide.visual;
-    if (slide.type === 'map' || key === 'map') return `<div data-map>${mapVisual(mapSelection, slide.type === 'map')}</div>`;
+    if (slide.type === 'map' || key === 'map') return `<div data-map>${mapVisual(mapSelection, slide.type === 'map', visited)}</div>`;
     if (key === 'timeline') return timeline();
     if (key === 'compare') return `<div class="s-compare">${['paper', 'crowd'].map(
-      part => `<figure class="s-figure">${photo(part)}${attribution(visuals[part].source)}</figure>`).join('')}</div>`;
+      part => sourceFigure(part)).join('')}</div>`;
     if (!visuals[key]) return '';
-    return `<figure class="s-figure s-${key}">${photo(key)}${attribution(visuals[key].source)}</figure>`;
+    return sourceFigure(key, `s-${key}`);
   }
 
   function activityState() {
     const key = `${route.view}/${route.grade}/${route.index ?? ''}`;
-    if (!activities.has(key)) activities.set(key, {
-      order: [], place: route.view === 'lesson' && route.index === 4 ? 'aunae' : 'seoul',
-      visited: new Set(['seoul']), claimAnswers: {},
-    });
+    if (!activities.has(key)) {
+      const place = route.view === 'lesson' && route.index === 4 ? 'aunae' : 'seoul';
+      activities.set(key, { order: [], place, visited: new Set([place]), claimAnswers: {} });
+    }
     return activities.get(key);
   }
 
@@ -223,7 +246,7 @@
     const state = activityState();
     if (route.grade === '1-2') return orderActivity(state);
     if (route.grade === '5-6') return claimActivity(state);
-    return `<div data-map>${mapVisual(state.place, true)}</div>
+    return `<div data-map>${mapVisual(state.place, true, state.visited)}</div>
       <p class="s-feedback" role="status">${state.visited.size === places.length
         ? '세 곳을 모두 살펴봤어요. 3월 1일 시위가 열린 두 곳과, 그 뒤에 시위가 열린 곳을 짝에게 말해 보세요.'
         : `찾아본 장소 ${state.visited.size} / ${places.length}`}</p>`;
@@ -241,6 +264,7 @@
     const g = grades[route.grade];
     const slides = lessonSlides(route.grade);
     const slide = slides[route.index];
+    const { place, visited } = activityState();
     const kind = { cover: '도입', story: '이야기', record: '기록 읽기', observe: '자료 관찰', map: '지도 탐구', read: '사료 읽기',
       activity: '학생 활동', quiz: '골든벨', recap: '마무리' }[slide.type];
     const hero = slide.type === 'cover';
@@ -256,6 +280,7 @@
       <header class="s-top s-presenter-head">
         <div class="s-session"><a class="s-brand" href="samil.html">← 3·1절</a><span>${g.label}</span></div>
         <div class="s-tools">
+          <button class="s-button" type="button" data-action="scenes">장면 목록</button>
           <button class="s-button" type="button" data-action="qr">학생 QR</button>
           <button class="s-button" type="button" data-action="worksheets">학습지·해설</button>
           <button class="s-button s-secondary-tool" type="button" data-action="notes">교사 노트</button>
@@ -276,8 +301,10 @@
           ${explanation}
         </div>
         ${interaction ? `<section class="s-activity" aria-label="${esc(g.activity)}" data-activity>${activityBody()}</section>` : ''}
-        ${!hero && !interaction ? `<section class="s-visual" aria-label="수업 자료">${visualFor(slide, activityState().place)}</section>` : ''}
-        ${hero ? `<p class="s-cover-credit">${assetLink('photograph', '1919년 3월 서울 시위 사진')} · 한국통신국 간행물</p>` : ''}`}
+        ${!hero && !interaction ? `<section class="s-visual" aria-label="수업 자료">${visualFor(slide, place, visited)}</section>` : ''}
+        ${hero ? `<div class="s-cover-credit">${assetLink('photograph', '1919년 3월 서울 시위 사진')}
+          <button class="s-button s-enlarge" data-action="artifact" data-id="crowd" type="button"
+            aria-label="서울 시위 사진 확대">확대 <span aria-hidden="true">+</span></button></div>` : ''}`}
       </main>
       <footer class="s-presenter-foot">
         <div class="s-progress"><span class="s-progress-count">${route.index + 1} / ${slides.length}</span>
@@ -291,22 +318,62 @@
     wireScore();
   }
 
+  function showScenes(button) {
+    const sections = new Map();
+    lessonSlides(route.grade).forEach((slide, index) => {
+      const group = { activity: '학생 활동', quiz: '골든벨', recap: '마무리' }[slide.type] || '이야기와 자료';
+      if (!sections.has(group)) sections.set(group, []);
+      sections.get(group).push(`<li><a href="${lessonHref(route.grade, index)}" data-scene-link
+        ${index === route.index ? 'aria-current="step"' : ''}><span>${index + 1}</span>${esc(slide.title)}</a></li>`);
+    });
+    openDialog(`${grades[route.grade].label} 장면 목록`, `<div class="s-scene-index">${[...sections].map(([label, links]) =>
+      `<section><h3>${label}</h3><ul>${links.join('')}</ul></section>`).join('')}</div>`, button, 'scenes');
+    dialog.querySelector('[aria-current="step"]').focus();
+  }
+
+  const studentAnswerKey = index => `student/${route.grade}/${index}`;
+
+  function quizState() {
+    if (!quizzes.has(route.grade)) quizzes.set(route.grade, { index: 0, finished: false });
+    return quizzes.get(route.grade);
+  }
+
   function studentQuiz() {
     const g = grades[route.grade];
-    const key = index => `student/${route.grade}/${index}`;
-    const done = g.quiz.filter((_, index) => answers.has(key(index))).length;
+    const { index, finished } = quizState();
+    const total = g.quiz.length;
+    if (finished) {
+      const correctCount = g.quiz.filter((item, i) => answers.get(studentAnswerKey(i)) === item.correct).length;
+      return `<div class="s-quiz-result" data-student-quiz>
+        <h2 id="s-quiz-heading" tabindex="-1">골든벨 결과 <strong>${correctCount} / ${total}</strong></h2>
+        <ol>${g.quiz.map((item, i) => {
+          const correct = answers.get(studentAnswerKey(i)) === item.correct;
+          return `<li><button class="s-button" type="button" data-action="quiz-review" data-index="${i}">
+            <span>${i + 1}.</span> ${esc(item.title)}<strong>${correct ? '정답' : '다시 보기'}</strong></button></li>`;
+        }).join('')}</ol>
+        <button class="s-button" type="button" data-action="quiz-reset">처음부터 다시 풀기</button></div>`;
+    }
+    const done = g.quiz.filter((_, i) => answers.has(studentAnswerKey(i))).length;
+    const item = g.quiz[index];
+    const selected = answers.get(studentAnswerKey(index));
+    const visual = visualFor(item);
+    const feedback = selected === undefined ? '답을 골라요.' : selected === item.correct
+      ? `맞았어요. ${item.explain}` : '자료를 다시 보고 다른 답을 골라 봐요.';
     return `<div class="s-student-quiz" data-student-quiz>
-      <p class="s-feedback" role="status">${done} / ${g.quiz.length}문항 응답${done === g.quiz.length
-        ? ` · ${g.quiz.filter((item, index) => answers.get(key(index)) === item.correct).length}문항 맞았어요.` : ''}</p>
-      ${g.quiz.map((item, index) => {
-        const selected = answers.get(key(index));
-        return `<section class="s-student-question" aria-labelledby="quiz-title-${index}">
-          <h2 id="quiz-title-${index}">${index + 1}. ${esc(item.title)}</h2>
-          ${visualFor(item)}
-          ${choiceButtons(item, selected, index, selected === item.correct)}
-          <p class="s-feedback" role="status">${selected === undefined ? '답을 골라요.' : selected === item.correct
-            ? esc(item.explain) : '자료를 다시 보고 다른 답을 골라 봐요.'}</p></section>`;
-      }).join('')}</div>`;
+      <div class="s-quiz-progress"><span>${index + 1} / ${total} 문항</span>
+        <progress value="${done}" max="${total}" aria-label="응답한 문항"></progress><span>${done}문항 응답</span></div>
+      <section class="s-student-question" aria-labelledby="s-quiz-heading">
+        <h2 id="s-quiz-heading" tabindex="-1">${esc(item.title)}</h2>
+        <div class="s-question-body${visual ? ' has-visual' : ''}">${visual ? `<div>${visual}</div>` : ''}
+          <div>${choiceButtons(item, selected, index, selected === item.correct)}
+            <p class="s-feedback s-quiz-feedback" data-quiz-feedback>${esc(feedback)}</p></div>
+        </div>
+      </section>
+      <nav class="s-quiz-controls" aria-label="골든벨 문항 이동">
+        <button class="s-button" type="button" data-action="quiz-back" ${index === 0 ? 'disabled' : ''}>← 이전 문제</button>
+        <button class="s-button s-primary" type="button" data-action="quiz-next" ${selected === undefined ? 'disabled' : ''}>
+          ${index === total - 1 ? '결과 보기' : '다음 문제'} →</button>
+      </nav></div>`;
   }
 
   function student() {
@@ -319,8 +386,9 @@
           <a class="s-button" href="${studentHref(route.grade, 'quiz')}" ${quiz ? 'aria-current="page"' : ''}>골든벨</a>
         </nav>
         <h1 id="samil-title" tabindex="-1">${quiz ? '3·1절 골든벨' : esc(g.activity)}</h1>
-        ${quiz ? studentQuiz() : `<section class="s-activity" aria-label="${esc(g.activity)}" data-activity>${activityBody()}</section>`}
-        <p class="s-student-exit">${esc(g.exit)}</p>
+        ${quiz ? `<div class="s-visually-hidden" role="status" data-quiz-status></div>${studentQuiz()}`
+          : `<section class="s-activity" aria-label="${esc(g.activity)}" data-activity>${activityBody()}</section>
+            <p class="s-student-exit">${esc(g.exit)}</p>`}
       </main>`;
   }
 
@@ -369,7 +437,7 @@
   }
 
   function changeActivity(button) {
-    const { action, index, id } = button.dataset;
+    const { action, index, id, origin } = button.dataset;
     const state = activityState();
     const activity = app.querySelector('[data-activity]');
     if (action === 'place') {
@@ -377,8 +445,8 @@
       state.visited.add(id);
       if (!activity) {
         const map = app.querySelector('[data-map]');
-        map.innerHTML = mapVisual(id, true);
-        keepFocus(map, `[data-action="place"][data-id="${id}"]`);
+        map.innerHTML = mapVisual(id, true, state.visited);
+        keepFocus(map, `[data-id="${id}"][data-origin="${origin}"]`);
         return;
       }
     }
@@ -386,7 +454,7 @@
     if (action === 'reset-order') state.order = [];
     if (action === 'claim') state.claimAnswers[index] = Number(id);
     activity.innerHTML = activityBody();
-    const nextFocus = action === 'place' ? `[data-action="place"][data-id="${id}"]` :
+    const nextFocus = action === 'place' ? `[data-id="${id}"][data-origin="${origin}"]` :
       action === 'claim' ? `[data-action="claim"][data-index="${index}"][data-id="${id}"]` :
       '[data-action="order"]:not([disabled])';
     keepFocus(activity, nextFocus);
@@ -403,11 +471,32 @@
       options.innerHTML = choiceButtons(lessonSlides(route.grade)[route.index], selected, route.index, false);
       keepFocus(options, selector);
     } else {
-      answers.set(`student/${route.grade}/${index}`, selected);
+      answers.set(studentAnswerKey(index), selected);
       const container = app.querySelector('[data-student-quiz]');
       container.outerHTML = studentQuiz();
       keepFocus(app.querySelector('[data-student-quiz]'), selector);
+      app.querySelector('[data-quiz-status]').textContent = app.querySelector('[data-quiz-feedback]').textContent;
     }
+  }
+
+  function moveQuiz(button) {
+    const { action, index } = button.dataset;
+    const state = quizState();
+    const total = grades[route.grade].quiz.length;
+    if (action === 'quiz-reset') {
+      for (let i = 0; i < total; i++) answers.delete(studentAnswerKey(i));
+      quizzes.delete(route.grade);
+    } else if (action === 'quiz-review') {
+      state.index = Number(index);
+      state.finished = false;
+    } else if (action === 'quiz-next') {
+      if (state.index === total - 1) state.finished = true;
+      else state.index++;
+    } else if (action === 'quiz-back' && state.index > 0) state.index--;
+    app.querySelector('[data-student-quiz]').outerHTML = studentQuiz();
+    app.querySelector('[data-quiz-status]').textContent = '';
+    document.getElementById('s-quiz-heading').focus({ preventScroll: true });
+    window.scrollTo(0, 0);
   }
 
   function teacherNotes(button) {
@@ -441,17 +530,35 @@
       main.focus();
       return;
     }
+    const sceneLink = event.target.closest('[data-scene-link]');
+    if (sceneLink) {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      dialog.close();
+      return go(sceneLink.hash);
+    }
     const button = event.target.closest('button[data-action]');
     if (!button) return;
     const action = button.dataset.action;
     if (action === 'close') return dialog.close();
+    if (action === 'artifact') return showArtifact(button);
+    if (action === 'zoom') {
+      const sheet = dialog.querySelector('.s-artifact-sheet');
+      const zoomed = sheet.classList.toggle('is-zoomed');
+      button.setAttribute('aria-pressed', String(zoomed));
+      button.textContent = zoomed ? '화면에 맞추기' : '원본 크기';
+      sheet.scrollTo(0, 0);
+      return;
+    }
     if (action === 'choice') return choose(button);
     if (['place', 'order', 'reset-order', 'claim'].includes(action)) return changeActivity(button);
+    if (route.view === 'student' && action.startsWith('quiz-')) return moveQuiz(button);
     if (route.view !== 'lesson') return;
     switch (action) {
       case 'next': move(1); break;
       case 'previous': move(-1); break;
       case 'qr': window.ActivityQr.open('samil'); break;
+      case 'scenes': showScenes(button); break;
       case 'notes': teacherNotes(button); break;
       case 'toggle-score': {
         const audio = app.querySelector('.s-score-audio');
