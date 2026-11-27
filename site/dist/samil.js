@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const { sources, visuals, places, order, claims, grades, era } = window.SamilData;
+  const { sources, visuals, places, order, claims, grades, era, remembrance, videos } = window.SamilData;
   const app = document.getElementById('samil-app');
   const dialog = document.getElementById('samil-dialog');
   const answers = new Map();
@@ -13,7 +13,22 @@
   let route;
   let revealed = false;
   let dialogTrigger;
-  let scoreVolume = 0.8;
+  let narrationVolume = 0.26;
+  const remembranceSlides = [{
+    type: 'memory', title: '열 사람의 이름을 기억하는 시간', visual: 'crowd',
+    note: '약 10분을 잡습니다. 이름을 읽고 다음 장면으로 가기 전 한 호흡 쉬어 주세요.',
+    record: {
+      date: '기억의 시간 · 약 10분',
+      paragraphs: ['이제 시간을 되돌려 광복을 보지 못한 열 사람을 만납니다.', '먼저 안중근이 가족에게 남긴 글을 읽고, 어머니 조마리아에게는 어떤 기록이 남았는지 살펴봅니다.'],
+      links: [],
+    },
+  }, ...remembrance.map(person => ({
+    type: 'memory', title: person.title ?? person.name, visual: person.visual,
+    note: `장면에 약 ${Math.round(person.minutes * 60)}초를 잡습니다. ${person.cues
+      ? '낭독 시작을 누르고 배경음악 위로 화면의 문장을 교사가 천천히 읽어 주세요.'
+      : '이름과 한 가지 행동을 천천히 읽은 뒤 잠시 기다려 주세요.'}`,
+    record: { ...person, music: !!person.cues },
+  }))];
 
   function readRoute() {
     const [view, grade, target] = location.hash.slice(1).split('/');
@@ -28,9 +43,11 @@
 
   function lessonSlides(grade) {
     const g = grades[grade];
-    return [...g.slides, ...g.quiz, {
-      type: 'recap', title: '오늘 배운 것을 한 문장으로', prompt: g.exit, explain: g.example,
-      note: '학생의 한 문장을 들어 보고 학습지 또는 구두 답변으로 수업을 마무리하세요.', visual: 'crowd',
+    return [...g.slides, ...g.quiz, ...remembranceSlides, {
+      type: 'recap', title: '어떤 이름을 기억할까요?',
+      prompt: '오늘 기억하고 싶은 이름 하나와 그 사람이 했던 일 하나를 한 문장으로 남겨요.',
+      explain: '“나는 이선경을 기억하고 싶어요. 감옥에 갇힌 사람들의 가족을 도왔어요.”',
+      note: `인물의 이름과 기록에서 확인한 행동을 듣습니다. 본편 확인이 필요하면 다음 발문을 덧붙이세요. ${g.exit}`, visual: 'crowd',
     }];
   }
 
@@ -49,7 +66,8 @@
     const { source } = visuals[key];
     return `<figure class="s-figure ${modifier}">${photo(key)}
       <figcaption class="s-figure-label">
-        <div>${assetLink(source)} <span>${esc(sources[source].credit)}</span></div>
+        <div>${assetLink(source)} <span>${esc(sources[source].credit)}</span>${sources[source].license
+          ? ` <a href="${esc(sources[source].license)}" target="_blank" rel="noopener">라이선스 ↗</a>` : ''}</div>
         <button class="s-button s-enlarge" data-action="artifact" data-id="${key}" type="button"
           aria-label="${esc(sources[source].title)} 확대">확대 <span aria-hidden="true">+</span></button>
       </figcaption></figure>`;
@@ -73,6 +91,17 @@
       <p class="s-artifact-credit">${esc(source.credit)}</p>`, button, 'artifact');
   }
 
+  function showVideo(button) {
+    const clip = videos[button.dataset.id];
+    const start = clip.start ?? 0;
+    openDialog(clip.title, `<p>${esc(clip.publisher)} · ${esc(clip.description)}</p>
+      <iframe class="s-video" src="https://www.youtube-nocookie.com/embed/${clip.id}?start=${start}&amp;autoplay=1"
+        title="${esc(clip.title)}" referrerpolicy="strict-origin-when-cross-origin"
+        allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      <a class="s-button" href="https://www.youtube.com/watch?v=${clip.id}&amp;t=${start}s" target="_blank" rel="noopener">유튜브에서 열기 ↗</a>`,
+    button, 'video');
+  }
+
   function home() {
     app.innerHTML = `<header class="s-top s-home-top"><a class="s-brand" href="index.html">‹ 오늘의 국경일</a>
         <nav aria-label="3·1절 수업 메뉴"><a href="#samil-grades">학년 선택</a><a href="#samil-worksheets">인쇄 자료</a></nav></header>
@@ -84,7 +113,7 @@
           <div class="s-hero-copy">
             <time class="s-hero-date" datetime="1919-03-01">1919년 3월 1일</time>
             <h1 id="samil-title" tabindex="-1"><span>함께</span> <span>외친 날</span></h1>
-            <p>서울의 만세 사진, 독립선언서,<br class="s-home-break"> 가족에게 남긴 편지를 읽는 3·1절 수업.</p>
+            <p>만세는 왜 시작됐을까요?<br class="s-home-break"> 사진과 선언서로 그날에 이른 길을 따라갑니다.</p>
           </div>
         </section>
         <section class="s-grade-section" id="samil-grades" aria-labelledby="samil-grade-heading">
@@ -113,51 +142,88 @@
   }
 
   function archivePanel(slide, question) {
-    const { date, quotation, quoteLabel, paragraphs, context, links } = slide.record;
+    const { date, quotation, quoteLabel, paragraphs, context, links, name, cues } = slide.record;
     const visual = visuals[slide.visual];
     return `<article class="s-archive-panel${visual ? ' s-archive-illustrated' : ''}${quotation ? ' s-archive-with-quote' : ''}">
       <div class="s-archive-reading">
         <p class="s-archive-date">${esc(date)}</p>
+        ${name && name !== slide.title ? `<p class="s-archive-person">${esc(name)}</p>` : ''}
         <h1 id="samil-title" tabindex="-1">${esc(slide.title)}</h1>
-        ${quotation ? `<blockquote>“${esc(quotation)}”<cite>${esc(quoteLabel)}</cite></blockquote>` : ''}
-        ${paragraphs.map(paragraph => `<p class="s-archive-line">${esc(paragraph)}</p>`).join('')}
-        ${context ? `<p class="s-archive-context">${esc(context)}</p>` : ''}
-        <ul class="s-archive-sources" aria-label="내용 출처">${links.map(key => `<li>${assetLink(key)}</li>`).join('')}</ul>
+        <div data-reading-copy>
+          ${quotation ? `<blockquote>“${esc(quotation)}”<cite>${esc(quoteLabel)}</cite></blockquote>` : ''}
+          ${paragraphs.map(paragraph => `<p class="s-archive-line">${esc(paragraph)}</p>`).join('')}
+          ${context ? `<p class="s-archive-context">${esc(context)}</p>` : ''}
+        </div>
+        ${cues ? `<div class="s-reading-cue" data-reading-cue hidden>
+          <p class="s-reading-speaker"></p><p class="s-reading-line"></p><p class="s-reading-position"></p></div>` : ''}
+        ${links.length ? `<ul class="s-archive-sources" aria-label="내용 출처">${links.map(key => `<li>${assetLink(key)}</li>`).join('')}</ul>` : ''}
       </div>
       ${visual ? `<div class="s-archive-reproduction">${sourceFigure(slide.visual, 's-archive-photo')}</div>` : ''}
-      <aside class="s-archive-question" aria-label="교실 토의">${question}</aside>
+      ${question ? `<aside class="s-archive-question" aria-label="교실 토의">${question}</aside>` : ''}
     </article>`;
   }
 
   function scoreControls() {
     return `<div class="s-score" role="group" aria-label="배경음악 남겨진 말">
-      <button class="s-button s-score-play" type="button" data-action="toggle-score">음악 재생</button>
-      <label class="s-score-volume">음량<input type="range" min="0" max="1" step="0.05" value="${scoreVolume}"></label>
+      <button class="s-button s-score-play" type="button" data-action="toggle-score">교사 낭독 시작</button>
+      <label class="s-score-volume">배경음악<input type="range" min="0" max="1" step="0.01" value="${narrationVolume}"></label>
       <audio class="s-score-audio" preload="metadata" src="audio/samil-words-left.mp3"></audio>
       <p class="s-score-error" role="status" hidden></p>
     </div>`;
   }
 
-  function wireScore() {
+  function wireScore(cues) {
     const audio = app.querySelector('.s-score-audio');
     if (!audio) return;
     const button = app.querySelector('[data-action="toggle-score"]');
     const failure = app.querySelector('.s-score-error');
-    audio.volume = scoreVolume;
+    audio.volume = narrationVolume;
+    const updateCue = () => {
+      if (!audio.isConnected || (!audio.currentTime && audio.paused)) return;
+      const panel = app.querySelector('[data-reading-cue]');
+      const index = cues.findLastIndex(cue => cue.at <= audio.currentTime);
+      if (panel.dataset.index === String(index)) return;
+      panel.dataset.index = index;
+      panel.hidden = false;
+      app.querySelector('[data-reading-copy]').hidden = true;
+      panel.querySelector('.s-reading-speaker').textContent = cues[index].speaker;
+      const line = panel.querySelector('.s-reading-line');
+      line.textContent = cues[index].text;
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        line.animate([{ opacity: .34, transform: 'translateY(.23em)' }, { opacity: 1, transform: 'none' }],
+          { duration: 540, easing: 'ease-out' });
+      }
+      panel.querySelector('.s-reading-position').textContent = `${index + 1} / ${cues.length}`;
+    };
     const sync = () => {
-      button.textContent = audio.paused ? '음악 재생' : '음악 멈춤';
+      button.textContent = audio.paused ? (audio.ended ? '다시 낭독' : '낭독 계속') : '낭독 멈춤';
       button.dataset.playing = String(!audio.paused);
       if (!audio.paused) failure.hidden = true;
+      updateCue();
     };
     for (const event of ['play', 'pause', 'ended']) audio.addEventListener(event, sync);
+    audio.addEventListener('timeupdate', updateCue);
     audio.addEventListener('error', () => {
       failure.textContent = '음악을 불러오지 못했어요.';
       failure.hidden = false;
     });
     app.querySelector('.s-score-volume input').addEventListener('input', e => {
-      scoreVolume = Number(e.currentTarget.value);
-      audio.volume = scoreVolume;
+      audio.volume = Number(e.currentTarget.value);
+      narrationVolume = audio.volume;
     });
+  }
+
+  async function playScore(audio, restart = false) {
+    const failure = app.querySelector('.s-score-error');
+    try {
+      if (restart) audio.currentTime = 0;
+      await audio.play();
+    } catch {
+      if (audio.isConnected) {
+        failure.textContent = '배경음악을 재생하지 못했어요.';
+        failure.hidden = false;
+      }
+    }
   }
 
   function mapVisual(selected, interactive, visited = new Set()) {
@@ -204,7 +270,7 @@
   function activityState() {
     const key = `${route.view}/${route.grade}/${route.index ?? ''}`;
     if (!activities.has(key)) {
-      const place = route.view === 'lesson' && route.index === 4 ? 'aunae' : 'seoul';
+      const place = (route.view === 'lesson' && lessonSlides(route.grade)[route.index].mapPlace) || 'seoul';
       activities.set(key, { order: [], place, visited: new Set([place]), claimAnswers: {} });
     }
     return activities.get(key);
@@ -270,8 +336,11 @@
     const hero = slide.type === 'cover';
     const quiz = slide.type === 'quiz';
     const interaction = slide.type === 'activity';
-    const mainClass = slide.record ? 's-record-stage' : interaction ? 's-activity-slide' : hero ? 's-cover' : 's-slide-grid';
-    const nextTitle = !revealed ? (quiz ? '정답 보기' : '설명 보기')
+    const memory = slide.type === 'memory';
+    const visual = !hero && !interaction && !slide.record ? visualFor(slide, place, visited) : '';
+    const mainClass = slide.record ? 's-record-stage' : interaction ? 's-activity-slide' : hero ? 's-cover'
+      : visual ? 's-slide-grid' : 's-slide-text';
+    const nextTitle = memory ? '다음 이야기' : !revealed ? (quiz ? '정답 보기' : '설명 보기')
       : route.index === slides.length - 1 ? '수업 마치기' : '다음 장면';
     const explanation = `<div class="s-explanation" aria-live="polite" ${revealed ? '' : 'hidden'}>
       <strong>${quiz ? '정답과 이유' : '함께 정리'}</strong><p>${esc(slide.explain)}</p></div>`;
@@ -285,23 +354,27 @@
           <button class="s-button" type="button" data-action="worksheets">학습지·해설</button>
           <button class="s-button s-secondary-tool" type="button" data-action="notes">교사 노트</button>
           <button class="s-button s-secondary-tool" type="button" data-action="fullscreen" aria-pressed="${!!document.fullscreenElement}">전체 화면</button>
-          ${hero || slide.record ? '<button class="s-button s-secondary-tool" type="button" data-action="replay">다시 보기</button>' : ''}
+          ${hero || slide.record || slide.date ? '<button class="s-button s-secondary-tool" type="button" data-action="replay">다시 보기</button>' : ''}
         </div>
       </header>
       <main id="samil-content" class="s-stage ${mainClass}">
-        ${slide.record ? archivePanel(slide, prompt + explanation) : `
+        ${slide.record ? archivePanel(slide, memory ? '' : prompt + explanation) : `
         ${hero ? `<div class="s-cover-image">${photo('crowd')}</div>` : ''}
         <div class="s-copy">
-          ${hero ? '' : `<p class="s-kicker">${kind}</p>`}
+          ${hero ? '' : slide.date ? `<time class="s-history-date" datetime="${esc(slide.iso)}">${esc(slide.date)}</time>` : `<p class="s-kicker">${kind}</p>`}
           ${hero ? '<span class="s-cover-date" aria-label="1919년 3월 1일"><span>1919</span><span>. 3. 1.</span></span>' : ''}
           <h1 id="samil-title" tabindex="-1">${esc(slide.title)}</h1>
+          ${slide.summary ? `<p class="s-history-summary">${esc(slide.summary)}</p>` : ''}
           ${prompt}
           ${slide.quotation ? `<blockquote>${esc(slide.quotation)}<cite>3·1독립선언서 첫머리 · 수업용 현대어 풀이</cite></blockquote>` : ''}
+          ${slide.evidence ? `<p class="s-quiz-evidence">${esc(slide.evidence)}</p>` : ''}
           ${quiz ? `<div data-teacher-options>${choiceButtons(slide, answers.get(location.hash), route.index, revealed)}</div>` : ''}
           ${explanation}
+          ${slide.source ? `<div class="s-history-actions">${assetLink(slide.source, '기록 출처')}
+            ${slide.video ? `<button class="s-button" type="button" data-action="video" data-id="${slide.video}">관련 영상 보기</button>` : ''}</div>` : ''}
         </div>
         ${interaction ? `<section class="s-activity" aria-label="${esc(g.activity)}" data-activity>${activityBody()}</section>` : ''}
-        ${!hero && !interaction ? `<section class="s-visual" aria-label="수업 자료">${visualFor(slide, place, visited)}</section>` : ''}
+        ${visual ? `<section class="s-visual" aria-label="수업 자료">${visual}</section>` : ''}
         ${hero ? `<div class="s-cover-credit">${assetLink('photograph', '1919년 3월 서울 시위 사진')}
           <button class="s-button s-enlarge" data-action="artifact" data-id="crowd" type="button"
             aria-label="서울 시위 사진 확대">확대 <span aria-hidden="true">+</span></button></div>` : ''}`}
@@ -315,13 +388,13 @@
           <button type="button" class="s-button s-primary" data-action="next">${nextTitle} →</button>
         </div>
       </footer></div>`;
-    wireScore();
+    wireScore(slide.record?.cues);
   }
 
   function showScenes(button) {
     const sections = new Map();
     lessonSlides(route.grade).forEach((slide, index) => {
-      const group = { activity: '학생 활동', quiz: '골든벨', recap: '마무리' }[slide.type] || '이야기와 자료';
+      const group = { activity: '학생 활동', quiz: '골든벨', memory: '기억할 열 사람', recap: '마무리' }[slide.type] || '이야기와 자료';
       if (!sections.has(group)) sections.set(group, []);
       sections.get(group).push(`<li><a href="${lessonHref(route.grade, index)}" data-scene-link
         ${index === route.index ? 'aria-current="step"' : ''}><span>${index + 1}</span>${esc(slide.title)}</a></li>`);
@@ -364,6 +437,7 @@
         <progress value="${done}" max="${total}" aria-label="응답한 문항"></progress><span>${done}문항 응답</span></div>
       <section class="s-student-question" aria-labelledby="s-quiz-heading">
         <h2 id="s-quiz-heading" tabindex="-1">${esc(item.title)}</h2>
+        ${item.evidence ? `<p class="s-quiz-evidence">${esc(item.evidence)}</p>` : ''}
         <div class="s-question-body${visual ? ' has-visual' : ''}">${visual ? `<div>${visual}</div>` : ''}
           <div>${choiceButtons(item, selected, index, selected === item.correct)}
             <p class="s-feedback s-quiz-feedback" data-quiz-feedback>${esc(feedback)}</p></div>
@@ -425,10 +499,11 @@
   }
 
   function move(direction) {
-    if (direction > 0 && !revealed) return updateReveal(true);
+    const slides = lessonSlides(route.grade);
+    if (direction > 0 && !revealed && slides[route.index].type !== 'memory') return updateReveal(true);
     if (direction < 0 && revealed) return updateReveal(false);
     const next = route.index + direction;
-    if (next >= lessonSlides(route.grade).length) return go('');
+    if (next >= slides.length) return go('');
     if (next >= 0) go(lessonHref(route.grade, next));
   }
 
@@ -503,7 +578,7 @@
     const g = grades[route.grade];
     const slide = lessonSlides(route.grade)[route.index];
     openDialog('교사 노트', `<p><strong>학습 목표</strong> ${esc(g.goal)}</p>
-      <p>${esc(slide.note)}</p><p><strong>정리할 말</strong> ${esc(slide.explain)}</p>
+      <p>${esc(slide.note)}</p>${slide.explain ? `<p><strong>정리할 말</strong> ${esc(slide.explain)}</p>` : ''}
       <details><summary>자료 출처와 참고 영상</summary><ul class="s-sources">${Object.entries(sources).map(([key, source]) =>
         `<li>${assetLink(key)} <span>${esc(source.credit)}</span></li>`).join('')}</ul></details>`, button);
     if (openNotes.has(route.grade)) dialog.querySelector('details').open = true;
@@ -541,6 +616,7 @@
     if (!button) return;
     const action = button.dataset.action;
     if (action === 'close') return dialog.close();
+    if (action === 'video') return showVideo(button);
     if (action === 'artifact') return showArtifact(button);
     if (action === 'zoom') {
       const sheet = dialog.querySelector('.s-artifact-sheet');
@@ -562,16 +638,8 @@
       case 'notes': teacherNotes(button); break;
       case 'toggle-score': {
         const audio = app.querySelector('.s-score-audio');
-        const failure = app.querySelector('.s-score-error');
-        if (audio.paused) {
-          try { await audio.play(); }
-          catch {
-            if (audio.isConnected) {
-              failure.textContent = '음악을 재생하지 못했어요.';
-              failure.hidden = false;
-            }
-          }
-        } else audio.pause();
+        if (audio.paused) await playScore(audio);
+        else audio.pause();
         break;
       }
       case 'worksheets':
@@ -588,10 +656,10 @@
         }
         break;
       case 'replay': {
-        const motion = app.querySelector('.s-cover-date,.s-archive-reading');
+        const motion = app.querySelector('.s-cover-date,.s-archive-reading,.s-history-date');
         motion?.replaceWith(motion.cloneNode(true));
         const audio = app.querySelector('.s-score-audio');
-        if (audio && audio.readyState > 0) audio.currentTime = 0;
+        if (audio) await playScore(audio, true);
         break;
       }
     }
@@ -608,7 +676,10 @@
   document.addEventListener('fullscreenchange', () => {
     app.querySelector('[data-action="fullscreen"]')?.setAttribute('aria-pressed', String(!!document.fullscreenElement));
   });
-  dialog.addEventListener('close', () => dialogTrigger?.focus({ preventScroll: true }));
+  dialog.addEventListener('close', () => {
+    if (dialog.dataset.kind === 'video') dialog.querySelector('iframe')?.remove();
+    dialogTrigger?.focus({ preventScroll: true });
+  });
   window.addEventListener('hashchange', () => {
     if (location.hash.startsWith('#samil-')) return;
     if (dialog.open) dialog.close();

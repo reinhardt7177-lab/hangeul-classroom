@@ -301,6 +301,46 @@
       "bytes": 745524,
       "sourceSha256": "f0cf557a09b0675e4fdd4ba69dc56026656d08f8c66dd8774fe469c32e592895",
       "sha256": "fabf4d374efd5e4c162216fdad71dc58b2ce6b393d93b2efdb33cac238478205"
+    },
+    {
+      "source": "samil-gojong-funeral.jpg",
+      "file": "samil-gojong-funeral.webp",
+      "width": 1351,
+      "height": 953,
+      "sourceBytes": 302159,
+      "bytes": 642066,
+      "sourceSha256": "3ef2b9a05d531c8daf8e1d09dede35818929ea0b9a1cb33409896fa1fb312230",
+      "sha256": "bd8d457a17896e792926bb183395287fcd369ff87c5725774ec1329eca50c92e"
+    },
+    {
+      "source": "samil-february-declaration.jpg",
+      "file": "samil-february-declaration.webp",
+      "width": 4000,
+      "height": 1868,
+      "sourceBytes": 1895842,
+      "bytes": 3600758,
+      "sourceSha256": "4c765924b30f47c7d0caf8c6b09861521a4331b2151f9fbdc944d73bbdda4485",
+      "sha256": "df05cf2376507c8969353939a869af22e66ff8e351650184ef0cd31bab014c80"
+    },
+    {
+      "source": "samil-provisional-assembly.jpg",
+      "file": "samil-provisional-assembly.webp",
+      "width": 3600,
+      "height": 3009,
+      "sourceBytes": 2656808,
+      "bytes": 7474526,
+      "sourceSha256": "1300fa6b9a2849c0004ebe55fe8a9f111806517a72b9c638448fb9ffa0db8476",
+      "sha256": "842b949c7a5b3c58cd9c97635c105a69e050375168be93f33df5ebcabdd55205"
+    },
+    {
+      "source": "samil-jeamri.png",
+      "file": "samil-jeamri.webp",
+      "width": 1184,
+      "height": 792,
+      "sourceBytes": 1561194,
+      "bytes": 675560,
+      "sourceSha256": "3407b91c085d10b98cd15a7fd105105fdf57aa05555b8d6fa55fd3cc9eeb9ce9",
+      "sha256": "cbf41db0151f237d0053adc7c36c4585555bb184924aa0fc5a30d78a17286ad6"
     }
   ]
 }

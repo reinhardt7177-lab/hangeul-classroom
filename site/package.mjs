@@ -23,7 +23,7 @@ for(const name of ['index.html','hangeul.html','holidays.css','gaecheon.html','g
  copy(path.join(source,name),path.join(target,name));
 }
 fs.mkdirSync(path.join(target,'assets'),{recursive:true});
-for(const name of ['samil.html','samil.css','samil.js','samil-data.js','samil-landing.css','audio/samil-words-left.mp3']){
+for(const name of ['samil.html','samil.css','samil.js','samil-history.js','samil-data.js','samil-landing.css','audio/samil-words-left.mp3']){
  fs.mkdirSync(path.dirname(path.join(target,name)),{recursive:true});
  copy(path.join(source,name),path.join(target,name));
 }

@@ -24,6 +24,8 @@ SOURCES = [
     'hunminjeongeum-haerye-facsimile.jpg',
     'samil-seoul.jpg', 'samil-declaration.jpg', 'samil-flag.jpg', 'samil-map.png',
     'samil-ahn-visit.jpg', 'samil-yu-record.jpg',
+    'samil-gojong-funeral.jpg', 'samil-february-declaration.jpg',
+    'samil-provisional-assembly.jpg', 'samil-jeamri.png',
 ]
 
 

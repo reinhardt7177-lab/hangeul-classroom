@@ -31,6 +31,30 @@ const qr=context.ActivityQr;
 for(const base of ['http://localhost:4198/','http://127.0.0.2/','http://[::1]/','http://app.localhost/','file:///classroom/','https://user:secret@example.com/','javascript:alert(1)'])assert.throws(()=>qr.targetUrl(base,'gaecheon.html','5-6',2),base);
 assert.equal(qr.targetUrl('https://example.com/classroom/hangeul.html','gaecheon.html','5-6',2),'https://example.com/classroom/gaecheon.html#student/5-6/2');
 assert.equal(qr.targetUrl('http://192.168.1.20:4198/','hangeul.html','3-4',5),'http://192.168.1.20:4198/hangeul.html#student/3-4/5');
+const localQrBase = 'http://localhost:44199/samil.html';
+const detectedQrBase = 'http://192.168.0.20:44199/';
+context.location = { href: localQrBase };
+context.qrcode = () => ({ addData() {}, make() {}, createSvgTag: () => '<svg></svg>' });
+qr.register('samil-qr-review', {
+  file: 'samil.html', grade: () => '3-4', label: () => '3·1절',
+  targets: () => [{ id: 'activity', label: '탐구 활동' }], current: () => 'activity',
+  modal() {
+    nodes.set('activity-share', {});
+    nodes.set('activity-share-base', { value: localQrBase });
+    nodes.set('activity-qr-target', { value: 'activity' });
+    for (const id of ['activity-qr-result', 'activity-qr-status', 'activity-qr-networks']) nodes.set(id, {});
+  },
+});
+for (const focused of [true, false]) {
+  let completeDiscovery;
+  context.fetch = () => new Promise(resolve => { completeDiscovery = resolve; });
+  const opening = qr.open('samil-qr-review');
+  const address = nodes.get('activity-share-base');
+  document.activeElement = focused ? address : previous;
+  completeDiscovery({ ok: true, json: async () => ({ addresses: [{ name: '교실', url: detectedQrBase }] }) });
+  await opening;
+  assert.equal(address.value, focused ? localQrBase : detectedQrBase);
+}
 context.esc=value=>String(value??'');context.tabHeading=(title,body)=>`${title} ${body}`;
 context.state={grade:'5-6',activity:{drafts:{},classes:{}}};
 for(const name of ['learning-resources.js','gaecheon-data.js','gaecheon-inquiry.js','hangeul-inquiry.js'])vm.runInContext(fs.readFileSync(new URL(name,dist),'utf8'),context);
